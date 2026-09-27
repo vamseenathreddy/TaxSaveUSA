@@ -1,0 +1,69 @@
+name: publish-shorts
+
+on:
+  schedule:
+    # Every 30 min. GitHub Actions cron is UTC-only and best-effort
+    # (can slip a few minutes under load) - scheduler.py is what
+    # actually decides whether to fire, this just controls how often
+    # we check.
+    - cron: "*/30 * * * *"
+  workflow_dispatch: {}  # lets you trigger a manual test run from the Actions tab
+
+permissions:
+  contents: write  # needed to commit state/ and content/topics.json (used flags) back
+
+concurrency:
+  group: publish-shorts
+  cancel-in-progress: false  # never cancel a run mid-upload
+
+jobs:
+  check-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python deps
+        run: |
+          pip install --break-system-packages tzdata google-auth google-auth-oauthlib google-api-python-client
+
+      - name: Install ffmpeg
+        run: sudo apt-get update -y && sudo apt-get install -y ffmpeg
+
+      - name: Decide whether this tick should publish
+        id: decide
+        run: |
+          result=$(python3 scripts/scheduler.py)
+          echo "result=$result" >> "$GITHUB_OUTPUT"
+
+      - name: Generate video
+        if: steps.decide.outputs.result == 'fire'
+        run: python3 scripts/generate_video.py > build_meta.txt
+
+      - name: Upload to YouTube
+        if: steps.decide.outputs.result == 'fire'
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: |
+          title=$(grep '^title:' build_meta.txt | cut -d' ' -f2-)
+          description=$(grep '^description:' build_meta.txt | cut -d' ' -f2-)
+          video_path=$(grep '^rendered:' build_meta.txt | cut -d' ' -f2-)
+          python3 scripts/upload_to_youtube.py \
+            --video "$video_path" \
+            --title "$title" \
+            --description "$description" \
+            --tags "personalfinance,taxtips,moneytips"
+
+      - name: Commit updated state
+        if: always()
+        run: |
+          git config user.name "shorts-automation-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add state/ content/topics.json
+          git diff --cached --quiet || git commit -m "chore: update scheduler state / consumed topic queue"
+          git push

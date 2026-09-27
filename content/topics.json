@@ -1,0 +1,14 @@
+{
+  "_comment": "FIFO queue consumed by scripts/generate_video.py. Add topics faster than you burn through them - the pipeline fails loudly (not silently) when this runs dry. Keep 'script' short: ~45-55 sec read at normal pace (roughly 120-140 words) for a Short. Source facts ONLY from primary sources (irs.gov, ssa.gov, usa.gov, treasury.gov) - do not source tax/benefit numbers from blogs or forums.",
+  "topics": [
+    {
+      "slug": "401k-2027-contribution-limit",
+      "title": "The 401(k) Limit Just Changed - Are You Maxing It Out?",
+      "caption_headline": "2027 401(k) Limit",
+      "background": "default.mp4",
+      "script": "PLACEHOLDER - write a ~45 second script here citing the IRS-confirmed contribution limit for the relevant tax year. Do not publish this placeholder - replace with a fact-checked script before this topic reaches the front of the queue.",
+      "description": "General education only, not personalized tax or financial advice. Source: IRS.gov. Consult a CPA or CFP for your specific situation.\n\n#personalfinance #401k #taxtips",
+      "used": false
+    }
+  ]
+}

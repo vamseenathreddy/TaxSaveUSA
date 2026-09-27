@@ -1,0 +1,6 @@
+build/
+assets/backgrounds/*
+!assets/backgrounds/.gitkeep
+client_secret.json
+*.pyc
+__pycache__/

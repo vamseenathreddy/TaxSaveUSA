@@ -1,0 +1,30 @@
+{
+  "_comment": "Staged rollout config. rollout_start_date is set the day you first publish - the scheduler computes 'days since start' from it to pick the active stage. Edit posts_per_day / windows_et as metrics allow; do not need to touch the workflow file to change pace.",
+  "rollout_start_date": "2026-09-29",
+  "timezone_note": "windows_et are in US Eastern local time (America/New_York) and are DST-safe - the scheduler converts them to UTC/IST at run time using zoneinfo, so they stay correct across the Nov/Mar DST switch.",
+  "stages": [
+    {
+      "name": "stage_1_validate",
+      "day_range": [0, 13],
+      "posts_per_day": 1,
+      "windows_et": ["19:00-22:00"]
+    },
+    {
+      "name": "stage_2_scale_2to3",
+      "day_range": [14, 27],
+      "posts_per_day": 3,
+      "windows_et": ["07:00-09:00", "12:00-13:00", "19:00-22:00"]
+    },
+    {
+      "name": "stage_3_full",
+      "day_range": [28, null],
+      "posts_per_day": 5,
+      "windows_et": ["07:00-09:00", "12:00-13:00", "17:00-18:30", "19:00-22:00"]
+    }
+  ],
+  "advance_conditions_manual_check": [
+    "Average view duration on published Shorts is at or above 50% before moving to the next stage",
+    "No Content ID claims, community guideline strikes, or 'limited/no ads' flags on recent uploads",
+    "No YouTube Studio notice about reused/repetitious or spam content"
+  ]
+}
