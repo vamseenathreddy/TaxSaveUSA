@@ -33,7 +33,7 @@ UTC = ZoneInfo("UTC")
 
 
 def load_config():
-    with open(CONFIG_PATH) as f:
+    with open(CONFIG_PATH, encoding="utf-8-sig") as f:
         return json.load(f)
 
 

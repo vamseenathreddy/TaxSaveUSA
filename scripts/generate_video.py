@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 """
 Pulls today's topic + facts, generates a TTS voiceover, and renders a
 vertical (1080x1920) Short with FFmpeg. This is a working stub with
@@ -27,7 +27,7 @@ def load_next_topic():
     """Pop the next unused topic from content/topics.json (FIFO queue).
     Also returns how many topics were already used before this one -
     used to alternate voice gender deterministically across publishes."""
-    with open(TOPICS_PATH) as f:
+    with open(TOPICS_PATH, encoding="utf-8-sig") as f:
         data = json.load(f)
     already_used_count = sum(1 for t in data["topics"] if t.get("used"))
     pending = [t for t in data["topics"] if not t.get("used")]
