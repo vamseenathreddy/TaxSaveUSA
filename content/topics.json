@@ -8,7 +8,8 @@
       "background": "default.mp4",
       "script": "Quick tax tip. If you have a 401k at work, the IRS just raised how much you can put in for 2026. The regular limit is now 24,500 dollars a year, up from 23,500. If you're 50 or older, you can add an extra 8,000 dollars in catch up contributions, for a total of 32,500. And if you're between 60 and 63, there's a bigger catch up limit of 11,250, letting you put in up to 35,750 total. This money comes out of your paycheck before taxes, so maxing it out lowers your taxable income right now, not just your future nest egg. Check with your HR or plan provider to update your contribution percentage today.",
       "description": "General education only, not personalized tax or financial advice. Source: IRS.gov (IR-2025-111). Consult a CPA or CFP for your specific situation.\n\n#personalfinance #401k #taxtips",
-      "used": false
+      "used": true,
+      "used_date": "2026-09-28"
     },
     {
       "slug": "standard-deduction-2026",
