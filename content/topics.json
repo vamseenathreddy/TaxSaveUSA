@@ -1,4 +1,4 @@
-﻿{
+{
   "_comment": "FIFO queue consumed by scripts/generate_video.py. Add topics faster than you burn through them - the pipeline fails loudly (not silently) when this runs dry. Keep 'script' short: ~45-55 sec read at normal pace (roughly 120-140 words) for a Short. Source facts ONLY from primary sources (irs.gov, ssa.gov, usa.gov, treasury.gov) - do not source tax/benefit numbers from blogs or forums.",
   "topics": [
     {
@@ -8,6 +8,33 @@
       "background": "default.mp4",
       "script": "Quick tax tip. If you have a 401k at work, the IRS just raised how much you can put in for 2026. The regular limit is now 24,500 dollars a year, up from 23,500. If you're 50 or older, you can add an extra 8,000 dollars in catch up contributions, for a total of 32,500. And if you're between 60 and 63, there's a bigger catch up limit of 11,250, letting you put in up to 35,750 total. This money comes out of your paycheck before taxes, so maxing it out lowers your taxable income right now, not just your future nest egg. Check with your HR or plan provider to update your contribution percentage today.",
       "description": "General education only, not personalized tax or financial advice. Source: IRS.gov (IR-2025-111). Consult a CPA or CFP for your specific situation.\n\n#personalfinance #401k #taxtips",
+      "used": false
+    },
+    {
+      "slug": "standard-deduction-2026",
+      "title": "2026 Standard Deduction Just Went Up - Here's the New Number",
+      "caption_headline": "2026 Standard Deduction",
+      "background": "bg2.mp4",
+      "script": "Here is a tax tip most people miss. For 2026, the IRS raised the standard deduction again. If you are single, it is now 16,100 dollars. If you are married filing jointly, it jumps to 32,200. And if you file as head of household, it is 24,150. This is the amount you can subtract from your income before taxes are calculated, and you get it automatically, no receipts needed. Most filers are better off taking this instead of itemizing, unless your mortgage interest, medical bills, or charitable donations add up to more than these numbers. Check your filing status and make sure your withholding matches.",
+      "description": "General education only, not personalized tax or financial advice. Source: IRS.gov (2026 tax inflation adjustments). Consult a CPA or CFP for your specific situation.\n\n#personalfinance #taxtips #standarddeduction",
+      "used": false
+    },
+    {
+      "slug": "hsa-limits-2026",
+      "title": "2026 HSA Contribution Limits - The Triple Tax Advantage Account",
+      "caption_headline": "2026 HSA Limits",
+      "background": "bg3.mp4",
+      "script": "If you have a high deductible health plan, listen up. The IRS just increased HSA contribution limits for 2026. If you have self only coverage, you can put in up to 4,400 dollars this year. For family coverage, the limit is 8,750. HSA contributions are triple tax advantaged, they go in pretax, grow tax free, and come out tax free for medical expenses. Unlike a flexible spending account, this money never expires and rolls over year after year. If your employer offers an HSA, check your current contribution rate today and see if you can bump it up before the year ends.",
+      "description": "General education only, not personalized tax or financial advice. Source: IRS Revenue Procedure 2025-19. Consult a CPA or CFP for your specific situation.\n\n#personalfinance #HSA #taxtips",
+      "used": false
+    },
+    {
+      "slug": "gift-tax-exclusion-2026",
+      "title": "How Much Can You Gift Tax-Free in 2026?",
+      "caption_headline": "2026 Gift Tax Exclusion: $19,000",
+      "background": "bg4.mp4",
+      "script": "Want to give money to family without any tax paperwork? Here is the number you need. For 2026, the IRS annual gift tax exclusion stays at 19,000 dollars per person. That means you can give up to 19,000 dollars to as many people as you want this year, no gift tax return required, no tax owed by you or them. A married couple can combine their exclusions and give 38,000 dollars to one person tax free. This is commonly used for helping kids with a down payment, paying for grandchildren's education, or simply passing on wealth early. Talk to a tax professional before making large gifts to plan it correctly.",
+      "description": "General education only, not personalized tax or financial advice. Source: IRS.gov (2026 tax inflation adjustments). Consult a CPA or CFP for your specific situation.\n\n#personalfinance #gifttax #estateplanning",
       "used": false
     }
   ]
