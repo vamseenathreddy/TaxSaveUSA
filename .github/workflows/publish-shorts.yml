@@ -10,7 +10,7 @@ on:
   workflow_dispatch: {}  # lets you trigger a manual test run from the Actions tab
 
 permissions:
-  contents: write  # needed to commit state/ and content/topics.json (used flags) back
+  contents: write  # needed to commit state/ and content/topics.json (used flags) back, and to create/delete the temporary Release used to host the video for Instagram
 
 concurrency:
   group: publish-shorts
@@ -19,6 +19,8 @@ concurrency:
 jobs:
   check-and-publish:
     runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # used by the gh CLI for the temporary Instagram-hosting release
     steps:
       - uses: actions/checkout@v4
 
@@ -28,7 +30,7 @@ jobs:
 
       - name: Install Python deps
         run: |
-          pip install --break-system-packages tzdata google-auth google-auth-oauthlib google-api-python-client edge-tts
+          pip install --break-system-packages tzdata google-auth google-auth-oauthlib google-api-python-client edge-tts requests
 
       - name: Install ffmpeg
         run: sudo apt-get update -y && sudo apt-get install -y ffmpeg
@@ -43,6 +45,23 @@ jobs:
         if: steps.decide.outputs.result == 'fire'
         run: python3 scripts/generate_video.py > build_meta.txt
 
+      - name: Parse build metadata
+        if: steps.decide.outputs.result == 'fire'
+        run: |
+          title=$(grep '^title:' build_meta.txt | cut -d' ' -f2-)
+          description_raw=$(grep '^description:' build_meta.txt | cut -d' ' -f2-)
+          description=$(printf '%b' "$description_raw")
+          video_path=$(grep '^rendered:' build_meta.txt | cut -d' ' -f2-)
+          tags=$(grep '^tags:' build_meta.txt | cut -d' ' -f2-)
+          {
+            echo "TITLE=$title"
+            echo "VIDEO_PATH=$video_path"
+            echo "TAGS=$tags"
+            echo "DESCRIPTION<<DESC_EOF"
+            echo "$description"
+            echo "DESC_EOF"
+          } >> "$GITHUB_ENV"
+
       - name: Upload to YouTube
         if: steps.decide.outputs.result == 'fire'
         env:
@@ -50,16 +69,40 @@ jobs:
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
         run: |
-          title=$(grep '^title:' build_meta.txt | cut -d' ' -f2-)
-          description_raw=$(grep '^description:' build_meta.txt | cut -d' ' -f2-)
-          description=$(printf '%b' "$description_raw")
-          video_path=$(grep '^rendered:' build_meta.txt | cut -d' ' -f2-)
-          tags=$(grep '^tags:' build_meta.txt | cut -d' ' -f2-)
           python3 scripts/upload_to_youtube.py \
-            --video "$video_path" \
-            --title "$title" \
-            --description "$description" \
-            --tags "$tags"
+            --video "$VIDEO_PATH" \
+            --title "$TITLE" \
+            --description "$DESCRIPTION" \
+            --tags "$TAGS"
+
+      - name: Host video temporarily for Instagram
+        if: steps.decide.outputs.result == 'fire'
+        id: host
+        run: |
+          tag="reel-${{ github.run_id }}-${{ github.run_attempt }}"
+          filename=$(basename "$VIDEO_PATH")
+          gh release create "$tag" "$VIDEO_PATH" \
+            --title "Temporary Reel hosting" \
+            --notes "Auto-created so Instagram's API can fetch this video. Deleted automatically after publish."
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "VIDEO_URL=https://github.com/${{ github.repository }}/releases/download/$tag/$filename" >> "$GITHUB_ENV"
+          sleep 10  # brief propagation buffer before Instagram fetches it
+
+      - name: Publish to Instagram
+        if: steps.decide.outputs.result == 'fire'
+        env:
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+        run: |
+          python3 scripts/upload_to_instagram.py \
+            --video-url "$VIDEO_URL" \
+            --caption "$TITLE
+
+          $DESCRIPTION"
+
+      - name: Clean up temporary Instagram hosting release
+        if: always() && steps.host.outputs.tag != ''
+        run: gh release delete "${{ steps.host.outputs.tag }}" --yes --cleanup-tag || true
 
       - name: Commit updated state
         if: always()
