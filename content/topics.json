@@ -88,7 +88,8 @@
       ],
       "script": "Big retirement news for 2026. The IRS just raised the IRA contribution limit to 7,500 dollars a year, up from 7,000. If you're 50 or older, the catch up contribution is now 1,100 dollars, bringing your total to 8,600. For Roth IRAs specifically, the income phase out range moved too, it's now 153,000 to 168,000 dollars for single filers, and 242,000 to 252,000 for married couples filing jointly. If your income falls above those ranges, you can't contribute directly to a Roth, but a backdoor Roth conversion may still work. Check your income against these numbers before you file.",
       "description": "The 2026 IRA contribution limit is now $7,500 (up from $7,000), with a $1,100 catch-up for age 50+. Roth IRA income phase-out ranges also moved: $153,000-$168,000 single, $242,000-$252,000 married filing jointly. Here's exactly where the new numbers land and what to do if you're near the limit.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (IR-2025-111). Consult a CPA or CFP for your specific situation.\n\n#IRA #rothira #taxtips2026 #personalfinance #retirementsavings",
-      "used": false
+      "used": true,
+      "used_date": "2026-09-29"
     },
     {
       "slug": "simple-ira-2026-limit",
