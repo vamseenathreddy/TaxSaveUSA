@@ -52,7 +52,8 @@
       ],
       "script": "If you have a high deductible health plan, listen up. The IRS just increased HSA contribution limits for 2026. If you have self only coverage, you can put in up to 4,400 dollars this year. For family coverage, the limit is 8,750. HSA contributions are triple tax advantaged, they go in pretax, grow tax free, and come out tax free for medical expenses. Unlike a flexible spending account, this money never expires and rolls over year after year. If your employer offers an HSA, check your current contribution rate today and see if you can bump it up before the year ends.",
       "description": "2026 HSA contribution limits just increased: $4,400 for self-only coverage, $8,750 for family coverage. HSAs are one of the few triple tax-advantaged accounts available, here's exactly how the new limits work and why the money never expires like an FSA.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS Revenue Procedure 2025-19. Consult a CPA or CFP for your specific situation.\n\n#HSA #taxtips2026 #personalfinance #healthsavingsaccount #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-09-29"
     },
     {
       "slug": "gift-tax-exclusion-2026",
