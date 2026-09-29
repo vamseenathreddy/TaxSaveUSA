@@ -51,13 +51,15 @@ jobs:
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
         run: |
           title=$(grep '^title:' build_meta.txt | cut -d' ' -f2-)
-          description=$(grep '^description:' build_meta.txt | cut -d' ' -f2-)
+          description_raw=$(grep '^description:' build_meta.txt | cut -d' ' -f2-)
+          description=$(printf '%b' "$description_raw")
           video_path=$(grep '^rendered:' build_meta.txt | cut -d' ' -f2-)
+          tags=$(grep '^tags:' build_meta.txt | cut -d' ' -f2-)
           python3 scripts/upload_to_youtube.py \
             --video "$video_path" \
             --title "$title" \
             --description "$description" \
-            --tags "personalfinance,taxtips,moneytips"
+            --tags "$tags"
 
       - name: Commit updated state
         if: always()

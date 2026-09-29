@@ -1,41 +1,95 @@
 {
-  "_comment": "FIFO queue consumed by scripts/generate_video.py. Add topics faster than you burn through them - the pipeline fails loudly (not silently) when this runs dry. Keep 'script' short: ~45-55 sec read at normal pace (roughly 120-140 words) for a Short. Source facts ONLY from primary sources (irs.gov, ssa.gov, usa.gov, treasury.gov) - do not source tax/benefit numbers from blogs or forums.",
+  "_comment": "FIFO queue consumed by scripts/generate_video.py. Add topics faster than you burn through them - the pipeline fails loudly (not silently) when this runs dry. Keep 'script' short: ~45-55 sec read at normal pace (roughly 120-140 words) for a Short. Source facts ONLY from primary sources (irs.gov, ssa.gov, usa.gov, treasury.gov) - do not source tax/benefit numbers from blogs or forums. 'tags' are topic-specific YouTube tags merged with BASE_TAGS in scripts/generate_video.py.",
   "topics": [
     {
       "slug": "401k-2026-contribution-limit",
-      "title": "IRS Just Raised the 401(k) Limit for 2026 - Are You Maxing It Out?",
+      "title": "New 2026 401(k) Limit: $24,500 - IRS Just Announced It",
       "caption_headline": "2026 401(k) Limit: $24,500",
       "background": "default.mp4",
+      "tags": ["401k 2026", "401k contribution limit", "retirement savings 2026", "401k catch up contribution", "how to max out 401k", "employer 401k match"],
       "script": "Quick tax tip. If you have a 401k at work, the IRS just raised how much you can put in for 2026. The regular limit is now 24,500 dollars a year, up from 23,500. If you're 50 or older, you can add an extra 8,000 dollars in catch up contributions, for a total of 32,500. And if you're between 60 and 63, there's a bigger catch up limit of 11,250, letting you put in up to 35,750 total. This money comes out of your paycheck before taxes, so maxing it out lowers your taxable income right now, not just your future nest egg. Check with your HR or plan provider to update your contribution percentage today.",
-      "description": "General education only, not personalized tax or financial advice. Source: IRS.gov (IR-2025-111). Consult a CPA or CFP for your specific situation.\n\n#personalfinance #401k #taxtips",
+      "description": "New 2026 401(k) contribution limit: $24,500 (up from $23,500), with higher catch-up limits for ages 50+ and 60-63. Here's exactly how much you can now contribute and why maxing it out lowers your taxable income today, not just your retirement balance.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (IR-2025-111). Consult a CPA or CFP for your specific situation.\n\n#401k #taxtips2026 #personalfinance #retirementsavings #IRS",
       "used": true,
       "used_date": "2026-09-28"
     },
     {
       "slug": "standard-deduction-2026",
-      "title": "2026 Standard Deduction Just Went Up - Here's the New Number",
+      "title": "2026 Standard Deduction Increase - New IRS Numbers Inside",
       "caption_headline": "2026 Standard Deduction",
       "background": "bg2.mp4",
+      "tags": ["standard deduction 2026", "tax deduction 2026", "IRS tax brackets 2026", "how to lower taxable income", "filing taxes 2026", "single vs married taxes"],
       "script": "Here is a tax tip most people miss. For 2026, the IRS raised the standard deduction again. If you are single, it is now 16,100 dollars. If you are married filing jointly, it jumps to 32,200. And if you file as head of household, it is 24,150. This is the amount you can subtract from your income before taxes are calculated, and you get it automatically, no receipts needed. Most filers are better off taking this instead of itemizing, unless your mortgage interest, medical bills, or charitable donations add up to more than these numbers. Check your filing status and make sure your withholding matches.",
-      "description": "General education only, not personalized tax or financial advice. Source: IRS.gov (2026 tax inflation adjustments). Consult a CPA or CFP for your specific situation.\n\n#personalfinance #taxtips #standarddeduction",
+      "description": "2026 standard deduction amounts just went up: $16,100 for single filers, $32,200 married filing jointly, $24,150 head of household. Here's what changed, why most filers are better off skipping itemized deductions, and how to check if your withholding still matches.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (2026 tax inflation adjustments). Consult a CPA or CFP for your specific situation.\n\n#standarddeduction #taxtips2026 #personalfinance #IRS #filingtaxes",
       "used": false
     },
     {
       "slug": "hsa-limits-2026",
-      "title": "2026 HSA Contribution Limits - The Triple Tax Advantage Account",
+      "title": "2026 HSA Limits: $4,400 Self-Only / $8,750 Family (IRS)",
       "caption_headline": "2026 HSA Limits",
       "background": "bg3.mp4",
+      "tags": ["HSA 2026", "HSA contribution limit", "health savings account 2026", "triple tax advantage", "high deductible health plan", "HSA vs FSA"],
       "script": "If you have a high deductible health plan, listen up. The IRS just increased HSA contribution limits for 2026. If you have self only coverage, you can put in up to 4,400 dollars this year. For family coverage, the limit is 8,750. HSA contributions are triple tax advantaged, they go in pretax, grow tax free, and come out tax free for medical expenses. Unlike a flexible spending account, this money never expires and rolls over year after year. If your employer offers an HSA, check your current contribution rate today and see if you can bump it up before the year ends.",
-      "description": "General education only, not personalized tax or financial advice. Source: IRS Revenue Procedure 2025-19. Consult a CPA or CFP for your specific situation.\n\n#personalfinance #HSA #taxtips",
+      "description": "2026 HSA contribution limits just increased: $4,400 for self-only coverage, $8,750 for family coverage. HSAs are one of the few triple tax-advantaged accounts available, here's exactly how the new limits work and why the money never expires like an FSA.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS Revenue Procedure 2025-19. Consult a CPA or CFP for your specific situation.\n\n#HSA #taxtips2026 #personalfinance #healthsavingsaccount #IRS",
       "used": false
     },
     {
       "slug": "gift-tax-exclusion-2026",
-      "title": "How Much Can You Gift Tax-Free in 2026?",
+      "title": "2026 Gift Tax Limit: Give $19,000 Tax-Free (IRS Rule)",
       "caption_headline": "2026 Gift Tax Exclusion: $19,000",
       "background": "bg4.mp4",
+      "tags": ["gift tax exclusion 2026", "gift tax limit", "tax free gifting", "estate planning 2026", "how much can you gift tax free", "wealth transfer strategies"],
       "script": "Want to give money to family without any tax paperwork? Here is the number you need. For 2026, the IRS annual gift tax exclusion stays at 19,000 dollars per person. That means you can give up to 19,000 dollars to as many people as you want this year, no gift tax return required, no tax owed by you or them. A married couple can combine their exclusions and give 38,000 dollars to one person tax free. This is commonly used for helping kids with a down payment, paying for grandchildren's education, or simply passing on wealth early. Talk to a tax professional before making large gifts to plan it correctly.",
-      "description": "General education only, not personalized tax or financial advice. Source: IRS.gov (2026 tax inflation adjustments). Consult a CPA or CFP for your specific situation.\n\n#personalfinance #gifttax #estateplanning",
+      "description": "The 2026 IRS annual gift tax exclusion is $19,000 per person ($38,000 for married couples combined), with zero tax owed and no gift tax return required. Here's how families use this every year to help with down payments, education costs, or early wealth transfer.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (2026 tax inflation adjustments). Consult a CPA or CFP for your specific situation.\n\n#gifttax #estateplanning #taxtips2026 #personalfinance #IRS",
+      "used": false
+    },
+    {
+      "slug": "ira-2026-contribution-limit",
+      "title": "2026 IRA Limit Jumps to $7,500 - New IRS Numbers",
+      "caption_headline": "2026 IRA Limit: $7,500",
+      "background": "default.mp4",
+      "tags": ["IRA 2026", "IRA contribution limit", "roth ira 2026", "traditional ira limit", "retirement savings 2026", "roth ira income limits"],
+      "script": "Big retirement news for 2026. The IRS just raised the IRA contribution limit to 7,500 dollars a year, up from 7,000. If you're 50 or older, the catch up contribution is now 1,100 dollars, bringing your total to 8,600. For Roth IRAs specifically, the income phase out range moved too, it's now 153,000 to 168,000 dollars for single filers, and 242,000 to 252,000 for married couples filing jointly. If your income falls above those ranges, you can't contribute directly to a Roth, but a backdoor Roth conversion may still work. Check your income against these numbers before you file.",
+      "description": "The 2026 IRA contribution limit is now $7,500 (up from $7,000), with a $1,100 catch-up for age 50+. Roth IRA income phase-out ranges also moved: $153,000-$168,000 single, $242,000-$252,000 married filing jointly. Here's exactly where the new numbers land and what to do if you're near the limit.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (IR-2025-111). Consult a CPA or CFP for your specific situation.\n\n#IRA #rothira #taxtips2026 #personalfinance #retirementsavings",
+      "used": false
+    },
+    {
+      "slug": "simple-ira-2026-limit",
+      "title": "2026 SIMPLE IRA Limit: $17,000 (Small Business Owners, Watch This)",
+      "caption_headline": "2026 SIMPLE IRA Limit: $17,000",
+      "background": "bg2.mp4",
+      "tags": ["simple ira 2026", "small business retirement plan", "simple ira contribution limit", "secure act 2.0", "self employed retirement", "small business tax tips"],
+      "script": "If you're a small business owner or you work for one with a SIMPLE IRA, here's your 2026 update. The IRS raised the SIMPLE IRA contribution limit to 17,000 dollars, up from 16,500. And under SECURE 2.0, some plans allow an even higher limit of 18,100 dollars for certain participants. This is a pretax retirement account designed specifically for small businesses, it's cheaper and simpler to run than a full 401k, but still lets employees build real retirement savings with employer matching. If you run a small business without a retirement plan yet, this is one of the easiest ones to set up. Check with your payroll provider to update contribution elections for 2026.",
+      "description": "The 2026 SIMPLE IRA contribution limit is $17,000 (up from $16,500), with some SECURE 2.0 plans allowing up to $18,100. Here's what small business owners and employees need to know about this low-cost retirement plan option for 2026.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (IR-2025-111). Consult a CPA or CFP for your specific situation.\n\n#smallbusiness #retirementsavings #taxtips2026 #personalfinance #IRS",
+      "used": false
+    },
+    {
+      "slug": "social-security-cola-2026",
+      "title": "Social Security Benefits Rising 2.8% in 2026 - Official SSA Number",
+      "caption_headline": "2026 Social Security COLA: 2.8%",
+      "background": "bg3.mp4",
+      "tags": ["social security 2026", "social security cola", "cost of living adjustment", "social security increase", "retirement benefits 2026", "ssa announcement"],
+      "script": "Here's news for the 75 million Americans on Social Security. The Social Security Administration just confirmed the 2026 cost of living adjustment, benefits are going up 2.8 percent starting in January. This COLA is designed to help your check keep pace with inflation, and it applies automatically, you don't need to apply or request it. It affects retirement benefits, disability benefits, and Supplemental Security Income. If you're not sure what your new payment amount will be, the Social Security Administration mails or posts your updated benefit amount through your online my Social Security account in December. Check yours as soon as it's available.",
+      "description": "Social Security and SSI benefits for 75 million Americans are increasing 2.8% starting January 2026, per the official SSA cost-of-living adjustment announcement. Here's what the COLA covers, who gets it automatically, and where to find your exact new payment amount.\n\nGeneral education only, not personalized tax or financial advice. Source: SSA.gov (2026 COLA announcement). Consult a financial advisor for your specific situation.\n\n#socialsecurity #cola #retirement #personalfinance #SSA",
+      "used": false
+    },
+    {
+      "slug": "social-security-wage-base-2026",
+      "title": "2026 Social Security Tax Cap: $184,500 - What High Earners Should Know",
+      "caption_headline": "2026 SS Wage Base: $184,500",
+      "background": "bg4.mp4",
+      "tags": ["social security wage base", "social security tax cap 2026", "payroll tax limit", "high earners tax tips", "FICA tax 2026", "social security tax withholding"],
+      "script": "If you're a higher earner, this 2026 number matters for your paycheck. The Social Security Administration just raised the taxable maximum, also called the wage base, to 184,500 dollars for 2026. That means Social Security tax, the 6.2 percent you see withheld from your paycheck, only applies up to that amount of income. Once your year to date wages cross 184,500 dollars, that specific withholding stops for the rest of the year. If you switch jobs mid year, double check your total withholding across employers, because each employer restarts the calculation separately, and you could end up overpaying. You'd then claim that excess back as a credit on your tax return.",
+      "description": "The 2026 Social Security taxable wage base (the income cap for the 6.2% Social Security tax) rises to $184,500. Here's exactly how the cap works, what happens once your wages cross it, and why switching jobs mid-year can lead to overpaying Social Security tax that you can claim back at filing time.\n\nGeneral education only, not personalized tax or financial advice. Source: SSA.gov (2026 wage base announcement). Consult a CPA or CFP for your specific situation.\n\n#socialsecurity #payrolltax #taxtips2026 #personalfinance #highearners",
+      "used": false
+    },
+    {
+      "slug": "eitc-2026-max-credit",
+      "title": "2026 Earned Income Tax Credit: Up to $8,231 - Do You Qualify?",
+      "caption_headline": "2026 EITC: Up to $8,231",
+      "background": "default.mp4",
+      "tags": ["earned income tax credit", "EITC 2026", "tax credit for families", "refundable tax credit", "low income tax credit", "how to qualify for EITC"],
+      "script": "This is one of the most overlooked tax credits, and the IRS just updated it for 2026. The maximum Earned Income Tax Credit for families with three or more qualifying children is now 8,231 dollars. The EITC is a refundable credit, meaning even if you owe zero in taxes, you can still get this money back as a refund. It's designed for low to moderate income working individuals and families, and the exact amount depends on your income, filing status, and number of kids. Millions of eligible people skip claiming it every year simply because they don't know it exists or think they don't qualify. Use the IRS EITC assistant tool on IRS dot gov to check your eligibility before you file.",
+      "description": "The 2026 maximum Earned Income Tax Credit for families with three or more qualifying children is $8,231, per the IRS. The EITC is fully refundable, meaning you can get it back even if you owe no tax. Here's who it's for and how to check if you qualify before filing.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (IR-2025-103). Consult a CPA or CFP for your specific situation.\n\n#EITC #taxcredit #taxtips2026 #personalfinance #IRS",
       "used": false
     }
   ]
