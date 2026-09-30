@@ -14,6 +14,7 @@ Pipeline:
      audio -> output/<slug>.mp4
 """
 import json
+import random
 import re
 import subprocess
 from datetime import date
@@ -25,6 +26,38 @@ AUDIO_DIR = ROOT / "build" / "audio"
 CAPTIONS_DIR = ROOT / "build" / "captions"
 OUTPUT_DIR = ROOT / "build" / "output"
 ASSETS_DIR = ROOT / "assets"
+EMOJI_DIR = ASSETS_DIR / "emoji"
+
+# Pre-rendered color emoji PNGs (Twemoji, CC-BY 4.0) used for the intro
+# "burst" effect below. ffmpeg's drawtext/libass text-rendering path
+# cannot render color/bitmap emoji fonts at all (confirmed: fails with
+# "invalid library handle" at arbitrary sizes and "Monocromatic (1bpp)
+# fonts are not supported" even at the font's own embedded bitmap size),
+# so these are composited as image overlays instead - the standard,
+# reliable workaround.
+EMOJI_FILES = [
+    "party_popper.png", "fireworks.png", "sparkles.png",
+    "collision.png", "fire.png",
+]
+
+# Spoken + captioned outro CTAs. One is appended (as plain text) to the
+# end of every topic's script before TTS synthesis, so it comes out of
+# the pipeline as BOTH spoken audio (edge-tts) and an on-screen caption
+# (via the existing word-boundary-timed .ass pipeline) automatically -
+# no separate rendering path needed. Deliberately distinct from
+# content/comment_prompts.json (which is posted as an actual YouTube
+# comment) so a viewer doesn't hear/read and then see the exact same
+# line twice.
+OUTRO_CTAS = [
+    "Drop a comment and tell me what you think.",
+    "Let me know your thoughts down in the comments.",
+    "Comment below and let's talk about it.",
+    "Got a question about this? Ask it in the comments.",
+    "Tell me in the comments if this helped you.",
+    "Share your opinion in the comments below.",
+    "What do you think? Comment and let me know.",
+    "Drop your thoughts in the comments right now.",
+]
 
 # Base tags applied to every video, on top of each topic's own tags -
 # see content/topics.json "tags" field. Keep broad + niche mixed for reach.
@@ -183,14 +216,18 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
     Vertical 1080x1920 render: loops/crops the background clip to
     length, burns in the word-synced captions, and opens with a
     "blast" attention-grab: a quick white flash-cut, a short
-    synthesized attention tone under the audio, then a bold
-    high-contrast hook headline - a scroll-stopping pattern interrupt
-    for the first ~3 seconds, before settling into the normal captioned
-    voiceover.
+    synthesized attention tone under the audio, a bold high-contrast
+    hook headline, and a staggered burst of color emoji (party popper,
+    fireworks, sparkles, collision, fire) popping in around the hook -
+    a scroll-stopping pattern interrupt for the first ~2 seconds,
+    before settling into the normal captioned voiceover.
     """
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     ass_escaped = str(ass_path).replace("\\", "/").replace(":", "\\:")
     hook_escaped = hook_text.replace("'", "\u2019").replace(":", "\\:")
+
+    emoji_paths = [EMOJI_DIR / name for name in EMOJI_FILES]
+    have_emoji = all(p.exists() for p in emoji_paths)
 
     # -shortest does not reliably cut the render when the background is
     # an infinitely looped input (-stream_loop -1) feeding a dual-chain
@@ -218,13 +255,14 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
     # cut used to stop the scroll before the eye even reads the hook.
     flash_drawbox = "drawbox=x=0:y=0:w=iw:h=ih:color=white@0.9:t=fill:enable='lt(t,0.08)'"
 
-    vf = (
+    base_vf = (
         f"[0:v]scale=1080:1920:force_original_aspect_ratio=increase,"
         f"crop=1080:1920,"
         f"subtitles='{ass_escaped}',"
         f"{hook_drawtext},"
-        f"{flash_drawbox}[vout]"
+        f"{flash_drawbox}[vbase]"
     )
+
     # Short synthesized "blip" tone mixed under the very start of the
     # voiceover - an audio pattern-interrupt to match the visual flash.
     # volume=1.8 after amix compensates for amix's default level drop
@@ -236,6 +274,38 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
         "-stream_loop", "-1", "-i", str(background_clip),
         "-i", str(audio_path),
         "-f", "lavfi", "-i", "sine=frequency=1400:duration=0.18",
+    ]
+
+    if have_emoji:
+        # Staggered emoji "burst": each icon pops in a beat after the
+        # last, clustered around the hook headline (which sits at
+        # y=140) without overlapping the lower-third captions.
+        for p in emoji_paths:
+            cmd += ["-i", str(p)]
+        positions = [
+            (50, 300), (900, 300), (50, 950), (900, 950), (475, 620),
+        ]
+        filter_parts = [base_vf]
+        scale_parts = []
+        for i in range(len(emoji_paths)):
+            scale_parts.append(f"[{3 + i}:v]scale=130:130[e{i}]")
+        filter_parts.extend(scale_parts)
+
+        chain_label = "vbase"
+        for i, (x, y) in enumerate(positions):
+            start = 0.1 + i * 0.12
+            end = start + 1.3
+            out_label = f"vb{i}" if i < len(positions) - 1 else "vout"
+            filter_parts.append(
+                f"[{chain_label}][e{i}]overlay=x={x}:y={y}:"
+                f"enable='between(t,{start:.2f},{end:.2f})'[{out_label}]"
+            )
+            chain_label = out_label
+        vf = ";".join(filter_parts)
+    else:
+        vf = base_vf.replace("[vbase]", "[vout]")
+
+    cmd += [
         "-filter_complex", f"{vf};{af}",
         "-map", "[vout]", "-map", "[aout]",
         "-t", f"{audio_duration:.3f}",
@@ -264,7 +334,18 @@ def main():
     ass_path = CAPTIONS_DIR / f"{slug}.ass"
     out_path = OUTPUT_DIR / f"{slug}.mp4"
 
-    word_boundaries = synthesize_voiceover(topic["script"], audio_path, voice_index=already_used_count)
+    # Append a spoken + on-screen outro CTA asking the viewer to comment.
+    # Because it's appended to the plain script text before TTS, it goes
+    # through the exact same pipeline as the rest of the script and comes
+    # out as BOTH spoken audio and a synced on-screen caption - no extra
+    # rendering path needed. random.seed on the slug keeps it deterministic
+    # per-video (reruns of the same topic pick the same CTA) while still
+    # varying across different topics/videos.
+    rng = random.Random(slug)
+    outro_cta = rng.choice(OUTRO_CTAS)
+    full_script = f"{topic['script'].rstrip()} {outro_cta}"
+
+    word_boundaries = synthesize_voiceover(full_script, audio_path, voice_index=already_used_count)
     events = build_caption_events(word_boundaries)
     write_ass_subtitles(events, ass_path)
 
