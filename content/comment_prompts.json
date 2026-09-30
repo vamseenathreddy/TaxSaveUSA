@@ -1,6 +1,6 @@
 {
   "_comment": "Rotating pool of engagement-CTA comments. scripts/upload_to_youtube.py posts one of these as a top-level comment on every uploaded Short, advancing next_index each time so the pool cycles through before repeating. Add/edit prompts freely - keep them short (under ~150 chars), on-topic for a US tax/finance channel, and genuinely inviting a reply rather than generic bait.",
-  "next_index": 0,
+  "next_index": 1,
   "prompts": [
     "What's your take on this? Drop a comment below.",
     "Did you know this before watching? Let me know in the comments.",
@@ -15,7 +15,7 @@
     "Rate this tip 1-10 in the comments.",
     "Comment 'yes' if you're maxing this out already.",
     "What other government benefit should we cover next?",
-    "Drop a 🔥 if this was useful.",
+    "Drop a \ud83d\udd25 if this was useful.",
     "Comment below - single or married filing jointly?",
     "Which tip from this channel has saved you the most money?",
     "Tell us your biggest money question in the comments.",

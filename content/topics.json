@@ -142,7 +142,8 @@
       ],
       "script": "If you're a higher earner, this 2026 number matters for your paycheck. The Social Security Administration just raised the taxable maximum, also called the wage base, to 184,500 dollars for 2026. That means Social Security tax, the 6.2 percent you see withheld from your paycheck, only applies up to that amount of income. Once your year to date wages cross 184,500 dollars, that specific withholding stops for the rest of the year. If you switch jobs mid year, double check your total withholding across employers, because each employer restarts the calculation separately, and you could end up overpaying. You'd then claim that excess back as a credit on your tax return.",
       "description": "The 2026 Social Security taxable wage base (the income cap for the 6.2% Social Security tax) rises to $184,500. Here's exactly how the cap works, what happens once your wages cross it, and why switching jobs mid-year can lead to overpaying Social Security tax that you can claim back at filing time.\n\nGeneral education only, not personalized tax or financial advice. Source: SSA.gov (2026 wage base announcement). Consult a CPA or CFP for your specific situation.\n\n#socialsecurity #payrolltax #taxtips2026 #personalfinance #highearners",
-      "used": false
+      "used": true,
+      "used_date": "2026-09-30"
     },
     {
       "slug": "eitc-2026-max-credit",
