@@ -196,7 +196,8 @@
       ],
       "script": "Selling stock or property this year? The IRS just updated the income thresholds for long term capital gains taxes in 2026. If you're single and your taxable income is under 49,450 dollars, you pay zero percent tax on long term gains. Between 49,450 and 545,500, you pay 15 percent. Above that, it's 20 percent. If you're married filing jointly, the zero percent bracket goes up to 98,900 dollars, 15 percent applies up to 613,700, and 20 percent kicks in above that. This only applies to investments held more than a year. Short term gains are taxed as regular income instead. Knowing these numbers can help you time a sale, especially if you're near a bracket line. Talk to a tax professional before making a big move.",
       "description": "The IRS updated 2026 long-term capital gains tax brackets: 0% up to $49,450 single / $98,900 married filing jointly, 15% up to $545,500 / $613,700, and 20% above that. Here's exactly where the thresholds land and why the holding period matters.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS Revenue Procedure 2025-32. Consult a CPA or CFP for your specific situation.\n\n#capitalgains #investing #taxtips2026 #personalfinance #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-09-30"
     },
     {
       "slug": "estate-tax-exemption-2026",
