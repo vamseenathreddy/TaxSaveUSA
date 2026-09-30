@@ -109,6 +109,6 @@ jobs:
         run: |
           git config user.name "shorts-automation-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add state/ content/topics.json
+          git add state/ content/topics.json content/comment_prompts.json
           git diff --cached --quiet || git commit -m "chore: update scheduler state / consumed topic queue"
           git push

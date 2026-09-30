@@ -181,30 +181,64 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_text: str, out_path: Path):
     """
     Vertical 1080x1920 render: loops/crops the background clip to
-    length, burns in the word-synced captions, overlays a short hook
-    headline for the first 3 seconds, muxes in the voiceover track.
+    length, burns in the word-synced captions, and opens with a
+    "blast" attention-grab: a quick white flash-cut, a short
+    synthesized attention tone under the audio, then a bold
+    high-contrast hook headline - a scroll-stopping pattern interrupt
+    for the first ~3 seconds, before settling into the normal captioned
+    voiceover.
     """
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     ass_escaped = str(ass_path).replace("\\", "/").replace(":", "\\:")
     hook_escaped = hook_text.replace("'", "\u2019").replace(":", "\\:")
-    hook_drawtext = (
-        f"drawtext=text='{hook_escaped}':fontcolor=white:fontsize=58:"
-        f"box=1:boxcolor=black@0.6:boxborderw=24:x=(w-text_w)/2:y=140:"
-        f"enable='between(t,0,3)'"
+
+    # -shortest does not reliably cut the render when the background is
+    # an infinitely looped input (-stream_loop -1) feeding a dual-chain
+    # -filter_complex (video chain + audio amix chain) - confirmed by
+    # testing: the render just kept going well past the voiceover's
+    # actual length instead of stopping. Probing the voiceover's exact
+    # duration and passing it as an explicit -t cap is deterministic
+    # regardless of filter complexity, so that's used instead below.
+    probe = subprocess.run(
+        ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+         "-of", "default=noprint_wrappers=1:nokey=1", str(audio_path)],
+        capture_output=True, text=True, check=True,
     )
+    audio_duration = float(probe.stdout.strip())
+
+    # Bold, high-contrast hook: yellow text, black outline, red box -
+    # appears right as the flash clears (0.05s) for a punch-in feel.
+    hook_drawtext = (
+        f"drawtext=text='{hook_escaped}':fontcolor=yellow:fontsize=68:"
+        f"bordercolor=black:borderw=5:"
+        f"box=1:boxcolor=red@0.75:boxborderw=26:x=(w-text_w)/2:y=140:"
+        f"enable='between(t,0.05,3)'"
+    )
+    # A single white flash frame at t=0 - a classic pattern-interrupt
+    # cut used to stop the scroll before the eye even reads the hook.
+    flash_drawbox = "drawbox=x=0:y=0:w=iw:h=ih:color=white@0.9:t=fill:enable='lt(t,0.08)'"
+
     vf = (
-        f"scale=1080:1920:force_original_aspect_ratio=increase,"
+        f"[0:v]scale=1080:1920:force_original_aspect_ratio=increase,"
         f"crop=1080:1920,"
         f"subtitles='{ass_escaped}',"
-        f"{hook_drawtext}"
+        f"{hook_drawtext},"
+        f"{flash_drawbox}[vout]"
     )
+    # Short synthesized "blip" tone mixed under the very start of the
+    # voiceover - an audio pattern-interrupt to match the visual flash.
+    # volume=1.8 after amix compensates for amix's default level drop
+    # (it averages inputs) so the voice doesn't come out quieter overall.
+    af = "[1:a][2:a]amix=inputs=2:duration=first:dropout_transition=0,volume=1.8[aout]"
+
     cmd = [
         "ffmpeg", "-y",
         "-stream_loop", "-1", "-i", str(background_clip),
         "-i", str(audio_path),
-        "-vf", vf,
-        "-map", "0:v:0", "-map", "1:a:0",
-        "-shortest",
+        "-f", "lavfi", "-i", "sine=frequency=1400:duration=0.18",
+        "-filter_complex", f"{vf};{af}",
+        "-map", "[vout]", "-map", "[aout]",
+        "-t", f"{audio_duration:.3f}",
         "-c:v", "libx264", "-c:a", "aac",
         str(out_path),
     ]
