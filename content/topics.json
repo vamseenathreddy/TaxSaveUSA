@@ -106,7 +106,8 @@
       ],
       "script": "If you're a small business owner or you work for one with a SIMPLE IRA, here's your 2026 update. The IRS raised the SIMPLE IRA contribution limit to 17,000 dollars, up from 16,500. And under SECURE 2.0, some plans allow an even higher limit of 18,100 dollars for certain participants. This is a pretax retirement account designed specifically for small businesses, it's cheaper and simpler to run than a full 401k, but still lets employees build real retirement savings with employer matching. If you run a small business without a retirement plan yet, this is one of the easiest ones to set up. Check with your payroll provider to update contribution elections for 2026.",
       "description": "The 2026 SIMPLE IRA contribution limit is $17,000 (up from $16,500), with some SECURE 2.0 plans allowing up to $18,100. Here's what small business owners and employees need to know about this low-cost retirement plan option for 2026.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (IR-2025-111). Consult a CPA or CFP for your specific situation.\n\n#smallbusiness #retirementsavings #taxtips2026 #personalfinance #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-09-30"
     },
     {
       "slug": "social-security-cola-2026",
