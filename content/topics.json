@@ -160,7 +160,8 @@
       ],
       "script": "This is one of the most overlooked tax credits, and the IRS just updated it for 2026. The maximum Earned Income Tax Credit for families with three or more qualifying children is now 8,231 dollars. The EITC is a refundable credit, meaning even if you owe zero in taxes, you can still get this money back as a refund. It's designed for low to moderate income working individuals and families, and the exact amount depends on your income, filing status, and number of kids. Millions of eligible people skip claiming it every year simply because they don't know it exists or think they don't qualify. Use the IRS EITC assistant tool on IRS dot gov to check your eligibility before you file.",
       "description": "The 2026 maximum Earned Income Tax Credit for families with three or more qualifying children is $8,231, per the IRS. The EITC is fully refundable, meaning you can get it back even if you owe no tax. Here's who it's for and how to check if you qualify before filing.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (IR-2025-103). Consult a CPA or CFP for your specific situation.\n\n#EITC #taxcredit #taxtips2026 #personalfinance #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-09-30"
     },
     {
       "slug": "fsa-limits-2026",
