@@ -124,7 +124,8 @@
       ],
       "script": "Here's news for the 75 million Americans on Social Security. The Social Security Administration just confirmed the 2026 cost of living adjustment, benefits are going up 2.8 percent starting in January. This COLA is designed to help your check keep pace with inflation, and it applies automatically, you don't need to apply or request it. It affects retirement benefits, disability benefits, and Supplemental Security Income. If you're not sure what your new payment amount will be, the Social Security Administration mails or posts your updated benefit amount through your online my Social Security account in December. Check yours as soon as it's available.",
       "description": "Social Security and SSI benefits for 75 million Americans are increasing 2.8% starting January 2026, per the official SSA cost-of-living adjustment announcement. Here's what the COLA covers, who gets it automatically, and where to find your exact new payment amount.\n\nGeneral education only, not personalized tax or financial advice. Source: SSA.gov (2026 COLA announcement). Consult a financial advisor for your specific situation.\n\n#socialsecurity #cola #retirement #personalfinance #SSA",
-      "used": false
+      "used": true,
+      "used_date": "2026-09-30"
     },
     {
       "slug": "social-security-wage-base-2026",
