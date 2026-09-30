@@ -178,7 +178,8 @@
       ],
       "script": "Open enrollment tip you need before you pick your benefits. For 2026, the IRS raised the health FSA contribution limit to 3,400 dollars, up from 3,300. And thanks to a new law, the dependent care FSA limit jumped from 5,000 to 7,500 dollars, the first big increase in decades. A health FSA lets you set aside pretax money for medical costs like copays, prescriptions, and dental work. A dependent care FSA covers daycare, preschool, and after school care for your kids while you work. Both come out of your paycheck before taxes, lowering what you owe. Just remember, health FSA money is mostly use it or lose it, so don't over contribute. Check your open enrollment portal and update your elections before the deadline.",
       "description": "The 2026 health FSA contribution limit rises to $3,400, and the dependent care FSA limit jumps to $7,500 (up from $5,000) under a new law. Here's exactly how both pretax accounts work and why now is the time to update your open enrollment elections.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS Publication 15-B (2026) and IRS Revenue Procedure 2025-32. Consult a CPA or CFP for your specific situation.\n\n#FSA #openenrollment #taxtips2026 #personalfinance #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-09-30"
     },
     {
       "slug": "capital-gains-tax-brackets-2026",
