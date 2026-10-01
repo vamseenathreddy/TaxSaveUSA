@@ -214,7 +214,8 @@
       ],
       "script": "Here's a number that matters if you're doing estate planning. For 2026, the IRS raised the federal estate tax exemption to 15 million dollars per person. That means an individual can pass on up to 15 million dollars at death without owing any federal estate tax, and a married couple can combine their exemptions to shield 30 million dollars. This higher exemption is now permanent under the new tax law, instead of scheduled to shrink like it was before. Only estates above these amounts owe federal estate tax, so this mainly affects high net worth families. Most states also have their own separate estate or inheritance tax rules with much lower thresholds. If your estate is anywhere near these numbers, work with an estate planning attorney now.",
       "description": "The 2026 federal estate tax exemption rises to $15 million per person ($30 million for married couples combined), and this higher exemption is now permanent under new tax law. Here's what the number means and why some states still tax smaller estates.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (2026 tax inflation adjustments, IR-2025-103). Consult a CPA or estate planning attorney for your specific situation.\n\n#estatetax #estateplanning #taxtips2026 #personalfinance #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-10-01"
     },
     {
       "slug": "adoption-tax-credit-2026",
