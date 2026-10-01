@@ -232,7 +232,8 @@
       ],
       "script": "If you adopted a child or you're planning to, this 2026 update matters. The IRS raised the maximum adoption tax credit to 17,670 dollars per child, covering costs like adoption fees, court costs, attorney fees, and travel expenses. Here's the big change, up to 5,120 dollars of that credit is now refundable, meaning you can get that portion back as a refund even if you owe zero in taxes. That's new, this credit used to be nonrefundable for everyone. It covers domestic adoptions, foster care adoptions, and international adoptions, though the rules differ slightly by type. Keep every adoption related receipt throughout the process. File Form 8839 to claim it, and talk to a tax professional to make sure you're claiming the right amount.",
       "description": "The 2026 adoption tax credit maxes out at $17,670 per child, and for the first time up to $5,120 of it is refundable. Here's what expenses qualify and why the refundable portion is a meaningful change for lower-income adoptive families.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (2026 tax inflation adjustments, IR-2025-103). Consult a CPA or CFP for your specific situation.\n\n#adoptiontaxcredit #adoption #taxtips2026 #personalfinance #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-10-01"
     },
     {
       "slug": "section-179-deduction-2026",
