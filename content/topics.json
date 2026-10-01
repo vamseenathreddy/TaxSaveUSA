@@ -250,7 +250,8 @@
       ],
       "script": "Small business owners, here's a 2026 number worth knowing before you buy equipment. The IRS raised the Section 179 deduction limit to 2,560,000 dollars for 2026. That means you can deduct the full cost of qualifying equipment, machinery, software, or business vehicles in the year you buy them, instead of depreciating it slowly over several years. The deduction starts phasing out once your total equipment purchases for the year cross 4,090,000 dollars. This is designed specifically to help small and mid sized businesses reinvest in their operations without waiting years for the tax benefit. It applies to both new and used equipment, as long as it's used more than 50 percent for business. Talk to your accountant before year end to see what qualifies.",
       "description": "The 2026 Section 179 deduction limit is $2,560,000, with the phase-out starting once total equipment purchases exceed $4,090,000. Here's how small businesses can write off qualifying equipment and vehicles in full the year they're bought instead of depreciating over time.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS Revenue Procedure 2025-32. Consult a CPA for your specific situation.\n\n#section179 #smallbusiness #taxtips2026 #businesstaxes #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-10-01"
     },
     {
       "slug": "amt-exemption-2026",
