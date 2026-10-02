@@ -304,7 +304,8 @@
       ],
       "script": "Heads up if you're planning home upgrades this year. The IRS confirms the Energy Efficient Home Improvement Credit ended for good after December 31st, 2025, and it's not available for 2026. That credit used to let homeowners claim up to 1,200 dollars a year for things like insulation, efficient windows, exterior doors, and home energy audits, plus up to 2,000 dollars for heat pumps and biomass stoves. If you installed and paid for qualifying upgrades by the end of 2025, you can still claim it on that year's tax return. But for any improvements installed in 2026 or later, this specific federal credit no longer applies. Some states and utility companies still offer their own rebates, so check those before you assume there's no help available. Always confirm current incentives before starting a project.",
       "description": "The IRS confirms the Energy Efficient Home Improvement Credit, once worth up to $1,200 a year (or $2,000 for heat pumps), ended permanently after December 31, 2025 and does not apply to 2026 upgrades. Here's what used to qualify and where to check for remaining state or utility incentives.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov, Energy Efficient Home Improvement Credit page. Consult a CPA for your specific situation.\n\n#energytaxcredit #homeimprovement #taxtips2026 #personalfinance #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-10-02"
     },
     {
       "slug": "ssi-payment-increase-2026",
