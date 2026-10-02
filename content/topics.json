@@ -322,7 +322,8 @@
       ],
       "script": "If you or a family member receives SSI, here's your 2026 update straight from the Social Security Administration. The maximum federal SSI payment is now 994 dollars a month for an individual, and 1,491 dollars a month for a couple, reflecting the same 2.8 percent cost of living adjustment applied to Social Security. SSI is different from regular Social Security, it's a needs based program for people who are disabled, blind, or 65 and older with very limited income and resources, and it's funded by general tax revenue, not payroll taxes. Some states add their own supplement on top of the federal amount, so your actual payment could be higher. The new amount takes effect automatically starting with your January 2026 payment. Check your online Social Security account to confirm your updated amount.",
       "description": "The 2026 maximum federal SSI payment is $994 a month for an individual and $1,491 for a couple, reflecting the 2.8% cost-of-living adjustment. Here's how SSI differs from regular Social Security and why some states pay even more on top of it.\n\nGeneral education only, not personalized tax or financial advice. Source: SSA.gov (SSI Federal Payment Amounts for 2026). Consult a financial advisor for your specific situation.\n\n#SSI #socialsecurity #disabilitybenefits #personalfinance #SSA",
-      "used": false
+      "used": true,
+      "used_date": "2026-10-02"
     },
     {
       "slug": "medicare-irmaa-2026",
