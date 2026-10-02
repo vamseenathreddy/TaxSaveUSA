@@ -286,7 +286,8 @@
       ],
       "script": "If you're paying off student loans, don't skip this deduction. For 2026, the IRS lets you deduct up to 2,500 dollars in student loan interest paid during the year, and you don't even need to itemize to claim it. But there are income limits. For single filers, the deduction starts phasing out at 85,000 dollars in modified adjusted gross income and disappears completely at 100,000. For married couples filing jointly, it phases out between 175,000 and 205,000 dollars. Your loan servicer sends you a Form 1098-E showing how much interest you paid if it was 600 dollars or more. Even below that threshold, you can usually still claim what you paid. Check your income against these numbers before you file.",
       "description": "The 2026 student loan interest deduction allows up to $2,500 off your taxable income, no itemizing required, phasing out at $85,000-$100,000 MAGI for single filers and $175,000-$205,000 for married filing jointly. Here's how to check if you qualify and where to find your interest paid.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS Revenue Procedure 2025-32. Consult a CPA or CFP for your specific situation.\n\n#studentloans #taxdeduction #taxtips2026 #personalfinance #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-10-02"
     },
     {
       "slug": "energy-efficient-home-credit-ended-2025",
