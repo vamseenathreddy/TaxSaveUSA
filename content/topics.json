@@ -268,7 +268,8 @@
       ],
       "script": "Here's a tax rule that mostly targets higher earners with big deductions or incentive stock options. The Alternative Minimum Tax, or AMT, runs a second set of tax rules alongside the regular system, and you pay whichever amount is higher. For 2026, the IRS raised the AMT exemption to 90,100 dollars if you're single, and 140,200 dollars if you're married filing jointly. Below those amounts, the AMT usually doesn't apply to you at all. The exemption starts phasing out once income crosses 500,000 dollars for single filers, or 1 million dollars for married couples. This mostly affects people with large state tax deductions, exercised stock options, or big itemized deductions. If any of that applies to you, run the AMT calculation before you file.",
       "description": "The 2026 Alternative Minimum Tax exemption is $90,100 for single filers and $140,200 for married filing jointly, phasing out above $500,000 and $1,000,000 respectively. Here's who the AMT actually affects and why it's worth checking before you file.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS Revenue Procedure 2025-32. Consult a CPA or CFP for your specific situation.\n\n#AMT #taxplanning #taxtips2026 #personalfinance #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-10-02"
     },
     {
       "slug": "student-loan-interest-deduction-2026",
