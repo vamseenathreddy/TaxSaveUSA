@@ -5,15 +5,15 @@
   "randomness_note": "Windows are wide (06:00-23:59 ET) so timing is fully random rather than fixed slots - the scheduler picks a genuinely random minute inside this range for each of the day's posts, spread across the day. The 00:00-06:00 ET gap is kept out on purpose since that's overnight for the entire continental US - posting there gets near-zero views regardless of randomness.",
   "stages": [
     {
-      "name": "full_5_per_day",
+      "name": "one_per_day",
       "day_range": [0, null],
-      "posts_per_day": 5,
+      "posts_per_day": 1,
       "windows_et": ["06:00-23:59"]
     }
   ],
   "watch_for": [
-    "Average view duration on published Shorts - if it drops sharply after going to 5/day, consider dialing back",
+    "Average view duration and subscriber growth at 1/day pace",
     "Any Content ID claim, community guideline strike, or 'limited/no ads' flag on recent uploads",
-    "Any YouTube Studio notice about reused/repetitious or spam content - this is the main real risk of going straight to 5/day on a brand-new channel, so keep an eye on Studio the first week"
+    "Any YouTube Studio notice about reused/repetitious or spam content"
   ]
 }
