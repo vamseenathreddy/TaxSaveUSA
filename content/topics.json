@@ -340,7 +340,8 @@
       ],
       "script": "Retiring soon or already on Medicare? Here's your 2026 number from CMS. The standard Medicare Part B premium is now 202.90 dollars a month, up from 185 dollars, and the annual deductible rose to 283 dollars. But if your income is higher, you'll pay more through something called IRMAA, the income related monthly adjustment amount. For example, if you're single and your income was above 109,000 dollars two years ago, your premium jumps to at least 284.10 dollars a month, with several higher tiers after that. IRMAA is based on your tax return from two years earlier, so your 2026 premium depends on your 2024 income. If you've had a major income drop since then, like retirement, you can file an appeal with Social Security. Check your income bracket before assuming the standard premium applies to you.",
       "description": "The standard 2026 Medicare Part B premium is $202.90 a month (deductible $283), but IRMAA surcharges push it higher for individuals earning over $109,000 or couples over $218,000, based on income from two years prior. Here's how the brackets work and how to appeal if your income has dropped.\n\nGeneral education only, not personalized tax or financial advice. Source: CMS.gov (2026 Medicare Parts A & B Premiums and Deductibles fact sheet). Consult a CPA or financial advisor for your specific situation.\n\n#medicare #IRMAA #retirementplanning #personalfinance #CMS",
-      "used": false
+      "used": true,
+      "used_date": "2026-10-03"
     },
     {
       "slug": "aotc-education-credit-2026",
