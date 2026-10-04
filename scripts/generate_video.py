@@ -148,12 +148,18 @@ def synthesize_voiceover(script_text: str, out_path: Path, voice_index: int):
     return asyncio.run(_run())
 
 
-def build_caption_events(word_boundaries, max_words=4, max_chunk_dur=2.2, max_gap=0.5):
+def build_caption_events(word_boundaries, max_chunk_dur=11.0, max_gap=0.45):
     """
-    Groups individual timed words into short on-screen caption chunks
-    (the fast-paced, few-words-at-a-time style used on Shorts/Reels),
-    breaking a chunk early on a long pause (likely a sentence break)
-    so captions don't run two separate thoughts together.
+    Groups timed words into FULL-SENTENCE/clause caption blocks instead
+    of tiny 3-4-word chunks. Previously captions flashed a few words at
+    a time and were immediately replaced, which reads as choppy
+    "subtitles coming and going." Now a chunk only breaks where
+    edge-tts actually pauses (a gap between words longer than max_gap -
+    in practice this lines up with sentence/clause punctuation in the
+    script), so the full sentence the voice is currently speaking stays
+    on screen together for as long as it's being read, instead of
+    disappearing mid-thought. max_chunk_dur is just a safety cap for an
+    unusually long run-on sentence with no detectable pause.
     """
     events = []
     current = []
@@ -182,7 +188,7 @@ def build_caption_events(word_boundaries, max_words=4, max_chunk_dur=2.2, max_ga
         if current:
             gap = w["start"] - current[-1]["end"]
             chunk_dur = current[-1]["end"] - current[0]["start"]
-            if gap > max_gap or len(current) >= max_words or chunk_dur >= max_chunk_dur:
+            if gap > max_gap or chunk_dur >= max_chunk_dur:
                 flush()
                 current = []
         current.append(w)
@@ -208,16 +214,19 @@ def _fmt_ass_time(seconds: float) -> str:
 # captions to one constant on-screen position for the whole video (no
 # per-line repositioning) is what makes them read as "locked" rather
 # than drifting/scrolling.
-CAPTION_BAND_TOP = 300
-CAPTION_BAND_HEIGHT = 260
-CAPTION_MARGIN_V = 320  # distance from the top edge to the caption text block
+CAPTION_BAND_TOP = 290
+CAPTION_BAND_HEIGHT = 380
+CAPTION_MARGIN_V = 300  # distance from the top edge to the caption text block
+CAPTION_FONTSIZE = 46   # smaller than the old 64 - full-sentence blocks need room to wrap to 2-4 lines
 
 
 def write_ass_subtitles(events, ass_path: Path, video_w=1080, video_h=1920):
     """Burned-in captions: bold white text, black outline + semi-opaque
     per-line box, pinned to a fixed top-of-screen position (Alignment=8,
     top-center) so the text never moves/scrolls and never ends up
-    hidden behind a platform's bottom-screen UI chrome."""
+    hidden behind a platform's bottom-screen UI chrome. Full sentences
+    (see build_caption_events) auto-wrap across up to a few lines within
+    this style's margins."""
     header = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: {video_w}
@@ -226,7 +235,7 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Caption,Arial,64,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,3,4,0,8,60,60,{CAPTION_MARGIN_V},1
+Style: Caption,Arial,{CAPTION_FONTSIZE},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,3,3,0,8,60,60,{CAPTION_MARGIN_V},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -347,14 +356,14 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
     if have_emoji:
         # Staggered emoji "burst": each icon pops in a beat after the
         # last. Positioned in the clear middle band of the frame - below
-        # the hook headline (y~140-270) and the fixed caption band
-        # (y=300-560), and well above where Shorts/Reels UI chrome
-        # (profile pic, like/comment/share buttons) typically sits near
-        # the bottom - so nothing overlaps the now-locked top captions.
+        # the hook headline (y~140-270) AND the taller full-sentence
+        # caption band (y=290-670), and well above where Shorts/Reels UI
+        # chrome (profile pic, like/comment/share buttons) typically
+        # sits near the bottom - so nothing overlaps the locked captions.
         for p in emoji_paths:
             cmd += ["-i", str(p)]
         positions = [
-            (70, 620), (850, 620), (70, 900), (850, 900), (460, 760),
+            (70, 720), (850, 720), (70, 1000), (850, 1000), (460, 860),
         ]
         filter_parts = [base_vf]
         scale_parts = []
