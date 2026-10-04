@@ -198,9 +198,26 @@ def _fmt_ass_time(seconds: float) -> str:
     return f"{h}:{m:02d}:{s:02d}.{cs:02d}"
 
 
+# Caption band: a fixed, non-scrolling zone pinned near the top of the
+# frame, well clear of the intro hook headline (y=140-~270) above it
+# and - more importantly - clear of YouTube/Instagram Shorts/Reels'
+# own on-screen UI (profile pic, like/comment/share buttons, caption
+# toggle, progress bar) which covers a large chunk of the BOTTOM of a
+# vertical video on every platform. Captions used to sit in the lower
+# third, which is exactly where that UI chrome can cover them. Pinning
+# captions to one constant on-screen position for the whole video (no
+# per-line repositioning) is what makes them read as "locked" rather
+# than drifting/scrolling.
+CAPTION_BAND_TOP = 300
+CAPTION_BAND_HEIGHT = 260
+CAPTION_MARGIN_V = 320  # distance from the top edge to the caption text block
+
+
 def write_ass_subtitles(events, ass_path: Path, video_w=1080, video_h=1920):
     """Burned-in captions: bold white text, black outline + semi-opaque
-    box, lower-third position - the standard readable Shorts caption look."""
+    per-line box, pinned to a fixed top-of-screen position (Alignment=8,
+    top-center) so the text never moves/scrolls and never ends up
+    hidden behind a platform's bottom-screen UI chrome."""
     header = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: {video_w}
@@ -209,7 +226,7 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Caption,Arial,64,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,3,4,0,2,60,60,420,1
+Style: Caption,Arial,64,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,3,4,0,8,60,60,{CAPTION_MARGIN_V},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -293,9 +310,21 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
     # cut used to stop the scroll before the eye even reads the hook.
     flash_drawbox = "drawbox=x=0:y=0:w=iw:h=ih:color=white@0.9:t=fill:enable='lt(t,0.08)'"
 
+    # Full-width translucent "banner" behind the caption zone, drawn for
+    # the whole video (no enable clause) - gives every caption line a
+    # consistent readable backdrop regardless of what's happening in the
+    # background footage underneath, like a fixed semi-transparent PNG
+    # overlay. Drawn before the subtitles filter so the text renders on
+    # top of it.
+    caption_band_drawbox = (
+        f"drawbox=x=0:y={CAPTION_BAND_TOP}:w=iw:h={CAPTION_BAND_HEIGHT}:"
+        f"color=black@0.45:t=fill"
+    )
+
     base_vf = (
         f"[0:v]scale=1080:1920:force_original_aspect_ratio=increase,"
         f"crop=1080:1920,"
+        f"{caption_band_drawbox},"
         f"subtitles='{ass_escaped}',"
         f"{hook_drawtext},"
         f"{subscribe_drawtext},"
@@ -317,12 +346,15 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
 
     if have_emoji:
         # Staggered emoji "burst": each icon pops in a beat after the
-        # last, clustered around the hook headline (which sits at
-        # y=140) without overlapping the lower-third captions.
+        # last. Positioned in the clear middle band of the frame - below
+        # the hook headline (y~140-270) and the fixed caption band
+        # (y=300-560), and well above where Shorts/Reels UI chrome
+        # (profile pic, like/comment/share buttons) typically sits near
+        # the bottom - so nothing overlaps the now-locked top captions.
         for p in emoji_paths:
             cmd += ["-i", str(p)]
         positions = [
-            (50, 300), (900, 300), (50, 950), (900, 950), (475, 620),
+            (70, 620), (850, 620), (70, 900), (850, 900), (460, 760),
         ]
         filter_parts = [base_vf]
         scale_parts = []
