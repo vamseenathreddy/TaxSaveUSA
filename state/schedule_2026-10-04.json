@@ -1,0 +1,8 @@
+{
+  "stage": "one_per_day",
+  "day_num_since_rollout_start": 5,
+  "picked_times_et": [
+    "2026-10-04T20:25:16-04:00"
+  ],
+  "fired": {}
+}
