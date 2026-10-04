@@ -293,20 +293,26 @@ CAPTION_BAND_HEIGHT = 560
 CAPTION_MARGIN_V = 600  # distance from the top edge to the caption text block
 CAPTION_FONTSIZE = 42
 
-# Background footage is dimmed by this much (eq's brightness is additive;
-# -0.15 reads as roughly 15% darker overall) so the caption highlight
-# pops with more contrast - within the requested 10-25% decrease range.
-BACKGROUND_BRIGHTNESS_ADJUST = -0.15
+# Background footage (the mp4 clip itself, not the caption/text) is
+# dimmed by this much - eq's brightness is additive, so -0.20 reads as
+# roughly 20% darker overall, within the requested 10-25% range.
+BACKGROUND_BRIGHTNESS_ADJUST = -0.20
+
+# Glow amount for the caption text's blurred outline (ASS \blur tag,
+# applied per-line in write_ass_subtitles below) - higher = softer/more
+# diffuse halo around the letters.
+CAPTION_GLOW_BLUR = 2.2
 
 
 def write_ass_subtitles(events, ass_path: Path, video_w=1080, video_h=1920):
-    """Burned-in captions: bold white text, black outline + a near-opaque
-    per-line highlight box (darker than before, for stronger contrast),
-    pinned to a fixed top-of-screen position (Alignment=8, top-center) so
-    the text never moves/scrolls and never ends up hidden behind a
-    platform's bottom-screen UI chrome. Full sentences (see
-    build_caption_events) auto-wrap across up to a few lines within this
-    style's margins."""
+    """Burned-in captions: bold white text with a thick, blurred gold
+    outline (a glow, via BorderStyle=1 + a wide Outline + the ASS \\blur
+    tag - not a flat black outline) on top of the dark highlight band
+    drawn separately in render_video(), pinned to a fixed top-of-screen
+    position (Alignment=8, top-center) so the text never moves/scrolls
+    and never ends up hidden behind a platform's bottom-screen UI
+    chrome. Full sentences (see build_caption_events) auto-wrap across
+    up to a few lines within this style's margins."""
     header = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: {video_w}
@@ -315,7 +321,7 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Caption,Arial,{CAPTION_FONTSIZE},&H00FFFFFF,&H000000FF,&H00000000,&H40000000,-1,0,0,0,100,100,0,0,3,3,0,8,60,60,{CAPTION_MARGIN_V},1
+Style: Caption,Arial,{CAPTION_FONTSIZE},&H00FFFFFF,&H000000FF,&H0000D7FF,&H40000000,-1,0,0,0,100,100,0,0,1,4,0,8,60,60,{CAPTION_MARGIN_V},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -327,7 +333,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             start = _fmt_ass_time(ev["start"])
             end = _fmt_ass_time(ev["end"])
             text = ev["text"].replace("\n", " ")
-            f.write(f"Dialogue: 0,{start},{end},Caption,,0,0,0,,{text}\n")
+            f.write(f"Dialogue: 0,{start},{end},Caption,,0,0,0,,{{\\blur{CAPTION_GLOW_BLUR}}}{text}\n")
 
 
 SUBSCRIBE_WINDOW_SECONDS = 4.0  # how long the subscribe banner stays up at the end
