@@ -1,16 +1,21 @@
 #!/usr/bin/env python3
 """
-Pulls today's topic + facts, generates a TTS voiceover with word-level
-timing, builds synced captions, and renders a vertical (1080x1920)
-Short with FFmpeg.
+Pulls today's topic + facts, condenses it to one short, clear message,
+generates a TTS voiceover, and renders a vertical (1080x1920) Short
+with FFmpeg - target length ~20 seconds, one message per video.
 
 Pipeline:
   1. content/topics.json (git) -> today's topic + script text
-  2. edge-tts -> audio/<slug>.mp3 + word-boundary timings (captured
-     live during synthesis - same source as the audio, so captions
-     are always perfectly in sync, no separate transcription step)
-  3. word boundaries -> grouped caption chunks -> .ass subtitle file
-  4. FFmpeg -> background clip + burned-in captions + hook headline +
+  2. condense_script() trims the script down to its lead sentence(s)
+     (the ones carrying the actual number/fact) within CORE_SCRIPT_WORD
+     _BUDGET words, so the final video stays around ~20s
+  3. edge-tts -> audio/<slug>.mp3 (+ word-boundary timings, used only
+     to measure the actual spoken duration for the caption/-t cap)
+  4. The full condensed script + outro CTA is burned in as ONE static
+     caption for the entire video - not a scrolling/flashing
+     word-by-word track - so the whole message is visible together and
+     never moves
+  5. FFmpeg -> background clip + static caption + hook headline +
      audio -> output/<slug>.mp4
 """
 import json
@@ -71,6 +76,71 @@ SUBSCRIBE_CTAS = [
     "Subscribe - new tax tip daily",
     "Follow along for more tax tips",
 ]
+
+# Target ~20-second Shorts: the full script is condensed down to just
+# its lead sentence(s) (the ones with the actual number/fact - these
+# topic scripts are written "lead with the number" style, so the first
+# 1-2 sentences already carry the core message) within this many words,
+# before the outro CTA is appended. ~2.4 words/sec is a rough estimate
+# for edge-tts's "-3%" rate English speech, so budget*~0.42s plus the
+# outro's own ~3s keeps the final video comfortably under 20s - watch
+# actual render durations (ffprobe on build/audio/*.mp3) and tune this
+# down further if they're running long.
+CORE_SCRIPT_WORD_BUDGET = 34
+
+
+# Matches a number that reads as an actual dollar figure/limit rather
+# than an incidental small number (an age, a year, a percentage): a
+# comma-grouped amount (24,500), a 2-decimal amount (202.90), or a bare
+# 3+ digit number immediately followed by "dollar(s)" (750 dollars).
+# Deliberately does NOT match a bare "2026" or "50" - those are
+# incidental context, not the headline figure.
+_MONEY_RE = re.compile(
+    r"\b\d{1,3}(?:,\d{3})+(?:\.\d+)?\b"
+    r"|\b\d+\.\d{2}\b"
+    r"|\b\d{3,}\s*dollars?\b",
+    re.IGNORECASE,
+)
+
+
+def condense_script(script_text: str, word_budget: int = CORE_SCRIPT_WORD_BUDGET) -> str:
+    """Condense down to a short, clear message instead of reading the
+    full script - but length is never allowed to cost the actual fact.
+    These scripts are usually structured as a hook sentence, then the
+    headline dollar figure, then secondary/bonus details that often
+    mention even bigger cumulative numbers (e.g. a 50+ or 60-63 catch-up
+    total) - so "keep whichever sentence has the most digits" actually
+    picks a later, narrower bonus fact instead of the main headline
+    number, and "keep adding sentences until the budget runs out" can
+    use the whole budget on the hook/teaser and cut off right before
+    any number is said. Instead this always keeps (a) the first
+    sentence (the hook) and (b) the FIRST sentence (in original order)
+    that contains a real dollar-figure-shaped number per _MONEY_RE -
+    i.e. the headline number, not just the one with the most digits -
+    even if that pair alone goes over word_budget, and only then fills
+    in any other sentences, in their original order, while there's
+    budget left."""
+    sentences = re.split(r"(?<=[.?!])\s+", script_text.strip())
+    if not sentences:
+        return script_text.strip()
+
+    key_idx = next((i for i, s in enumerate(sentences) if _MONEY_RE.search(s)), None)
+    must_keep = {0}
+    if key_idx is not None:
+        must_keep.add(key_idx)
+
+    selected = set(must_keep)
+    count = sum(len(sentences[i].split()) for i in selected)
+    for i, s in enumerate(sentences):
+        if i in selected:
+            continue
+        wc = len(s.split())
+        if count + wc <= word_budget:
+            selected.add(i)
+            count += wc
+
+    return " ".join(sentences[i] for i in sorted(selected))
+
 
 # Base tags applied to every video, on top of each topic's own tags -
 # see content/topics.json "tags" field. Keep broad + niche mixed for reach.
@@ -148,6 +218,10 @@ def synthesize_voiceover(script_text: str, out_path: Path, voice_index: int):
     return asyncio.run(_run())
 
 
+# NOTE: not used by the current default pipeline (see main(), which now
+# writes one single static caption event covering the whole condensed
+# script+outro - "all text on one page, nothing moves"). Kept here in
+# case a sentence-by-sentence caption style is wanted again later.
 def build_caption_events(word_boundaries, max_chunk_dur=11.0, max_gap=0.45):
     """
     Groups timed words into FULL-SENTENCE/clause caption blocks instead
@@ -204,20 +278,20 @@ def _fmt_ass_time(seconds: float) -> str:
     return f"{h}:{m:02d}:{s:02d}.{cs:02d}"
 
 
-# Caption band: a fixed, non-scrolling zone pinned near the top of the
-# frame, well clear of the intro hook headline (y=140-~270) above it
-# and - more importantly - clear of YouTube/Instagram Shorts/Reels'
-# own on-screen UI (profile pic, like/comment/share buttons, caption
-# toggle, progress bar) which covers a large chunk of the BOTTOM of a
-# vertical video on every platform. Captions used to sit in the lower
-# third, which is exactly where that UI chrome can cover them. Pinning
-# captions to one constant on-screen position for the whole video (no
-# per-line repositioning) is what makes them read as "locked" rather
-# than drifting/scrolling.
-CAPTION_BAND_TOP = 290
-CAPTION_BAND_HEIGHT = 380
-CAPTION_MARGIN_V = 300  # distance from the top edge to the caption text block
-CAPTION_FONTSIZE = 46   # smaller than the old 64 - full-sentence blocks need room to wrap to 2-4 lines
+# Caption band: a fixed, non-scrolling zone sized to hold the ENTIRE
+# condensed script + outro CTA as ONE static block for the whole video -
+# "all text on one page" that "doesn't move." Positioned in the clear
+# middle of the frame: below the intro hook headline/emoji burst
+# (y~140-540, only active for the first ~1.7s) and well above where
+# YouTube/Instagram Shorts/Reels' own on-screen UI (profile pic,
+# like/comment/share buttons, caption toggle, progress bar) typically
+# covers the BOTTOM of a vertical video. A smaller font than the old
+# per-chunk captions so ~30-45 words of text wraps to fit the band
+# without overflowing.
+CAPTION_BAND_TOP = 580
+CAPTION_BAND_HEIGHT = 560
+CAPTION_MARGIN_V = 600  # distance from the top edge to the caption text block
+CAPTION_FONTSIZE = 42
 
 
 def write_ass_subtitles(events, ass_path: Path, video_w=1080, video_h=1920):
@@ -355,15 +429,14 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
 
     if have_emoji:
         # Staggered emoji "burst": each icon pops in a beat after the
-        # last. Positioned in the clear middle band of the frame - below
-        # the hook headline (y~140-270) AND the taller full-sentence
-        # caption band (y=290-670), and well above where Shorts/Reels UI
-        # chrome (profile pic, like/comment/share buttons) typically
-        # sits near the bottom - so nothing overlaps the locked captions.
+        # last. Positioned in the gap between the hook headline
+        # (y~140-270) and the big static caption band (now down at
+        # y=580-1140, since it holds the whole message for the whole
+        # video) - so nothing overlaps the locked caption text.
         for p in emoji_paths:
             cmd += ["-i", str(p)]
         positions = [
-            (70, 720), (850, 720), (70, 1000), (850, 1000), (460, 860),
+            (60, 300), (890, 300), (60, 430), (890, 430), (475, 365),
         ]
         filter_parts = [base_vf]
         scale_parts = []
@@ -414,16 +487,20 @@ def main():
     ass_path = CAPTIONS_DIR / f"{slug}.ass"
     out_path = OUTPUT_DIR / f"{slug}.mp4"
 
-    # Append a spoken + on-screen outro CTA asking the viewer to comment.
-    # Because it's appended to the plain script text before TTS, it goes
-    # through the exact same pipeline as the rest of the script and comes
-    # out as BOTH spoken audio and a synced on-screen caption - no extra
-    # rendering path needed. random.seed on the slug keeps it deterministic
+    rng = random.Random(slug)
+
+    # Condense the script down to one short, clear message (its lead
+    # sentence(s), within CORE_SCRIPT_WORD_BUDGET words) instead of the
+    # full script, then append a spoken + on-screen outro CTA asking the
+    # viewer to comment. Because it's all appended as plain text before
+    # TTS, it goes through the exact same pipeline and comes out as BOTH
+    # spoken audio and the on-screen caption - no extra rendering path
+    # needed. random.seed on the slug keeps the CTA pick deterministic
     # per-video (reruns of the same topic pick the same CTA) while still
     # varying across different topics/videos.
-    rng = random.Random(slug)
+    condensed_script = condense_script(topic["script"])
     outro_cta = rng.choice(OUTRO_CTAS)
-    full_script = f"{topic['script'].rstrip()} {outro_cta}"
+    full_script = f"{condensed_script.rstrip()} {outro_cta}"
 
     # Visual-only "subscribe" banner (see SUBSCRIBE_CTAS / render_video) -
     # drawn from the same per-slug rng right after outro_cta so picks stay
@@ -431,7 +508,15 @@ def main():
     subscribe_text = rng.choice(SUBSCRIBE_CTAS)
 
     word_boundaries = synthesize_voiceover(full_script, audio_path, voice_index=already_used_count)
-    events = build_caption_events(word_boundaries)
+
+    # One single static caption for the ENTIRE video - the whole message
+    # on one page, visible the whole time, never replaced/scrolling -
+    # instead of word-by-word or sentence-by-sentence chunks. End time is
+    # the last spoken word's end plus a small pad for trailing silence;
+    # render_video() separately probes the exact audio duration for the
+    # actual video-length cap, so this just needs to not cut off early.
+    caption_end = (word_boundaries[-1]["end"] + 0.4) if word_boundaries else 1.0
+    events = [{"start": 0.0, "end": caption_end, "text": full_script}]
     write_ass_subtitles(events, ass_path)
 
     background_clip = ASSETS_DIR / "backgrounds" / topic.get("background", "default.mp4")
