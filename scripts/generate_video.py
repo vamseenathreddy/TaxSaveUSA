@@ -293,14 +293,20 @@ CAPTION_BAND_HEIGHT = 560
 CAPTION_MARGIN_V = 600  # distance from the top edge to the caption text block
 CAPTION_FONTSIZE = 42
 
+# Background footage is dimmed by this much (eq's brightness is additive;
+# -0.15 reads as roughly 15% darker overall) so the caption highlight
+# pops with more contrast - within the requested 10-25% decrease range.
+BACKGROUND_BRIGHTNESS_ADJUST = -0.15
+
 
 def write_ass_subtitles(events, ass_path: Path, video_w=1080, video_h=1920):
-    """Burned-in captions: bold white text, black outline + semi-opaque
-    per-line box, pinned to a fixed top-of-screen position (Alignment=8,
-    top-center) so the text never moves/scrolls and never ends up
-    hidden behind a platform's bottom-screen UI chrome. Full sentences
-    (see build_caption_events) auto-wrap across up to a few lines within
-    this style's margins."""
+    """Burned-in captions: bold white text, black outline + a near-opaque
+    per-line highlight box (darker than before, for stronger contrast),
+    pinned to a fixed top-of-screen position (Alignment=8, top-center) so
+    the text never moves/scrolls and never ends up hidden behind a
+    platform's bottom-screen UI chrome. Full sentences (see
+    build_caption_events) auto-wrap across up to a few lines within this
+    style's margins."""
     header = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: {video_w}
@@ -309,7 +315,7 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Caption,Arial,{CAPTION_FONTSIZE},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,3,3,0,8,60,60,{CAPTION_MARGIN_V},1
+Style: Caption,Arial,{CAPTION_FONTSIZE},&H00FFFFFF,&H000000FF,&H00000000,&H40000000,-1,0,0,0,100,100,0,0,3,3,0,8,60,60,{CAPTION_MARGIN_V},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -393,21 +399,34 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
     # cut used to stop the scroll before the eye even reads the hook.
     flash_drawbox = "drawbox=x=0:y=0:w=iw:h=ih:color=white@0.9:t=fill:enable='lt(t,0.08)'"
 
+    # Dim the background footage a bit (not the text/overlays) so the
+    # caption highlight reads with more contrast against busy footage -
+    # eq's brightness is additive, roughly a 15% darker image overall,
+    # within the requested 10-25% range.
+    background_dim = f"eq=brightness={BACKGROUND_BRIGHTNESS_ADJUST}"
+
     # Full-width translucent "banner" behind the caption zone, drawn for
     # the whole video (no enable clause) - gives every caption line a
     # consistent readable backdrop regardless of what's happening in the
     # background footage underneath, like a fixed semi-transparent PNG
     # overlay. Drawn before the subtitles filter so the text renders on
-    # top of it.
+    # top of it. A thin bright accent line along its top edge turns it
+    # into more of a deliberate "highlight card" for the text rather
+    # than a plain dim rectangle, and echoes the hook's yellow accent.
     caption_band_drawbox = (
         f"drawbox=x=0:y={CAPTION_BAND_TOP}:w=iw:h={CAPTION_BAND_HEIGHT}:"
-        f"color=black@0.45:t=fill"
+        f"color=black@0.55:t=fill"
+    )
+    caption_band_accent = (
+        f"drawbox=x=0:y={CAPTION_BAND_TOP}:w=iw:h=6:color=yellow@0.9:t=fill"
     )
 
     base_vf = (
         f"[0:v]scale=1080:1920:force_original_aspect_ratio=increase,"
         f"crop=1080:1920,"
+        f"{background_dim},"
         f"{caption_band_drawbox},"
+        f"{caption_band_accent},"
         f"subtitles='{ass_escaped}',"
         f"{hook_drawtext},"
         f"{subscribe_drawtext},"
