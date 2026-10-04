@@ -59,6 +59,19 @@ OUTRO_CTAS = [
     "Drop your thoughts in the comments right now.",
 ]
 
+# Purely visual (not spoken, not in the .ass captions) "subscribe" banner
+# burned in near the end of every video via its own drawtext filter - see
+# SUBSCRIBE_WINDOW_SECONDS in render_video(). Kept short so it fits the
+# same banner box used for the opening hook. One is picked deterministically
+# per-slug (same rng draw as OUTRO_CTAS, see main()) so reruns are stable.
+SUBSCRIBE_CTAS = [
+    "Subscribe for more tax tips",
+    "Follow for daily tax tips",
+    "Hit subscribe for more 2026 tips",
+    "Subscribe - new tax tip daily",
+    "Follow along for more tax tips",
+]
+
 # Base tags applied to every video, on top of each topic's own tags -
 # see content/topics.json "tags" field. Keep broad + niche mixed for reach.
 BASE_TAGS = [
@@ -211,7 +224,11 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             f.write(f"Dialogue: 0,{start},{end},Caption,,0,0,0,,{text}\n")
 
 
-def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_text: str, out_path: Path):
+SUBSCRIBE_WINDOW_SECONDS = 4.0  # how long the subscribe banner stays up at the end
+
+
+def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_text: str,
+                  out_path: Path, subscribe_text: str):
     """
     Vertical 1080x1920 render: loops/crops the background clip to
     length, burns in the word-synced captions, and opens with a
@@ -221,10 +238,18 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
     fireworks, sparkles, collision, fire) popping in around the hook -
     a scroll-stopping pattern interrupt for the first ~2 seconds,
     before settling into the normal captioned voiceover.
+
+    In the last SUBSCRIBE_WINDOW_SECONDS of the video, a second banner
+    (same position/box style as the opening hook, so no new on-screen
+    real estate is introduced) fades in asking the viewer to subscribe.
+    It's a plain drawtext overlay - independent of the spoken outro CTA
+    and the .ass word captions - so it shows up purely on screen without
+    being read aloud or duplicated in the caption track.
     """
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     ass_escaped = str(ass_path).replace("\\", "/").replace(":", "\\:")
     hook_escaped = hook_text.replace("'", "\u2019").replace(":", "\\:")
+    subscribe_escaped = subscribe_text.replace("'", "\u2019").replace(":", "\\:")
 
     emoji_paths = [EMOJI_DIR / name for name in EMOJI_FILES]
     have_emoji = all(p.exists() for p in emoji_paths)
@@ -251,6 +276,19 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
         f"box=1:boxcolor=red@0.75:boxborderw=26:x=(w-text_w)/2:y=140:"
         f"enable='between(t,0.05,3)'"
     )
+    # Subscribe banner: same slot/box style as the hook (top of frame,
+    # clear of the lower-third captions) but blue instead of red so it
+    # reads as a distinct prompt, timed to the last SUBSCRIBE_WINDOW_SECONDS
+    # of the clip. Clamped so it can never start before the hook has long
+    # finished (hook's own enable window ends at t=3).
+    sub_start = max(audio_duration - SUBSCRIBE_WINDOW_SECONDS, 3.5)
+    sub_end = max(audio_duration - 0.05, sub_start + 0.1)
+    subscribe_drawtext = (
+        f"drawtext=text='{subscribe_escaped}':fontcolor=white:fontsize=56:"
+        f"bordercolor=black:borderw=4:"
+        f"box=1:boxcolor=blue@0.75:boxborderw=22:x=(w-text_w)/2:y=140:"
+        f"enable='between(t,{sub_start:.2f},{sub_end:.2f})'"
+    )
     # A single white flash frame at t=0 - a classic pattern-interrupt
     # cut used to stop the scroll before the eye even reads the hook.
     flash_drawbox = "drawbox=x=0:y=0:w=iw:h=ih:color=white@0.9:t=fill:enable='lt(t,0.08)'"
@@ -260,6 +298,7 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
         f"crop=1080:1920,"
         f"subtitles='{ass_escaped}',"
         f"{hook_drawtext},"
+        f"{subscribe_drawtext},"
         f"{flash_drawbox}[vbase]"
     )
 
@@ -345,6 +384,11 @@ def main():
     outro_cta = rng.choice(OUTRO_CTAS)
     full_script = f"{topic['script'].rstrip()} {outro_cta}"
 
+    # Visual-only "subscribe" banner (see SUBSCRIBE_CTAS / render_video) -
+    # drawn from the same per-slug rng right after outro_cta so picks stay
+    # deterministic per video without the two lists' choices being coupled.
+    subscribe_text = rng.choice(SUBSCRIBE_CTAS)
+
     word_boundaries = synthesize_voiceover(full_script, audio_path, voice_index=already_used_count)
     events = build_caption_events(word_boundaries)
     write_ass_subtitles(events, ass_path)
@@ -353,7 +397,7 @@ def main():
     if not background_clip.exists():
         raise SystemExit(f"Missing background clip: {background_clip} - pull one into assets/backgrounds/ from Drive.")
 
-    render_video(audio_path, background_clip, ass_path, topic["caption_headline"], out_path)
+    render_video(audio_path, background_clip, ass_path, topic["caption_headline"], out_path, subscribe_text)
 
     tags = build_tags(topic)
     # Description may contain embedded newlines (e.g. the hashtag line).
