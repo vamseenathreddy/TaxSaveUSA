@@ -62,6 +62,13 @@ def upload_short(video_path: Path, title: str, description: str, tags: list[str]
             "description": description[:5000],
             "tags": tags,
             "categoryId": "27",  # Education; consider "22" People & Blogs if it fits better
+            # Declares the video's language explicitly instead of leaving
+            # it unset - without this YouTube can misjudge which locale's
+            # search/suggested results to surface the video in, which is
+            # a quiet but real reach-limiting gap for English-language
+            # search and recommendations.
+            "defaultLanguage": "en",
+            "defaultAudioLanguage": "en",
         },
         "status": {
             "selfDeclaredMadeForKids": False,

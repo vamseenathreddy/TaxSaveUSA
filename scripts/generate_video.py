@@ -143,12 +143,48 @@ def condense_script(script_text: str, word_budget: int = CORE_SCRIPT_WORD_BUDGET
 
 
 # Base tags applied to every video, on top of each topic's own tags -
-# see content/topics.json "tags" field. Keep broad + niche mixed for reach.
+# see content/topics.json "tags" field. Keep broad + niche mixed for
+# reach: a few very high-volume broad terms so the video has a shot at
+# competitive searches, the existing finance/tax niche terms so it
+# ranks well for people actually looking for this content, and explicit
+# "shorts"-family tags since YouTube's Shorts feed itself is a huge,
+# separate discovery surface from regular search/suggested.
 BASE_TAGS = [
     "personal finance", "money tips", "tax tips 2026", "save money",
     "financial freedom", "USA taxes", "tax season", "IRS", "money hacks",
-    "finance tips for beginners",
+    "finance tips for beginners", "shorts", "youtube shorts",
+    "money tips 2026", "financial education", "taxes explained",
 ]
+
+# YouTube only auto-routes a video into the Shorts feed/shelf for
+# API-uploaded videos (as opposed to ones recorded in the mobile Shorts
+# camera) when it is <=3 min, vertical, AND the title or description
+# contains the literal #Shorts hashtag - this isn't optional metadata,
+# it's the actual discovery-surface switch, so it's applied to every
+# video rather than left to each topic entry in topics.json.
+SHORTS_HASHTAG = "#Shorts"
+
+
+def _with_shorts_tag_in_title(title: str) -> str:
+    """Appends ' #Shorts' to the title if there's room under YouTube's
+    100-char title limit and it isn't already present, since having the
+    tag in BOTH the title and description costs nothing and only helps
+    Shorts-shelf eligibility."""
+    if SHORTS_HASHTAG.lower() in title.lower():
+        return title
+    candidate = f"{title} {SHORTS_HASHTAG}"
+    return candidate if len(candidate) <= 100 else title
+
+
+def _with_shorts_tag_in_description(description: str) -> str:
+    """Prepends #Shorts as its own line at the very top of the
+    description. YouTube shows a description's first ~3 hashtags as
+    clickable chips above the title, so leading with it (rather than
+    appending it after the topic's own hashtag line) maximizes the
+    odds it's one of the ones that actually get surfaced/counted."""
+    if SHORTS_HASHTAG.lower() in description.lower():
+        return description
+    return f"{SHORTS_HASHTAG}\n\n{description}"
 
 # Small, safe keyword -> emoji map, currently unused (see ENABLE_EMOJI
 # below) - the default fonts on the render environment don't have
@@ -507,6 +543,13 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
 
 
 def build_tags(topic):
+    """Merges the topic's own niche tags with BASE_TAGS, topic tags
+    first (they're the most specific/relevant to this exact video, so
+    they should survive any trimming before the generic broad ones).
+    YouTube rejects the whole tags list if the joined string exceeds
+    500 characters, so this trims by actual character budget rather
+    than just a tag count, leaving a safety margin for the comma
+    separators the caller joins with."""
     topic_tags = topic.get("tags", [])
     seen = set()
     merged = []
@@ -515,7 +558,17 @@ def build_tags(topic):
         if key not in seen:
             seen.add(key)
             merged.append(t)
-    return merged[:30]  # YouTube allows up to 500 chars total across tags; 30 short tags is a safe ceiling
+
+    budget = 460  # stay under YouTube's 500-char hard limit (joined w/ commas)
+    selected = []
+    used = 0
+    for t in merged:
+        added = len(t) + (1 if selected else 0)  # +1 for the joining comma
+        if used + added > budget:
+            continue
+        selected.append(t)
+        used += added
+    return selected
 
 
 def main():
@@ -564,14 +617,16 @@ def main():
     render_video(audio_path, background_clip, ass_path, topic["caption_headline"], out_path, subscribe_text)
 
     tags = build_tags(topic)
+    seo_title = _with_shorts_tag_in_title(topic["title"])
+    seo_description = _with_shorts_tag_in_description(topic["description"])
     # Description may contain embedded newlines (e.g. the hashtag line).
     # build_meta.txt is parsed line-by-line downstream (grep '^description:'),
     # which would otherwise silently truncate to just the first line - so
     # newlines are escaped to a literal "\n" here and unescaped again in
     # the workflow's bash step with `printf '%b'` before upload.
-    description_escaped = topic["description"].replace("\n", "\\n")
+    description_escaped = seo_description.replace("\n", "\\n")
     print(f"rendered: {out_path}")
-    print(f"title: {topic['title']}")
+    print(f"title: {seo_title}")
     print(f"description: {description_escaped}")
     print(f"tags: {','.join(tags)}")
 
