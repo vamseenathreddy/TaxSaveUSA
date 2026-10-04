@@ -289,30 +289,40 @@ def _fmt_ass_time(seconds: float) -> str:
 # per-chunk captions so ~30-45 words of text wraps to fit the band
 # without overflowing.
 CAPTION_BAND_TOP = 580
-CAPTION_BAND_HEIGHT = 560
+CAPTION_BAND_HEIGHT = 760  # taller band to fit the larger font below
 CAPTION_MARGIN_V = 600  # distance from the top edge to the caption text block
-CAPTION_FONTSIZE = 42
+CAPTION_FONTSIZE = 54  # bumped up from 42 for readability (user: "expand text size")
 
 # Background footage (the mp4 clip itself, not the caption/text) is
-# dimmed by this much - eq's brightness is additive, so -0.20 reads as
-# roughly 20% darker overall, within the requested 10-25% range.
-BACKGROUND_BRIGHTNESS_ADJUST = -0.20
+# dimmed by this much - eq's brightness is additive, so -0.30 reads as
+# roughly 30% darker overall. Pushed past the original 10-25% ask because
+# the user wants the viewer's attention OFF the background video entirely
+# and fully on the caption text; combined with a mild blur below so the
+# footage reads as ambient motion, not content competing with the text.
+BACKGROUND_BRIGHTNESS_ADJUST = -0.30
 
-# Glow amount for the caption text's blurred outline (ASS \blur tag,
-# applied per-line in write_ass_subtitles below) - higher = softer/more
-# diffuse halo around the letters.
-CAPTION_GLOW_BLUR = 2.2
+# Mild Gaussian blur applied to the background footage itself (the
+# "boxblur" ffmpeg filter, luma_radius:luma_power) so it no longer reads
+# as something to watch/focus on - just soft, out-of-focus motion behind
+# the text. This is separate from the caption text's own outline below.
+BACKGROUND_BOXBLUR = "6:1"
+
+# Caption text style: plain bold white with a thick black outline and a
+# soft shadow - no colored (gold) outline/glow, which the user felt
+# looked bad. Clean, high-legibility "movie subtitle" look instead, sized
+# up to match the larger CAPTION_FONTSIZE.
+CAPTION_OUTLINE_WIDTH = 5
+CAPTION_SHADOW = 2
 
 
 def write_ass_subtitles(events, ass_path: Path, video_w=1080, video_h=1920):
-    """Burned-in captions: bold white text with a thick, blurred gold
-    outline (a glow, via BorderStyle=1 + a wide Outline + the ASS \\blur
-    tag - not a flat black outline) on top of the dark highlight band
-    drawn separately in render_video(), pinned to a fixed top-of-screen
-    position (Alignment=8, top-center) so the text never moves/scrolls
-    and never ends up hidden behind a platform's bottom-screen UI
-    chrome. Full sentences (see build_caption_events) auto-wrap across
-    up to a few lines within this style's margins."""
+    """Burned-in captions: bold white text with a thick black outline and
+    a soft drop shadow (BorderStyle=1, no colored glow) on top of the
+    dark highlight band drawn separately in render_video(), pinned to a
+    fixed top-of-screen position (Alignment=8, top-center) so the text
+    never moves/scrolls and never ends up hidden behind a platform's
+    bottom-screen UI chrome. Full sentences (see build_caption_events)
+    auto-wrap across up to a few lines within this style's margins."""
     header = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: {video_w}
@@ -321,7 +331,7 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Caption,Arial,{CAPTION_FONTSIZE},&H00FFFFFF,&H000000FF,&H0000D7FF,&H40000000,-1,0,0,0,100,100,0,0,1,4,0,8,60,60,{CAPTION_MARGIN_V},1
+Style: Caption,Arial,{CAPTION_FONTSIZE},&H00FFFFFF,&H000000FF,&H00000000,&H40000000,-1,0,0,0,100,100,0,0,1,{CAPTION_OUTLINE_WIDTH},{CAPTION_SHADOW},8,60,60,{CAPTION_MARGIN_V},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -333,7 +343,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             start = _fmt_ass_time(ev["start"])
             end = _fmt_ass_time(ev["end"])
             text = ev["text"].replace("\n", " ")
-            f.write(f"Dialogue: 0,{start},{end},Caption,,0,0,0,,{{\\blur{CAPTION_GLOW_BLUR}}}{text}\n")
+            f.write(f"Dialogue: 0,{start},{end},Caption,,0,0,0,,{text}\n")
 
 
 SUBSCRIBE_WINDOW_SECONDS = 4.0  # how long the subscribe banner stays up at the end
@@ -405,32 +415,35 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
     # cut used to stop the scroll before the eye even reads the hook.
     flash_drawbox = "drawbox=x=0:y=0:w=iw:h=ih:color=white@0.9:t=fill:enable='lt(t,0.08)'"
 
-    # Dim the background footage a bit (not the text/overlays) so the
-    # caption highlight reads with more contrast against busy footage -
-    # eq's brightness is additive, roughly a 15% darker image overall,
-    # within the requested 10-25% range.
+    # De-emphasize the background footage (not the text/overlays) so the
+    # viewer's attention stays on the caption text, not on what's playing
+    # in the clip: dimmed (~30% darker, eq's brightness is additive) AND
+    # mildly blurred (boxblur) so it reads as soft ambient motion behind
+    # the text rather than content competing for attention.
     background_dim = f"eq=brightness={BACKGROUND_BRIGHTNESS_ADJUST}"
+    background_blur = f"boxblur={BACKGROUND_BOXBLUR}"
 
     # Full-width translucent "banner" behind the caption zone, drawn for
     # the whole video (no enable clause) - gives every caption line a
     # consistent readable backdrop regardless of what's happening in the
     # background footage underneath, like a fixed semi-transparent PNG
     # overlay. Drawn before the subtitles filter so the text renders on
-    # top of it. A thin bright accent line along its top edge turns it
-    # into more of a deliberate "highlight card" for the text rather
-    # than a plain dim rectangle, and echoes the hook's yellow accent.
+    # top of it. A thin white accent line along its top edge separates it
+    # from the (now blurred/dimmed) footage above without pulling extra
+    # attention the way the earlier yellow line did.
     caption_band_drawbox = (
         f"drawbox=x=0:y={CAPTION_BAND_TOP}:w=iw:h={CAPTION_BAND_HEIGHT}:"
-        f"color=black@0.55:t=fill"
+        f"color=black@0.6:t=fill"
     )
     caption_band_accent = (
-        f"drawbox=x=0:y={CAPTION_BAND_TOP}:w=iw:h=6:color=yellow@0.9:t=fill"
+        f"drawbox=x=0:y={CAPTION_BAND_TOP}:w=iw:h=4:color=white@0.6:t=fill"
     )
 
     base_vf = (
         f"[0:v]scale=1080:1920:force_original_aspect_ratio=increase,"
         f"crop=1080:1920,"
         f"{background_dim},"
+        f"{background_blur},"
         f"{caption_band_drawbox},"
         f"{caption_band_accent},"
         f"subtitles='{ass_escaped}',"
