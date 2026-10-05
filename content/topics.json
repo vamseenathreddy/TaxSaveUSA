@@ -358,7 +358,8 @@
       ],
       "script": "Paying for college this year? Make sure you're not leaving this credit on the table. The American Opportunity Tax Credit lets you claim up to 2,500 dollars per eligible student for tuition, fees, and course materials during their first four years of college. Here's the part people miss, 40 percent of that credit, up to 1,000 dollars, is refundable, meaning you can get it back even if you owe zero in taxes. For 2026, the credit phases out once your modified adjusted gross income hits 80,000 dollars if you're single, or 160,000 if you're married filing jointly, and disappears entirely at 90,000 and 180,000. You'll need Form 8863 and a 1098-T from the school to claim it. Check your income against these numbers before you file this year's return.",
       "description": "The American Opportunity Tax Credit is worth up to $2,500 per eligible student, with 40% (up to $1,000) refundable even if you owe no tax. For 2026, it phases out at $80,000-$90,000 MAGI for single filers and $160,000-$180,000 for married filing jointly.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Education Credits Questions and Answers). Consult a CPA or CFP for your specific situation.\n\n#AOTC #educationtaxcredit #taxtips2026 #personalfinance #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-10-05"
     },
     {
       "slug": "rmd-age-73-rules-2026",

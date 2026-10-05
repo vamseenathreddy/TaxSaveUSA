@@ -1,6 +1,6 @@
 {
   "_comment": "Rotating pool of engagement-CTA comments. scripts/upload_to_youtube.py posts one of these as a top-level comment on every uploaded Short, advancing next_index each time so the pool cycles through before repeating. Add/edit prompts freely - keep them short (under ~150 chars), on-topic for a US tax/finance channel, and genuinely inviting a reply rather than generic bait.",
-  "next_index": 12,
+  "next_index": 13,
   "prompts": [
     "What's your take on this? Drop a comment below.",
     "Did you know this before watching? Let me know in the comments.",
