@@ -376,7 +376,8 @@
       ],
       "script": "If you're approaching retirement, mark this age on your calendar. Under current IRS rules, you generally must start taking required minimum distributions, or RMDs, from your traditional IRA, SIMPLE IRA, SEP IRA, or 401k once you turn 73. This age moved up thanks to the SECURE 2.0 Act, it used to be 70 and a half, then 72. The IRS calculates your RMD based on your account balance and your life expectancy factor. Here's the part that really stings, if you miss your RMD or don't take enough, the penalty is 25 percent of the amount you should have withdrawn, though it drops to 10 percent if you fix it within two years. Roth IRAs don't have this requirement during the owner's lifetime. Mark your 73rd birthday and talk to your account provider well before year end.",
       "description": "Under current IRS rules, required minimum distributions from traditional retirement accounts must generally start at age 73. Miss the deadline and the penalty is 25% of the amount you should have withdrawn (10% if corrected within two years). Here's what changed under SECURE 2.0 and how to avoid the penalty.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Retirement Topics - Required Minimum Distributions). Consult a CPA or CFP for your specific situation.\n\n#RMD #retirementplanning #taxtips2026 #personalfinance #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-10-05"
     },
     {
       "slug": "529-to-roth-ira-rollover-rule",
