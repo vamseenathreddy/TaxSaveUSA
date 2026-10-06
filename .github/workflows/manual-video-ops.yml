@@ -1,0 +1,123 @@
+name: manual-video-ops
+
+# One-off, manually-triggered YouTube channel operations that need the
+# upload credentials (which only exist as secrets here in Actions, not
+# anywhere Claude's own sandbox can reach) - used to clean up or re-do a
+# specific video outside the normal scheduled publish flow. Every mode
+# writes its result to state/video_ops_result.json and commits it back,
+# since Actions run logs can't be read back out of this repo after the
+# fact the way a committed file can.
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "list-recent | delete | set-privacy | regenerate"
+        required: true
+        type: choice
+        options:
+          - list-recent
+          - delete
+          - set-privacy
+          - regenerate
+      video_id:
+        description: "YouTube video id (delete / set-privacy)"
+        required: false
+      privacy:
+        description: "privacyStatus (set-privacy, or the upload status for regenerate): public | private | unlisted"
+        required: false
+        default: "unlisted"
+      slug:
+        description: "content/topics.json slug to re-render (regenerate)"
+        required: false
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python deps
+        run: pip install --break-system-packages tzdata google-auth google-auth-oauthlib google-api-python-client edge-tts requests
+
+      - name: Install ffmpeg and fonts
+        if: inputs.mode == 'regenerate'
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ffmpeg fonts-dejavu-core fontconfig
+          fc-cache -f
+
+      - name: List recent uploads
+        if: inputs.mode == 'list-recent'
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: python3 scripts/upload_to_youtube.py --list-recent 10 --result-file state/video_ops_result.json
+
+      - name: Delete video
+        if: inputs.mode == 'delete'
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: python3 scripts/upload_to_youtube.py --delete "${{ inputs.video_id }}" --result-file state/video_ops_result.json
+
+      - name: Set privacy
+        if: inputs.mode == 'set-privacy'
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: python3 scripts/upload_to_youtube.py --set-privacy "${{ inputs.video_id }}" "${{ inputs.privacy }}" --result-file state/video_ops_result.json
+
+      - name: Regenerate video
+        if: inputs.mode == 'regenerate'
+        run: python3 scripts/generate_video.py --slug "${{ inputs.slug }}" > build_meta.txt
+
+      - name: Parse build metadata
+        if: inputs.mode == 'regenerate'
+        run: |
+          title=$(grep '^title:' build_meta.txt | cut -d' ' -f2-)
+          description_raw=$(grep '^description:' build_meta.txt | cut -d' ' -f2-)
+          description=$(printf '%b' "$description_raw")
+          video_path=$(grep '^rendered:' build_meta.txt | cut -d' ' -f2-)
+          tags=$(grep '^tags:' build_meta.txt | cut -d' ' -f2-)
+          {
+            echo "TITLE=$title"
+            echo "VIDEO_PATH=$video_path"
+            echo "TAGS=$tags"
+            echo "DESCRIPTION<<DESC_EOF"
+            echo "$description"
+            echo "DESC_EOF"
+          } >> "$GITHUB_ENV"
+
+      - name: Upload (re-)rendered video
+        if: inputs.mode == 'regenerate'
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: |
+          python3 scripts/upload_to_youtube.py \
+            --video "$VIDEO_PATH" \
+            --title "$TITLE" \
+            --description "$DESCRIPTION" \
+            --tags "$TAGS" \
+            --privacy "${{ inputs.privacy }}" \
+            --result-file state/video_ops_result.json
+
+      - name: Commit result
+        if: always()
+        run: |
+          git config user.name "shorts-automation-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add state/video_ops_result.json
+          git diff --cached --quiet || git commit -m "chore: record manual video-ops result (${{ inputs.mode }})"
+          git push

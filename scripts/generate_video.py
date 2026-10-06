@@ -18,6 +18,7 @@ Pipeline:
   5. FFmpeg -> background clip + static caption + hook headline +
      audio -> output/<slug>.mp4
 """
+import argparse
 import json
 import random
 import re
@@ -95,10 +96,19 @@ CORE_SCRIPT_WORD_BUDGET = 34
 # 3+ digit number immediately followed by "dollar(s)" (750 dollars).
 # Deliberately does NOT match a bare "2026" or "50" - those are
 # incidental context, not the headline figure.
+# Matches the sentence carrying the video's actual headline number, so
+# condense_script() (below) never drops it. Originally dollar-figures
+# only (comma-grouped thousands, 2-decimal cents, "N dollars"), but that
+# missed topics whose headline fact is a PERCENTAGE instead of a dollar
+# amount - e.g. "the penalty is 25 percent of the amount you should have
+# withdrawn" (rmd-age-73-rules-2026) got condensed down to two sentences
+# that never once mention the 25% penalty the video's own title promises.
+# Percentage alternative added to close that gap: "N percent"/"N%".
 _MONEY_RE = re.compile(
     r"\b\d{1,3}(?:,\d{3})+(?:\.\d+)?\b"
     r"|\b\d+\.\d{2}\b"
-    r"|\b\d{3,}\s*dollars?\b",
+    r"|\b\d{3,}\s*dollars?\b"
+    r"|\b\d{1,3}(?:\.\d+)?\s*(?:%|percent)\b",
     re.IGNORECASE,
 )
 
@@ -350,15 +360,61 @@ BACKGROUND_BOXBLUR = "6:1"
 CAPTION_OUTLINE_WIDTH = 5
 CAPTION_SHADOW = 2
 
+# Both libass (the subtitles= ffmpeg filter, used for the burned-in
+# caption) and the drawtext filter (hook headline + subscribe banner)
+# need an ACTUAL font to draw glyphs with. Neither was ever given one
+# explicitly - the ASS style just named the family "Arial" and drawtext
+# had no "font"/"fontfile" at all - which silently works on a machine
+# that happens to have a matching font installed via fontconfig (true of
+# this sandbox) but silently renders NO TEXT AT ALL, with no error, on
+# one that doesn't (true of the bare "apt-get install ffmpeg" GitHub
+# Actions runner this pipeline actually publishes from - it was never
+# told to install any font package). This is the confirmed cause of
+# published Shorts showing their background/caption band/boxes but no
+# caption text: the render "succeeded" (ffmpeg doesn't treat a missing
+# font as fatal), it just drew nothing. Resolving an explicit, bundled
+# font file - rather than hoping a system font happens to be present -
+# fixes this for good and fails loudly (not silently) if it's ever
+# missing again.
+_FONT_CANDIDATES = [
+    ("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", "DejaVu Sans"),
+    ("/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf", "Liberation Sans"),
+]
 
-def write_ass_subtitles(events, ass_path: Path, video_w=1080, video_h=1920):
+
+def resolve_caption_font() -> tuple[Path, str]:
+    """Returns (font_file_path, font_family_name) for the first bold
+    sans-serif font found on disk, checked in order of preference. Raises
+    SystemExit with a clear, actionable message if neither is present,
+    instead of letting the render "succeed" with blank text - see the
+    comment above _FONT_CANDIDATES for why that's the real failure mode
+    being guarded against here."""
+    for path_str, family in _FONT_CANDIDATES:
+        path = Path(path_str)
+        if path.exists():
+            return path, family
+    raise SystemExit(
+        "No usable bold sans-serif font found on disk (checked: "
+        + ", ".join(p for p, _ in _FONT_CANDIDATES)
+        + "). Without one, ffmpeg renders the caption text, hook "
+        "headline, and subscribe banner as BLANK instead of failing - "
+        "install fonts-dejavu-core (or fonts-liberation) before "
+        "rendering."
+    )
+
+
+def write_ass_subtitles(events, ass_path: Path, font_family: str, video_w=1080, video_h=1920):
     """Burned-in captions: bold white text with a thick black outline and
     a soft drop shadow (BorderStyle=1, no colored glow) on top of the
     dark highlight band drawn separately in render_video(), pinned to a
     fixed top-of-screen position (Alignment=8, top-center) so the text
     never moves/scrolls and never ends up hidden behind a platform's
     bottom-screen UI chrome. Full sentences (see build_caption_events)
-    auto-wrap across up to a few lines within this style's margins."""
+    auto-wrap across up to a few lines within this style's margins.
+    font_family must be a family name actually resolvable to an
+    installed font file (see resolve_caption_font()/fontsdir on the
+    subtitles= filter in render_video()) - libass silently draws nothing
+    for a family it can't match, rather than erroring."""
     header = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: {video_w}
@@ -367,7 +423,7 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Caption,Arial,{CAPTION_FONTSIZE},&H00FFFFFF,&H000000FF,&H00000000,&H40000000,-1,0,0,0,100,100,0,0,1,{CAPTION_OUTLINE_WIDTH},{CAPTION_SHADOW},8,60,60,{CAPTION_MARGIN_V},1
+Style: Caption,{font_family},{CAPTION_FONTSIZE},&H00FFFFFF,&H000000FF,&H00000000,&H40000000,-1,0,0,0,100,100,0,0,1,{CAPTION_OUTLINE_WIDTH},{CAPTION_SHADOW},8,60,60,{CAPTION_MARGIN_V},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -386,7 +442,7 @@ SUBSCRIBE_WINDOW_SECONDS = 4.0  # how long the subscribe banner stays up at the 
 
 
 def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_text: str,
-                  out_path: Path, subscribe_text: str):
+                  out_path: Path, subscribe_text: str, font_path: Path):
     """
     Vertical 1080x1920 render: loops/crops the background clip to
     length, burns in the word-synced captions, and opens with a
@@ -403,11 +459,24 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
     It's a plain drawtext overlay - independent of the spoken outro CTA
     and the .ass word captions - so it shows up purely on screen without
     being read aloud or duplicated in the caption track.
+
+    font_path is the resolved on-disk font file from
+    resolve_caption_font() - passed in explicitly (rather than looked up
+    again here) so the caller only has to resolve it once and the whole
+    render fails fast, before any ffmpeg work starts, if no font is
+    installed. It's used two ways: directly as drawtext's fontfile= for
+    the hook/subscribe banners, and as fontsdir= on the subtitles=
+    filter so libass loads the caption font from this exact file instead
+    of searching the system's fontconfig database (which is what
+    silently produced blank caption text in CI - see the comment on
+    _FONT_CANDIDATES above).
     """
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     ass_escaped = str(ass_path).replace("\\", "/").replace(":", "\\:")
     hook_escaped = hook_text.replace("'", "\u2019").replace(":", "\\:")
     subscribe_escaped = subscribe_text.replace("'", "\u2019").replace(":", "\\:")
+    font_path_escaped = str(font_path).replace("\\", "/").replace(":", "\\:")
+    font_dir_escaped = str(font_path.parent).replace("\\", "/").replace(":", "\\:")
 
     emoji_paths = [EMOJI_DIR / name for name in EMOJI_FILES]
     have_emoji = all(p.exists() for p in emoji_paths)
@@ -428,8 +497,12 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
 
     # Bold, high-contrast hook: yellow text, black outline, red box -
     # appears right as the flash clears (0.05s) for a punch-in feel.
+    # fontfile= points drawtext straight at the resolved font file
+    # instead of relying on fontconfig to find "a" font on its own -
+    # without it, drawtext silently draws nothing (see font_path's
+    # docstring note in render_video() above).
     hook_drawtext = (
-        f"drawtext=text='{hook_escaped}':fontcolor=yellow:fontsize=68:"
+        f"drawtext=fontfile='{font_path_escaped}':text='{hook_escaped}':fontcolor=yellow:fontsize=68:"
         f"bordercolor=black:borderw=5:"
         f"box=1:boxcolor=red@0.75:boxborderw=26:x=(w-text_w)/2:y=140:"
         f"enable='between(t,0.05,3)'"
@@ -442,7 +515,7 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
     sub_start = max(audio_duration - SUBSCRIBE_WINDOW_SECONDS, 3.5)
     sub_end = max(audio_duration - 0.05, sub_start + 0.1)
     subscribe_drawtext = (
-        f"drawtext=text='{subscribe_escaped}':fontcolor=white:fontsize=56:"
+        f"drawtext=fontfile='{font_path_escaped}':text='{subscribe_escaped}':fontcolor=white:fontsize=56:"
         f"bordercolor=black:borderw=4:"
         f"box=1:boxcolor=blue@0.75:boxborderw=22:x=(w-text_w)/2:y=140:"
         f"enable='between(t,{sub_start:.2f},{sub_end:.2f})'"
@@ -482,7 +555,7 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
         f"{background_blur},"
         f"{caption_band_drawbox},"
         f"{caption_band_accent},"
-        f"subtitles='{ass_escaped}',"
+        f"subtitles='{ass_escaped}':fontsdir='{font_dir_escaped}',"
         f"{hook_drawtext},"
         f"{subscribe_drawtext},"
         f"{flash_drawbox}[vbase]"
@@ -571,8 +644,40 @@ def build_tags(topic):
     return selected
 
 
+def load_topic_by_slug(slug: str):
+    """Looks up one specific topic by slug regardless of its "used"
+    flag, and - unlike load_next_topic() - never mutates topics.json.
+    Used for re-rendering an already-published topic (e.g. to fix a bug
+    and re-upload) without touching the queue's rotation/used-state."""
+    with open(TOPICS_PATH, encoding="utf-8-sig") as f:
+        data = json.load(f)
+    for t in data["topics"]:
+        if t["slug"] == slug:
+            already_used_count = sum(1 for x in data["topics"] if x.get("used"))
+            return t, already_used_count
+    raise SystemExit(f"No topic with slug '{slug}' found in content/topics.json")
+
+
 def main():
-    topic, already_used_count = load_next_topic()
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--slug", default=None,
+        help="Re-render this specific (already-used-or-not) topic by slug instead of "
+             "popping the next unused one from the queue - doesn't touch topics.json. "
+             "Used to fix and re-publish a specific video.",
+    )
+    args = parser.parse_args()
+
+    # Resolve the caption/hook/subscribe-banner font once, up front, and
+    # fail immediately (before any TTS or ffmpeg work) if no usable font
+    # is installed - see resolve_caption_font()'s docstring. This is the
+    # fix for published Shorts rendering with no visible caption text.
+    font_path, font_family = resolve_caption_font()
+
+    if args.slug:
+        topic, already_used_count = load_topic_by_slug(args.slug)
+    else:
+        topic, already_used_count = load_next_topic()
     slug = topic["slug"]
     audio_path = AUDIO_DIR / f"{slug}.mp3"
     ass_path = CAPTIONS_DIR / f"{slug}.ass"
@@ -608,13 +713,13 @@ def main():
     # actual video-length cap, so this just needs to not cut off early.
     caption_end = (word_boundaries[-1]["end"] + 0.4) if word_boundaries else 1.0
     events = [{"start": 0.0, "end": caption_end, "text": full_script}]
-    write_ass_subtitles(events, ass_path)
+    write_ass_subtitles(events, ass_path, font_family)
 
     background_clip = ASSETS_DIR / "backgrounds" / topic.get("background", "default.mp4")
     if not background_clip.exists():
         raise SystemExit(f"Missing background clip: {background_clip} - pull one into assets/backgrounds/ from Drive.")
 
-    render_video(audio_path, background_clip, ass_path, topic["caption_headline"], out_path, subscribe_text)
+    render_video(audio_path, background_clip, ass_path, topic["caption_headline"], out_path, subscribe_text, font_path)
 
     tags = build_tags(topic)
     seo_title = _with_shorts_tag_in_title(topic["title"])

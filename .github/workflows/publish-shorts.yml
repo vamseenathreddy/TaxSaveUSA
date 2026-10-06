@@ -32,8 +32,19 @@ jobs:
         run: |
           pip install --break-system-packages tzdata google-auth google-auth-oauthlib google-api-python-client edge-tts requests
 
-      - name: Install ffmpeg
-        run: sudo apt-get update -y && sudo apt-get install -y ffmpeg
+      - name: Install ffmpeg and fonts
+        # fonts-dejavu-core provides the bold sans-serif font the video
+        # renderer needs for the caption text, hook headline, and
+        # subscribe banner (see resolve_caption_font() in
+        # generate_video.py) - without it, ffmpeg's drawtext/subtitles
+        # filters silently draw NO TEXT instead of failing, which is why
+        # published Shorts were showing up with their background/boxes
+        # but no caption text. fc-cache refreshes the font cache so the
+        # newly installed font is immediately visible.
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ffmpeg fonts-dejavu-core fontconfig
+          fc-cache -f
 
       - name: Decide whether this tick should publish
         id: decide
