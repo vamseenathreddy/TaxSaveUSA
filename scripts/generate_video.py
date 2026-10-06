@@ -152,6 +152,66 @@ def condense_script(script_text: str, word_budget: int = CORE_SCRIPT_WORD_BUDGET
     return " ".join(sentences[i] for i in sorted(selected))
 
 
+def probe_audio_duration(audio_path: Path) -> float:
+    """Exact duration (seconds) of a rendered audio file via ffprobe -
+    the one source of truth for how long the video actually is, used
+    both to cap the ffmpeg render (render_video()) and, critically, to
+    size the caption's on-screen duration (main()) instead of trusting
+    edge-tts's own WordBoundary events for that - see the comment on
+    caption_end in main() for why that distinction matters."""
+    probe = subprocess.run(
+        ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+         "-of", "default=noprint_wrappers=1:nokey=1", str(audio_path)],
+        capture_output=True, text=True, check=True,
+    )
+    return float(probe.stdout.strip())
+
+
+def compute_sentence_end_times(script_text: str, word_boundaries: list, audio_duration: float) -> list:
+    """Maps each sentence of script_text to the timestamp (seconds) it
+    ends at - used to pop an emoji in right as each sentence finishes
+    being spoken (see render_video()'s sentence_end_times param),
+    instead of a fixed burst near the start regardless of what's
+    actually being said.
+
+    Prefers edge-tts's own word_boundaries (walking a running word-count
+    through them, since edge-tts's tokenization of contractions/
+    punctuation doesn't always split identically to a plain str.split()
+    on the sentence text - counts are far more robust than trying to
+    align the words themselves). But word_boundaries is a stream of
+    events from a live TTS connection, and has been observed to come
+    back materially short of the actual spoken audio (its last
+    timestamp far earlier than audio_duration) without the synthesis
+    itself failing - if that's detected here, this falls back to a
+    simple proportional split of audio_duration by each sentence's word
+    count instead, so emoji timing degrades gracefully to "roughly
+    right" instead of all clustering in the first second or two of a
+    20-second video."""
+    sentences = [s for s in re.split(r"(?<=[.?!])\s+", script_text.strip()) if s.strip()]
+    if not sentences:
+        return []
+
+    word_boundaries_look_complete = bool(word_boundaries) and word_boundaries[-1]["end"] >= audio_duration * 0.75
+    if word_boundaries_look_complete:
+        times = []
+        word_idx = 0
+        for s in sentences:
+            word_idx += len(s.split())
+            boundary_idx = min(word_idx, len(word_boundaries)) - 1
+            if boundary_idx < 0:
+                continue
+            times.append(word_boundaries[boundary_idx]["end"])
+        return times
+
+    total_words = sum(len(s.split()) for s in sentences) or 1
+    times = []
+    word_idx = 0
+    for s in sentences:
+        word_idx += len(s.split())
+        times.append(audio_duration * word_idx / total_words)
+    return times
+
+
 # Base tags applied to every video, on top of each topic's own tags -
 # see content/topics.json "tags" field. Keep broad + niche mixed for
 # reach: a few very high-volume broad terms so the video has a shot at
@@ -442,16 +502,18 @@ SUBSCRIBE_WINDOW_SECONDS = 4.0  # how long the subscribe banner stays up at the 
 
 
 def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_text: str,
-                  out_path: Path, subscribe_text: str, font_path: Path):
+                  out_path: Path, subscribe_text: str, font_path: Path, sentence_end_times=()):
     """
     Vertical 1080x1920 render: loops/crops the background clip to
     length, burns in the word-synced captions, and opens with a
     "blast" attention-grab: a quick white flash-cut, a short
     synthesized attention tone under the audio, a bold high-contrast
-    hook headline, and a staggered burst of color emoji (party popper,
-    fireworks, sparkles, collision, fire) popping in around the hook -
-    a scroll-stopping pattern interrupt for the first ~2 seconds,
-    before settling into the normal captioned voiceover.
+    hook headline, and color emoji (party popper, fireworks, sparkles,
+    collision, fire) popping in one-per-sentence, each timed to the end
+    of the sentence it "punctuates" (see sentence_end_times) - rather
+    than all firing in a fixed burst near the start regardless of what's
+    actually being said - before settling into the normal captioned
+    voiceover.
 
     In the last SUBSCRIBE_WINDOW_SECONDS of the video, a second banner
     (same position/box style as the opening hook, so no new on-screen
@@ -470,6 +532,15 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
     of searching the system's fontconfig database (which is what
     silently produced blank caption text in CI - see the comment on
     _FONT_CANDIDATES above).
+
+    sentence_end_times is a list of timestamps (seconds into the
+    voiceover), one per sentence of the spoken script, from
+    compute_sentence_end_times() - emoji[i] pops in right as
+    sentence_end_times[i] is reached, one emoji per sentence, in order.
+    If there are more sentences than emoji icons the extra sentences
+    just don't get one; if there are fewer, the unused icons simply
+    don't appear that video - no icon is ever shown without a sentence
+    actually ending at that moment.
     """
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     ass_escaped = str(ass_path).replace("\\", "/").replace(":", "\\:")
@@ -574,28 +645,41 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
         "-f", "lavfi", "-i", "sine=frequency=1400:duration=0.18",
     ]
 
-    if have_emoji:
-        # Staggered emoji "burst": each icon pops in a beat after the
-        # last. Positioned in the gap between the hook headline
-        # (y~140-270) and the big static caption band (now down at
-        # y=580-1140, since it holds the whole message for the whole
-        # video) - so nothing overlaps the locked caption text.
-        for p in emoji_paths:
+    # One emoji per sentence, timed to that sentence's own end - not a
+    # fixed burst at the start regardless of script length/content.
+    # Capped to however many (icons, sentence-end-times) pairs actually
+    # exist; if there are more sentences than icons the extras just
+    # don't get one, and if emoji assets or sentence timing aren't
+    # available at all, no emoji overlay is added (falls through to the
+    # plain base_vf path below, same as before this feature existed).
+    n_emoji = min(len(emoji_paths), len(sentence_end_times)) if have_emoji else 0
+
+    if n_emoji:
+        emoji_paths_used = emoji_paths[:n_emoji]
+        for p in emoji_paths_used:
             cmd += ["-i", str(p)]
+        # Positioned in the gap between the hook headline (y~140-270)
+        # and the big static caption band (y=580-1340, holds the whole
+        # message for the whole video) - so nothing overlaps either.
         positions = [
             (60, 300), (890, 300), (60, 430), (890, 430), (475, 365),
         ]
         filter_parts = [base_vf]
         scale_parts = []
-        for i in range(len(emoji_paths)):
+        for i in range(n_emoji):
             scale_parts.append(f"[{3 + i}:v]scale=130:130[e{i}]")
         filter_parts.extend(scale_parts)
 
         chain_label = "vbase"
-        for i, (x, y) in enumerate(positions):
-            start = 0.1 + i * 0.12
-            end = start + 1.3
-            out_label = f"vb{i}" if i < len(positions) - 1 else "vout"
+        for i in range(n_emoji):
+            x, y = positions[i % len(positions)]
+            # Pops in right as its sentence finishes (a tiny lead-in so
+            # it doesn't feel like it's trailing the word) and holds
+            # briefly - 0.9s reads clearly without lingering into the
+            # next sentence's own pop.
+            start = max(sentence_end_times[i] - 0.1, 0.0)
+            end = start + 0.9
+            out_label = f"vb{i}" if i < n_emoji - 1 else "vout"
             filter_parts.append(
                 f"[{chain_label}][e{i}]overlay=x={x}:y={y}:"
                 f"enable='between(t,{start:.2f},{end:.2f})'[{out_label}]"
@@ -705,21 +789,52 @@ def main():
 
     word_boundaries = synthesize_voiceover(full_script, audio_path, voice_index=already_used_count)
 
+    # The actual spoken audio length - the one reliable source of truth
+    # for how long the video is. Deliberately NOT derived from
+    # word_boundaries: edge-tts's WordBoundary events are a stream from
+    # a live connection and have been observed to cut off well short of
+    # the actual audio (e.g. ending around 1s into a 20s clip) without
+    # the synthesis itself failing or raising - a caption end time taken
+    # from word_boundaries[-1] in that case makes the caption disappear
+    # seconds into the video even though the voiceover keeps playing
+    # (this is what the user reported: "text appearing only one
+    # second"). Probing the actual rendered audio file instead sidesteps
+    # that failure mode entirely.
+    audio_duration = probe_audio_duration(audio_path)
+
     # One single static caption for the ENTIRE video - the whole message
     # on one page, visible the whole time, never replaced/scrolling -
     # instead of word-by-word or sentence-by-sentence chunks. End time is
-    # the last spoken word's end plus a small pad for trailing silence;
-    # render_video() separately probes the exact audio duration for the
-    # actual video-length cap, so this just needs to not cut off early.
-    caption_end = (word_boundaries[-1]["end"] + 0.4) if word_boundaries else 1.0
+    # the full probed audio duration (plus a small pad) rather than
+    # word_boundaries' last timestamp - see audio_duration's comment
+    # above. render_video() separately -t caps the actual ffmpeg render
+    # to this same audio file's length, so the two always agree.
+    caption_end = audio_duration + 0.4
     events = [{"start": 0.0, "end": caption_end, "text": full_script}]
     write_ass_subtitles(events, ass_path, font_family)
+
+    # One emoji per sentence, each timed to that sentence's own end -
+    # see compute_sentence_end_times()/render_video()'s docstring. Also
+    # guarded against the same word_boundaries-truncation failure mode
+    # via the audio_duration check inside compute_sentence_end_times().
+    sentence_end_times = compute_sentence_end_times(full_script, word_boundaries, audio_duration)
+
+    # Diagnostics - not parsed by the workflow (which only greps the
+    # title:/description:/tags:/rendered: prefixes below), just useful
+    # for spotting a bad render (e.g. word_boundaries way shorter than
+    # the script, which would make captions disappear early) from the
+    # printed build log without needing to watch the video itself.
+    wb_last = word_boundaries[-1]["end"] if word_boundaries else 0.0
+    print(f"diag: script_words={len(full_script.split())} word_boundaries={len(word_boundaries)} "
+          f"audio_duration={audio_duration:.2f}s word_boundaries_last_end={wb_last:.2f}s "
+          f"caption_end={caption_end:.2f}s sentence_end_times={['%.2f' % t for t in sentence_end_times]}")
 
     background_clip = ASSETS_DIR / "backgrounds" / topic.get("background", "default.mp4")
     if not background_clip.exists():
         raise SystemExit(f"Missing background clip: {background_clip} - pull one into assets/backgrounds/ from Drive.")
 
-    render_video(audio_path, background_clip, ass_path, topic["caption_headline"], out_path, subscribe_text, font_path)
+    render_video(audio_path, background_clip, ass_path, topic["caption_headline"], out_path, subscribe_text,
+                 font_path, sentence_end_times)
 
     tags = build_tags(topic)
     seo_title = _with_shorts_tag_in_title(topic["title"])
