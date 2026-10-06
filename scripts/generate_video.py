@@ -33,6 +33,7 @@ CAPTIONS_DIR = ROOT / "build" / "captions"
 OUTPUT_DIR = ROOT / "build" / "output"
 ASSETS_DIR = ROOT / "assets"
 EMOJI_DIR = ASSETS_DIR / "emoji"
+AUDIO_ASSETS_DIR = ASSETS_DIR / "audio"
 
 # Pre-rendered color emoji PNGs (Twemoji, CC-BY 4.0) used for the intro
 # "burst" effect below. ffmpeg's drawtext/libass text-rendering path
@@ -64,6 +65,27 @@ OUTRO_CTAS = [
     "What do you think? Comment and let me know.",
     "Drop your thoughts in the comments right now.",
 ]
+
+# Spoken + captioned "congratulations" line, inserted right before the
+# ask-to-comment OUTRO_CTA (see main()) - a small celebratory beat that
+# pairs with the applause sting (APPLAUSE_PATH below), timed to start
+# right as this line finishes. A short rotation, same pattern as
+# OUTRO_CTAS, so it's not the identical line on every single video.
+CONGRATS_LINES = [
+    "Congratulations, you learned something new today!",
+    "Nice work, you just learned something new!",
+    "Congratulations, that's one more thing you know now!",
+    "You did it, that's today's new thing learned!",
+]
+
+# Synthesized (not downloaded/licensed) ~3-second applause sting - see
+# scripts/make_applause.py for how it's generated and why. Mixed in
+# under the audio starting right when the CONGRATS_LINES sentence ends
+# (see render_video()'s congrats_end_time param), ducked well below the
+# voice (APPLAUSE_VOLUME) so it reads as a celebratory sting under the
+# tail of the video rather than competing with the final spoken CTA.
+APPLAUSE_PATH = AUDIO_ASSETS_DIR / "applause.mp3"
+APPLAUSE_VOLUME = 0.55
 
 # Purely visual (not spoken, not in the .ass captions) "subscribe" banner
 # burned in near the end of every video via its own drawtext filter - see
@@ -502,7 +524,8 @@ SUBSCRIBE_WINDOW_SECONDS = 4.0  # how long the subscribe banner stays up at the 
 
 
 def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_text: str,
-                  out_path: Path, subscribe_text: str, font_path: Path, sentence_end_times=()):
+                  out_path: Path, subscribe_text: str, font_path: Path, sentence_end_times=(),
+                  congrats_end_time=None):
     """
     Vertical 1080x1920 render: loops/crops the background clip to
     length, burns in the word-synced captions, and opens with a
@@ -541,6 +564,14 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
     just don't get one; if there are fewer, the unused icons simply
     don't appear that video - no icon is ever shown without a sentence
     actually ending at that moment.
+
+    congrats_end_time (seconds), when given, is where the CONGRATS_LINES
+    sentence ends - the ~3s synthesized applause sting (APPLAUSE_PATH)
+    is mixed in starting right there, ducked under whatever's still
+    playing (the final ask-to-comment CTA has no silent gap to play
+    into, so it overlaps at reduced volume rather than being skipped -
+    the same layering real editors use for a stinger under an outro
+    line). None skips the applause entirely.
     """
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     ass_escaped = str(ass_path).replace("\\", "/").replace(":", "\\:")
@@ -632,12 +663,6 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
         f"{flash_drawbox}[vbase]"
     )
 
-    # Short synthesized "blip" tone mixed under the very start of the
-    # voiceover - an audio pattern-interrupt to match the visual flash.
-    # volume=1.8 after amix compensates for amix's default level drop
-    # (it averages inputs) so the voice doesn't come out quieter overall.
-    af = "[1:a][2:a]amix=inputs=2:duration=first:dropout_transition=0,volume=1.8[aout]"
-
     cmd = [
         "ffmpeg", "-y",
         "-stream_loop", "-1", "-i", str(background_clip),
@@ -688,6 +713,30 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
         vf = ";".join(filter_parts)
     else:
         vf = base_vf.replace("[vbase]", "[vout]")
+
+    # Short synthesized "blip" tone mixed under the very start of the
+    # voiceover - an audio pattern-interrupt to match the visual flash.
+    # volume=1.8 after amix compensates for amix's default level drop
+    # (it averages inputs) so the voice doesn't come out quieter overall.
+    have_applause = congrats_end_time is not None and APPLAUSE_PATH.exists()
+    if have_applause:
+        applause_idx = 3 + n_emoji  # next input slot after background/voice/blip/emoji
+        cmd += ["-i", str(APPLAUSE_PATH)]
+        delay_ms = max(int(congrats_end_time * 1000), 0)
+        # adelay with all=1 applies the same delay to every channel
+        # regardless of the input's channel count (our mono asset), so
+        # the clip starts right when the congrats sentence ends; volume
+        # ducks it well under the voice so it reads as a sting under the
+        # final CTA rather than competing with it.
+        applause_filter = (
+            f"[{applause_idx}:a]adelay=delays={delay_ms}:all=1,volume={APPLAUSE_VOLUME}[sfx]"
+        )
+        af = (
+            f"{applause_filter};"
+            f"[1:a][2:a][sfx]amix=inputs=3:duration=first:dropout_transition=0,volume=1.8[aout]"
+        )
+    else:
+        af = "[1:a][2:a]amix=inputs=2:duration=first:dropout_transition=0,volume=1.8[aout]"
 
     cmd += [
         "-filter_complex", f"{vf};{af}",
@@ -779,8 +828,16 @@ def main():
     # per-video (reruns of the same topic pick the same CTA) while still
     # varying across different topics/videos.
     condensed_script = condense_script(topic["script"])
+    # "Congratulations, you learned something new today!" line, inserted
+    # between the core content and the ask-to-comment CTA, so it reads
+    # as its own short sentence (full_script.split('. ')-style sentence
+    # splitting in compute_sentence_end_times() treats it as one of the
+    # trailing sentences - see congrats_end_time below). A ~3s applause
+    # sting is timed to land right as this line finishes (render_video's
+    # congrats_end_time param), then the outro_cta plays over/after it.
+    congrats_line = rng.choice(CONGRATS_LINES)
     outro_cta = rng.choice(OUTRO_CTAS)
-    full_script = f"{condensed_script.rstrip()} {outro_cta}"
+    full_script = f"{condensed_script.rstrip()} {congrats_line} {outro_cta}"
 
     # Visual-only "subscribe" banner (see SUBSCRIBE_CTAS / render_video) -
     # drawn from the same per-slug rng right after outro_cta so picks stay
@@ -819,6 +876,20 @@ def main():
     # via the audio_duration check inside compute_sentence_end_times().
     sentence_end_times = compute_sentence_end_times(full_script, word_boundaries, audio_duration)
 
+    # full_script is always built as "<condensed content> <congrats_line>
+    # <outro_cta>" above, so the congrats line is always the second-to-
+    # last sentence and sentence_end_times[-2] is always its end time -
+    # that's when the applause sting should start. Defensive fallback
+    # (len < 2) in case condense_script ever collapses everything into
+    # fewer sentences than expected than compute_sentence_end_times can
+    # split on.
+    if len(sentence_end_times) >= 2:
+        congrats_end_time = sentence_end_times[-2]
+    elif sentence_end_times:
+        congrats_end_time = sentence_end_times[-1]
+    else:
+        congrats_end_time = max(audio_duration - 3.0, 0.0)
+
     # Diagnostics - not parsed by the workflow (which only greps the
     # title:/description:/tags:/rendered: prefixes below), just useful
     # for spotting a bad render (e.g. word_boundaries way shorter than
@@ -827,14 +898,15 @@ def main():
     wb_last = word_boundaries[-1]["end"] if word_boundaries else 0.0
     print(f"diag: script_words={len(full_script.split())} word_boundaries={len(word_boundaries)} "
           f"audio_duration={audio_duration:.2f}s word_boundaries_last_end={wb_last:.2f}s "
-          f"caption_end={caption_end:.2f}s sentence_end_times={['%.2f' % t for t in sentence_end_times]}")
+          f"caption_end={caption_end:.2f}s sentence_end_times={['%.2f' % t for t in sentence_end_times]} "
+          f"congrats_end_time={congrats_end_time:.2f}s")
 
     background_clip = ASSETS_DIR / "backgrounds" / topic.get("background", "default.mp4")
     if not background_clip.exists():
         raise SystemExit(f"Missing background clip: {background_clip} - pull one into assets/backgrounds/ from Drive.")
 
     render_video(audio_path, background_clip, ass_path, topic["caption_headline"], out_path, subscribe_text,
-                 font_path, sentence_end_times)
+                 font_path, sentence_end_times, congrats_end_time=congrats_end_time)
 
     tags = build_tags(topic)
     seo_title = _with_shorts_tag_in_title(topic["title"])
