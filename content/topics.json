@@ -412,7 +412,8 @@
       ],
       "script": "Struggling to save for a down payment? Your IRA might be able to help. Under IRS rules, first time homebuyers can withdraw up to 10,000 dollars from an IRA without paying the usual 10 percent early withdrawal penalty, even if you're under 59 and a half. This is a lifetime limit, not an annual one, and it applies per person, so a married couple could potentially pull 20,000 dollars combined. You're still considered a first time buyer if you haven't owned a home in the past two years, even if you've owned one before that. Keep in mind, this exception only waives the penalty, you'll usually still owe regular income tax on a traditional IRA withdrawal, though qualified Roth IRA withdrawals may come out tax free too. This rule only applies to IRAs, not 401k plans. Talk to a financial advisor before tapping retirement funds for a home.",
       "description": "IRS rules let first-time homebuyers withdraw up to $10,000 from an IRA without the usual 10% early withdrawal penalty, a lifetime limit per person. Here's who counts as a first-time buyer, why regular income tax may still apply, and why this only works for IRAs, not 401(k)s.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Retirement Topics - Exceptions to Tax on Early Distributions; Publication 590-B). Consult a CPA or CFP for your specific situation.\n\n#firsttimehomebuyer #IRA #personalfinance #retirementplanning #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-10-07"
     },
     {
       "slug": "self-employment-tax-basics-2026",
