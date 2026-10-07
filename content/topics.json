@@ -394,7 +394,8 @@
       ],
       "script": "Got leftover money in a 529 college savings plan? You're not stuck with it anymore. Under current IRS rules, you can roll over up to 35,000 dollars of unused 529 funds into a Roth IRA for the same beneficiary over their lifetime, completely tax and penalty free. There are a few requirements though. The 529 account has to have been open for at least 15 years, and any contributions made in the last 5 years, plus their earnings, don't qualify for the rollover. It also has to be a direct transfer from the 529 plan to the Roth IRA, and normal annual Roth contribution limits still apply each year. This is a great option if your kid got a scholarship or didn't use all the money for school. Check with your 529 plan provider on how to start the transfer.",
       "description": "Under current IRS rules, up to $35,000 of unused 529 college savings can be rolled into a Roth IRA for the same beneficiary over their lifetime, tax and penalty free. Here's the 15-year account age requirement and other rules you need to know before transferring.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Topic no. 313, Qualified Tuition Programs). Consult a CPA or CFP for your specific situation.\n\n#529plan #rothira #collegesavings #personalfinance #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-10-07"
     },
     {
       "slug": "first-time-homebuyer-ira-penalty-exception",
