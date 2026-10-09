@@ -448,7 +448,8 @@
       ],
       "script": "Got kids? Here's a 2026 number that matters at tax time. The IRS confirms the Child Tax Credit is now 2,200 dollars per qualifying child under 17, adjusted upward under the new tax law. This credit reduces what you owe dollar for dollar, it's not just a deduction like the standard deduction. To claim it, your child needs a valid Social Security number, needs to live with you more than half the year, and you need to fall under the income limits for your filing status. A portion of this credit can still be refundable, meaning some families get money back even if they owe zero in taxes. Pull together each child's Social Security number before you file, since the IRS requires it to claim this credit for 2026.",
       "description": "The 2026 Child Tax Credit is $2,200 per qualifying child under 17, adjusted under the new tax law. Here's how the credit works, why it's different from a deduction, and what you need before filing to claim it this year.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS Revenue Procedure 2025-32. Consult a CPA or CFP for your specific situation.\n\n#childtaxcredit #taxtips2026 #personalfinance #IRS #familyfinance",
-      "used": false
+      "used": true,
+      "used_date": "2026-10-09"
     },
     {
       "slug": "kiddie-tax-2026",
