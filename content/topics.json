@@ -430,7 +430,8 @@
       ],
       "script": "If you freelance, drive for a gig app, or run your own business, this tax catches a lot of people off guard. The IRS self-employment tax rate is 15.3 percent, made up of 12.4 percent for Social Security and 2.9 percent for Medicare. As a W-2 employee, your employer normally pays half of these taxes for you, but when you're self-employed, you're responsible for both halves yourself. The good news, the IRS lets you deduct half of your self-employment tax when calculating your adjusted gross income, which softens the blow a little. This tax is separate from your regular income tax, so you owe both. Most self-employed people need to make quarterly estimated tax payments throughout the year to avoid a penalty. Use Schedule SE to calculate exactly what you owe.",
       "description": "The IRS self-employment tax rate is 15.3% (12.4% Social Security plus 2.9% Medicare), covering both the employee and employer portions that a traditional job would split. Here's why freelancers and 1099 workers owe this on top of regular income tax, and the deduction that softens it.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Topic no. 554, Self-Employment Tax). Consult a CPA for your specific situation.\n\n#selfemploymenttax #freelancer #1099 #smallbusiness #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-10-09"
     },
     {
       "slug": "child-tax-credit-2026",
