@@ -1,13 +1,14 @@
 name: publish-shorts
 
+# Paused: the schedule trigger was removed so this workflow never runs on
+# its own and uses no Actions minutes. It can only be started manually
+# (workflow_dispatch), and the workflow is also disabled in the repo's
+# Actions settings. To resume automatic posting, restore the cron below
+# and re-enable the workflow:
+#   schedule:
+#     - cron: "*/30 * * * *"
 on:
-  schedule:
-    # Every 30 min. GitHub Actions cron is UTC-only and best-effort
-    # (can slip a few minutes under load) - scheduler.py is what
-    # actually decides whether to fire, this just controls how often
-    # we check.
-    - cron: "*/30 * * * *"
-  workflow_dispatch: {}  # lets you trigger a manual test run from the Actions tab
+  workflow_dispatch: {}
 
 permissions:
   contents: write  # needed to commit state/ and content/topics.json (used flags) back, and to create/delete the temporary Release used to host the video for Instagram
