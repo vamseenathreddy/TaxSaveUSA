@@ -1,0 +1,36 @@
+name: analytics-pace
+
+# PAUSED: manual only. Reviews recent Shorts' views and subscribers and
+# adjusts state/pace.json (Shorts per day). To run weekly, uncomment the
+# schedule and make sure the workflow is enabled.
+on:
+  # schedule:
+  #   - cron: "17 5 * * 1"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install --break-system-packages google-auth google-auth-oauthlib google-api-python-client
+      - name: Review performance and set pace
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: python3 scripts/analytics_pace.py
+      - name: Commit pace
+        run: |
+          git config user.name "shorts-automation-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add state/pace.json state/analytics.json
+          git diff --cached --quiet || git commit -m "chore: analytics pace review"
+          git pull --rebase origin main || true
+          git push

@@ -52,15 +52,34 @@ def load_config():
         return json.load(f)
 
 
+def apply_pace_override(stage):
+    """If analytics_pace.py has written state/pace.json, its posts_per_day
+    replaces the config's pace. Posts are then spread over equal random
+    windows between 07:00 and 23:00 ET (never overnight)."""
+    try:
+        with open(STATE_DIR / "pace.json") as f:
+            n = int(json.load(f)["posts_per_day"])
+    except (OSError, ValueError, KeyError, json.JSONDecodeError):
+        return stage
+    n = max(1, min(n, 12))
+    start_min, span = 7 * 60, 16 * 60
+    windows = []
+    for i in range(n):
+        a = start_min + span * i // n
+        b = start_min + span * (i + 1) // n - 1
+        windows.append(f"{a // 60:02d}:{a % 60:02d}-{b // 60:02d}:{b % 60:02d}")
+    return {**stage, "posts_per_day": n, "windows_et": windows}
+
+
 def active_stage(cfg, today_et: date):
     start = date.fromisoformat(cfg["rollout_start_date"])
     days_since_start = (today_et - start).days
     for stage in cfg["stages"]:
         lo, hi = stage["day_range"]
         if days_since_start >= lo and (hi is None or days_since_start <= hi):
-            return stage, days_since_start
+            return apply_pace_override(stage), days_since_start
     # Fallback: before rollout_start_date, or config gap -> most conservative stage
-    return cfg["stages"][0], days_since_start
+    return apply_pace_override(cfg["stages"][0]), days_since_start
 
 
 def parse_window(window_str, on_date: date):

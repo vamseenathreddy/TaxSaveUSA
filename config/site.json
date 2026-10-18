@@ -1,0 +1,17 @@
+{
+  "site_name": "TaxSaveUSA Trending",
+  "tagline": "What America is talking about, in plain English.",
+  "base_url": "https://vamseenathreddy.github.io/TaxSaveUSA",
+  "youtube_url": "https://youtube.com/@TaxSaveUSA",
+  "language": "en-US",
+  "front_page_count": 30,
+  "categories": {
+    "trending": "Trending Now",
+    "us-news": "US News",
+    "tech": "Tech",
+    "sports": "Sports",
+    "entertainment": "Entertainment",
+    "money": "Money and Business",
+    "taxes": "Taxes"
+  }
+}
