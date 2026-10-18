@@ -73,8 +73,15 @@ def parse_window(window_str, on_date: date):
     return start_dt, end_dt
 
 
-def pick_times_for_today(stage, today_et: date, seed_key: str):
-    """Deterministically random: same seed_key -> same picks if rerun."""
+def pick_times_for_today(stage, today_et: date, seed_key: str, now_et: datetime | None = None):
+    """Deterministically random: same seed_key -> same picks if rerun.
+
+    If now_et is given (the day's schedule is being created partway
+    through the day), windows that already ended are skipped and a window
+    that is partly over only picks from its remaining part (starting 5
+    minutes from now). Without this, switching to a faster pace mid-day
+    would create several already-past slots that all fire back to back,
+    one per tick."""
     rng = random.Random(seed_key)
     n = stage["posts_per_day"]
     windows = stage["windows_et"]
@@ -83,6 +90,10 @@ def pick_times_for_today(stage, today_et: date, seed_key: str):
     for i in range(n):
         window = windows[i % len(windows)]
         start_dt, end_dt = parse_window(window, today_et)
+        if now_et is not None:
+            start_dt = max(start_dt, now_et + timedelta(minutes=5))
+            if start_dt >= end_dt:
+                continue
         span_seconds = int((end_dt - start_dt).total_seconds())
         offset = rng.randint(0, max(span_seconds, 0))
         picks.append((start_dt + timedelta(seconds=offset)).isoformat())
@@ -95,13 +106,13 @@ def state_path_for(day: date):
     return STATE_DIR / f"schedule_{day.isoformat()}.json"
 
 
-def ensure_today_scheduled(cfg, today_et: date):
+def ensure_today_scheduled(cfg, today_et: date, now_et: datetime | None = None):
     """Creates today's state file (with freshly picked times) if it
     doesn't exist yet. Returns (stage, day_num) for today."""
     stage, day_num = active_stage(cfg, today_et)
     state_file = state_path_for(today_et)
     if not state_file.exists():
-        picks = pick_times_for_today(stage, today_et, seed_key=today_et.isoformat())
+        picks = pick_times_for_today(stage, today_et, seed_key=today_et.isoformat(), now_et=now_et)
         state = {
             "stage": stage["name"],
             "day_num_since_rollout_start": day_num,
@@ -147,7 +158,7 @@ def main():
 
     # Always make sure today has a schedule, regardless of whether we
     # end up firing something from an older, missed day this tick.
-    stage, day_num = ensure_today_scheduled(cfg, today_et)
+    stage, day_num = ensure_today_scheduled(cfg, today_et, now_et)
 
     state_file, state, slot = find_oldest_overdue_slot(now_et)
 

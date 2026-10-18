@@ -53,8 +53,61 @@ def get_authenticated_service():
     return build("youtube", "v3", credentials=creds)
 
 
+TAX_PLAYLIST = "Tax Tips"
+TRENDING_COMMENT_PROMPTS = [
+    "What do you think about this? Tell us in the comments.",
+    "Did you already know about this? Comment below.",
+    "Which story should we cover next? Drop it in the comments.",
+    "Thoughts? Let us know below.",
+    "Tag a friend who needs to see this.",
+    "What is trending where you live? Comment and tell us.",
+]
+
+
+def get_or_create_playlist(youtube, title: str) -> str:
+    """Finds this channel's playlist with exactly this title (listing the
+    channel's own playlists, so a re-run never creates a duplicate), or
+    creates it public. Needs the youtube.force-ssl scope already in use."""
+    page_token = None
+    while True:
+        resp = youtube.playlists().list(
+            part="snippet", mine=True, maxResults=50, pageToken=page_token,
+        ).execute()
+        for item in resp.get("items", []):
+            if item["snippet"]["title"].strip().lower() == title.strip().lower():
+                return item["id"]
+        page_token = resp.get("nextPageToken")
+        if not page_token:
+            break
+    created = youtube.playlists().insert(
+        part="snippet,status",
+        body={
+            "snippet": {"title": title[:150], "description": f"{title} - new Shorts added automatically.",
+                         "defaultLanguage": "en"},
+            "status": {"privacyStatus": "public"},
+        },
+    ).execute()
+    print(f"Created playlist '{title}': {created['id']}")
+    return created["id"]
+
+
+def add_to_playlist(youtube, video_id: str, playlist_title: str) -> None:
+    """Non-fatal: the upload already succeeded by the time this runs."""
+    try:
+        playlist_id = get_or_create_playlist(youtube, playlist_title)
+        youtube.playlistItems().insert(
+            part="snippet",
+            body={"snippet": {"playlistId": playlist_id,
+                               "resourceId": {"kind": "youtube#video", "videoId": video_id}}},
+        ).execute()
+        print(f"Added {video_id} to playlist '{playlist_title}'")
+    except Exception as exc:
+        print(f"Could not add to playlist '{playlist_title}' (non-fatal, upload succeeded): {exc}", file=sys.stderr)
+
+
 def upload_short(video_path: Path, title: str, description: str, tags: list[str],
-                  publish_at_iso_utc: str | None = None, privacy_override: str | None = None):
+                  publish_at_iso_utc: str | None = None, privacy_override: str | None = None,
+                  playlist: str | None = None):
     youtube = get_authenticated_service()
 
     # privacy_override lets a caller (e.g. a manual re-upload for review
@@ -93,7 +146,11 @@ def upload_short(video_path: Path, title: str, description: str, tags: list[str]
     video_id = response["id"]
     print(f"Uploaded ({privacy_status}): https://youtube.com/watch?v={video_id}")
 
-    post_engagement_comment(youtube, video_id)
+    # Playlists are public pages: skip them for private/unlisted review uploads.
+    if playlist and privacy_status == "public":
+        add_to_playlist(youtube, video_id, playlist)
+
+    post_engagement_comment(youtube, video_id, playlist)
 
     return video_id, privacy_status
 
@@ -144,7 +201,7 @@ def set_video_privacy(video_id: str, privacy_status: str) -> None:
     print(f"Set privacy of {video_id} to {privacy_status}")
 
 
-def post_engagement_comment(youtube, video_id: str) -> None:
+def post_engagement_comment(youtube, video_id: str, playlist: str | None = None) -> None:
     """
     Posts one comment from the rotating pool in content/comment_prompts.json,
     advancing next_index so the pool cycles through ~36 different prompts
@@ -156,14 +213,21 @@ def post_engagement_comment(youtube, video_id: str) -> None:
     never fails the upload, which already succeeded by this point.
     """
     try:
-        with open(COMMENT_PROMPTS_PATH, encoding="utf-8-sig") as f:
-            data = json.load(f)
-        prompts = data["prompts"]
-        idx = data.get("next_index", 0) % len(prompts)
-        comment_text = prompts[idx]
-        data["next_index"] = (idx + 1) % len(prompts)
-        with open(COMMENT_PROMPTS_PATH, "w") as f:
-            json.dump(data, f, indent=2)
+        if playlist and playlist != TAX_PLAYLIST:
+            # Trending-news Shorts: the stored pool has tax-specific prompts,
+            # so use the generic news pool (random pick, no state to commit).
+            import random
+            idx = -1
+            comment_text = random.choice(TRENDING_COMMENT_PROMPTS)
+        else:
+            with open(COMMENT_PROMPTS_PATH, encoding="utf-8-sig") as f:
+                data = json.load(f)
+            prompts = data["prompts"]
+            idx = data.get("next_index", 0) % len(prompts)
+            comment_text = prompts[idx]
+            data["next_index"] = (idx + 1) % len(prompts)
+            with open(COMMENT_PROMPTS_PATH, "w") as f:
+                json.dump(data, f, indent=2)
 
         youtube.commentThreads().insert(
             part="snippet",
@@ -193,6 +257,9 @@ if __name__ == "__main__":
     parser.add_argument("--description", default=None)
     parser.add_argument("--tags", default="")
     parser.add_argument("--publish-at", default=None, help="ISO 8601 UTC, e.g. 2026-09-29T23:58:24Z")
+    parser.add_argument("--playlist", default=None,
+                         help="Add the uploaded video to this playlist (created if missing). Only "
+                              "applied to public uploads.")
     parser.add_argument("--privacy", default=None, choices=["public", "private", "unlisted"],
                          help="Force the initial privacyStatus on upload (overrides --publish-at's "
                               "default). Use 'private' or 'unlisted' to upload for review before "
@@ -234,6 +301,7 @@ if __name__ == "__main__":
             [t.strip() for t in args.tags.split(",") if t.strip()],
             args.publish_at,
             args.privacy,
+            args.playlist,
         )
         result = {"action": "upload", "video_id": video_id, "privacy_status": privacy_status,
                    "url": f"https://youtube.com/watch?v={video_id}"}

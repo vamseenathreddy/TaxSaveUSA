@@ -100,6 +100,16 @@ SUBSCRIBE_CTAS = [
     "Follow along for more tax tips",
 ]
 
+# Used instead of SUBSCRIBE_CTAS for trending-news Shorts (the tax ones
+# say "tax tips", which would be wrong under a news headline).
+TRENDING_SUBSCRIBE_CTAS = [
+    "Subscribe for daily US trends",
+    "Follow for trending news every day",
+    "Hit subscribe - new trends every few hours",
+    "Subscribe to stay in the loop",
+    "Follow along for more trending stories",
+]
+
 # Target ~20-second Shorts: the full script is condensed down to just
 # its lead sentence(s) (the ones with the actual number/fact - these
 # topic scripts are written "lead with the number" style, so the first
@@ -307,6 +317,32 @@ def load_next_topic():
     with open(TOPICS_PATH, "w") as f:
         json.dump(data, f, indent=2)
     return topic, already_used_count
+
+
+def pick_topic(source: str):
+    """Chooses where the next Short comes from - see --source. Trending
+    stories are built on the fly (scripts/trending.py) and never touch
+    topics.json; tax tips pop the next unused entry as before."""
+    import trending
+
+    if source == "tax":
+        return load_next_topic()
+    if source == "auto" and trending.due_for_tax_tip():
+        try:
+            topic, used = load_next_topic()
+            trending.bump_count()
+            return topic, used
+        except SystemExit:
+            print("tax queue empty - using a trending story instead")
+    try:
+        return trending.pick_trending_topic()
+    except trending.NoTrendingAvailable as exc:
+        if source == "trending":
+            raise SystemExit(f"No trending story available: {exc}")
+        print(f"{exc} - falling back to the next tax tip")
+        topic, used = load_next_topic()
+        trending.bump_count()
+        return topic, used
 
 
 def synthesize_voiceover(script_text: str, out_path: Path, voice_index: int):
@@ -759,7 +795,7 @@ def build_tags(topic):
     topic_tags = topic.get("tags", [])
     seen = set()
     merged = []
-    for t in topic_tags + BASE_TAGS:
+    for t in topic_tags + topic.get("base_tags", BASE_TAGS):
         key = t.lower()
         if key not in seen:
             seen.add(key)
@@ -799,6 +835,12 @@ def main():
              "popping the next unused one from the queue - doesn't touch topics.json. "
              "Used to fix and re-publish a specific video.",
     )
+    parser.add_argument(
+        "--source", choices=["auto", "trending", "tax"], default="auto",
+        help="Where the next Short comes from: 'trending' (live US trending story), 'tax' (next "
+             "unused topic in content/topics.json), or 'auto' (trending, with every 6th Short a "
+             "tax tip; falls back to a tax tip if no safe trending story can be fetched).",
+    )
     args = parser.parse_args()
 
     # Resolve the caption/hook/subscribe-banner font once, up front, and
@@ -810,7 +852,7 @@ def main():
     if args.slug:
         topic, already_used_count = load_topic_by_slug(args.slug)
     else:
-        topic, already_used_count = load_next_topic()
+        topic, already_used_count = pick_topic(args.source)
     slug = topic["slug"]
     audio_path = AUDIO_DIR / f"{slug}.mp3"
     ass_path = CAPTIONS_DIR / f"{slug}.ass"
@@ -827,7 +869,7 @@ def main():
     # needed. random.seed on the slug keeps the CTA pick deterministic
     # per-video (reruns of the same topic pick the same CTA) while still
     # varying across different topics/videos.
-    condensed_script = condense_script(topic["script"])
+    condensed_script = topic["script"] if topic.get("pre_condensed") else condense_script(topic["script"])
     # "Congratulations, you learned something new today!" line, inserted
     # between the core content and the ask-to-comment CTA, so it reads
     # as its own short sentence (full_script.split('. ')-style sentence
@@ -842,7 +884,7 @@ def main():
     # Visual-only "subscribe" banner (see SUBSCRIBE_CTAS / render_video) -
     # drawn from the same per-slug rng right after outro_cta so picks stay
     # deterministic per video without the two lists' choices being coupled.
-    subscribe_text = rng.choice(SUBSCRIBE_CTAS)
+    subscribe_text = rng.choice(TRENDING_SUBSCRIBE_CTAS if topic.get("pre_condensed") else SUBSCRIBE_CTAS)
 
     word_boundaries = synthesize_voiceover(full_script, audio_path, voice_index=already_used_count)
 
@@ -921,6 +963,7 @@ def main():
     print(f"title: {seo_title}")
     print(f"description: {description_escaped}")
     print(f"tags: {','.join(tags)}")
+    print(f"playlist: {topic.get('playlist', 'Tax Tips')}")
 
 
 if __name__ == "__main__":

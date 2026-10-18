@@ -1,14 +1,24 @@
 name: publish-shorts
 
-# Paused: the schedule trigger was removed so this workflow never runs on
-# its own and uses no Actions minutes. It can only be started manually
-# (workflow_dispatch), and the workflow is also disabled in the repo's
-# Actions settings. To resume automatic posting, restore the cron below
-# and re-enable the workflow:
-#   schedule:
-#     - cron: "*/30 * * * *"
+# PAUSED: no schedule trigger, so this only runs when started by hand.
+# To resume automatic posting (6 random-time Shorts/day, one inside each
+# 4-hour window in config/rollout.json), uncomment the schedule block
+# below and re-enable the workflow in the repo's Actions settings.
+# Idle ticks only run the tiny "decide" step and exit; this repo is
+# public, so Actions minutes are free.
 on:
-  workflow_dispatch: {}
+  # schedule:
+  #   - cron: "*/30 * * * *"
+  workflow_dispatch:
+    inputs:
+      source:
+        description: "What to post when run by hand: auto | trending | tax"
+        required: false
+        default: "auto"
+      force:
+        description: "Post now regardless of the schedule (true/false)"
+        required: false
+        default: "false"
 
 permissions:
   contents: write  # needed to commit state/ and content/topics.json (used flags) back, and to create/delete the temporary Release used to host the video for Instagram
@@ -29,7 +39,22 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Decide whether this tick should publish
+        # Runs first and needs only the standard library (+ tzdata), so a
+        # tick with nothing due finishes in seconds without installing
+        # ffmpeg or any Python packages.
+        id: decide
+        run: |
+          pip install --quiet tzdata
+          if [ "${{ inputs.force }}" = "true" ]; then
+            echo "result=fire" >> "$GITHUB_OUTPUT"
+          else
+            result=$(python3 scripts/scheduler.py)
+            echo "result=$result" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Install Python deps
+        if: steps.decide.outputs.result == 'fire'
         run: |
           pip install --break-system-packages tzdata google-auth google-auth-oauthlib google-api-python-client edge-tts requests
 
@@ -38,24 +63,17 @@ jobs:
         # renderer needs for the caption text, hook headline, and
         # subscribe banner (see resolve_caption_font() in
         # generate_video.py) - without it, ffmpeg's drawtext/subtitles
-        # filters silently draw NO TEXT instead of failing, which is why
-        # published Shorts were showing up with their background/boxes
-        # but no caption text. fc-cache refreshes the font cache so the
-        # newly installed font is immediately visible.
+        # filters silently draw NO TEXT instead of failing. fc-cache
+        # refreshes the font cache so the font is immediately visible.
+        if: steps.decide.outputs.result == 'fire'
         run: |
           sudo apt-get update -y
           sudo apt-get install -y ffmpeg fonts-dejavu-core fontconfig
           fc-cache -f
 
-      - name: Decide whether this tick should publish
-        id: decide
-        run: |
-          result=$(python3 scripts/scheduler.py)
-          echo "result=$result" >> "$GITHUB_OUTPUT"
-
       - name: Generate video
         if: steps.decide.outputs.result == 'fire'
-        run: python3 scripts/generate_video.py > build_meta.txt
+        run: python3 scripts/generate_video.py --source "${{ inputs.source || 'auto' }}" > build_meta.txt
 
       - name: Parse build metadata
         if: steps.decide.outputs.result == 'fire'
@@ -65,10 +83,12 @@ jobs:
           description=$(printf '%b' "$description_raw")
           video_path=$(grep '^rendered:' build_meta.txt | cut -d' ' -f2-)
           tags=$(grep '^tags:' build_meta.txt | cut -d' ' -f2-)
+          playlist=$(grep '^playlist:' build_meta.txt | cut -d' ' -f2-)
           {
             echo "TITLE=$title"
             echo "VIDEO_PATH=$video_path"
             echo "TAGS=$tags"
+            echo "PLAYLIST=$playlist"
             echo "DESCRIPTION<<DESC_EOF"
             echo "$description"
             echo "DESC_EOF"
@@ -85,7 +105,8 @@ jobs:
             --video "$VIDEO_PATH" \
             --title "$TITLE" \
             --description "$DESCRIPTION" \
-            --tags "$TAGS"
+            --tags "$TAGS" \
+            --playlist "$PLAYLIST"
 
       - name: Host video temporarily for Instagram
         if: steps.decide.outputs.result == 'fire'
@@ -123,4 +144,5 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add state/ content/topics.json content/comment_prompts.json
           git diff --cached --quiet || git commit -m "chore: update scheduler state / consumed topic queue"
+          git pull --rebase origin main || true
           git push

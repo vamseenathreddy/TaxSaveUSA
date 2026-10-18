@@ -4,5 +4,7 @@
   "picked_times_et": [
     "2026-10-10T22:41:17-04:00"
   ],
-  "fired": {}
+  "fired": {
+    "2026-10-10T22:41:17-04:00": "skipped-on-pipeline-reset-2026-10-18"
+  }
 }

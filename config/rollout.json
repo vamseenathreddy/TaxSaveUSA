@@ -1,14 +1,24 @@
 {
   "_comment": "Rollout config. rollout_start_date marks when this pace took effect. Edit posts_per_day / windows_et as needed - no need to touch the workflow file to change pace.",
-  "rollout_start_date": "2026-09-29",
+  "rollout_start_date": "2026-10-18",
   "timezone_note": "windows_et are in US Eastern local time (America/New_York) and are DST-safe - the scheduler converts them to UTC/IST at run time using zoneinfo, so they stay correct across the Nov/Mar DST switch.",
-  "randomness_note": "Windows are wide (06:00-23:59 ET) so timing is fully random rather than fixed slots - the scheduler picks a genuinely random minute inside this range for each of the day's posts, spread across the day. The 00:00-06:00 ET gap is kept out on purpose since that's overnight for the entire continental US - posting there gets near-zero views regardless of randomness.",
+  "randomness_note": "Six 4-hour windows tile the whole ET day; the scheduler picks a genuinely random minute inside each, so there is exactly one post per 4-hour block at an unpredictable time. To avoid overnight posts, shorten the first window (e.g. 05:00-07:59) or drop it and set posts_per_day to 5.",
   "stages": [
     {
-      "name": "one_per_day",
-      "day_range": [0, null],
-      "posts_per_day": 1,
-      "windows_et": ["06:00-23:59"]
+      "name": "trending_every_4h",
+      "day_range": [
+        0,
+        null
+      ],
+      "posts_per_day": 6,
+      "windows_et": [
+        "00:00-03:59",
+        "04:00-07:59",
+        "08:00-11:59",
+        "12:00-15:59",
+        "16:00-19:59",
+        "20:00-23:59"
+      ]
     }
   ],
   "watch_for": [
