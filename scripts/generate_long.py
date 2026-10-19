@@ -160,6 +160,7 @@ def speak(text: str, voice: str, out: Path) -> Path:
                     return out
             except Exception as exc:  # noqa: BLE001
                 last = exc
+    print(f"::error::narration failed: {last}")
     raise SystemExit(f"narration failed: {last}")
 
 
@@ -221,6 +222,7 @@ def news_plan(rng) -> dict:
                 per_cat[category] = per_cat.get(category, 0) + 1
                 break
     if len(picked) < MIN_NEWS:
+        print(f"::error::only {len(picked)} safe stories found")
         raise SystemExit(f"only {len(picked)} safe stories found (need {MIN_NEWS}); try again later")
     for p in picked:
         st["seen"].append({"key": re.sub(r"\W", "", p["headline"].lower())[:12], "tokens": sorted(trending._tokens(p["headline"])),
@@ -314,4 +316,12 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except SystemExit:
+        raise
+    except Exception as exc:  # noqa: BLE001 - surface the reason as a GitHub annotation (run logs are not downloadable)
+        import traceback
+
+        print(f"::error::generate_long failed: {type(exc).__name__}: {exc} | {traceback.format_exc()[-400:].replace(chr(10), ' | ')}")
+        sys.exit(1)
