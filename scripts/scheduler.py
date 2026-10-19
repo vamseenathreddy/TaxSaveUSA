@@ -56,6 +56,8 @@ def apply_pace_override(stage):
     """If analytics_pace.py has written state/pace.json, its posts_per_day
     replaces the config's pace. Posts are then spread over equal random
     windows between 07:00 and 23:00 ET (never overnight)."""
+    if stage.get("fixed"):
+        return stage
     try:
         with open(STATE_DIR / "pace.json") as f:
             n = int(json.load(f)["posts_per_day"])
@@ -102,10 +104,12 @@ def pick_times_for_today(stage, today_et: date, seed_key: str, now_et: datetime 
     would create several already-past slots that all fire back to back,
     one per tick."""
     rng = random.Random(seed_key)
-    n = stage["posts_per_day"]
-    windows = stage["windows_et"]
+    slots = stage.get("slots")
+    n = len(slots) if slots else stage["posts_per_day"]
+    windows = [x["window"] for x in slots] if slots else stage["windows_et"]
     # Spread posts across windows as evenly as possible
     picks = []
+    kinds = {}
     for i in range(n):
         window = windows[i % len(windows)]
         start_dt, end_dt = parse_window(window, today_et)
@@ -115,8 +119,12 @@ def pick_times_for_today(stage, today_et: date, seed_key: str, now_et: datetime 
                 continue
         span_seconds = int((end_dt - start_dt).total_seconds())
         offset = rng.randint(0, max(span_seconds, 0))
-        picks.append((start_dt + timedelta(seconds=offset)).isoformat())
+        iso = (start_dt + timedelta(seconds=offset)).isoformat()
+        picks.append(iso)
+        if slots:
+            kinds[iso] = f"{slots[i]['kind']}:{slots[i]['source']}"
     picks.sort()
+    pick_times_for_today.last_kinds = kinds
     return picks
 
 
@@ -133,6 +141,7 @@ def ensure_today_scheduled(cfg, today_et: date, now_et: datetime | None = None):
     if not state_file.exists():
         picks = pick_times_for_today(stage, today_et, seed_key=today_et.isoformat(), now_et=now_et)
         state = {
+            "kinds": getattr(pick_times_for_today, "last_kinds", {}),
             "stage": stage["name"],
             "day_num_since_rollout_start": day_num,
             "picked_times_et": picks,
@@ -189,7 +198,8 @@ def main():
     with open(state_file, "w") as f:
         json.dump(state, f, indent=2)
 
-    print("fire")
+    kind = state.get("kinds", {}).get(slot, "short:auto").replace(":", "-")
+    print(f"fire-{kind}")
     print(
         f"# fired_from={state_file.name} slot_et={slot} now_ist={now_utc.astimezone(IST).isoformat()}",
         file=sys.stderr,

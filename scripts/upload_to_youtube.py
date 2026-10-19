@@ -107,7 +107,7 @@ def add_to_playlist(youtube, video_id: str, playlist_title: str) -> None:
 
 def upload_short(video_path: Path, title: str, description: str, tags: list[str],
                   publish_at_iso_utc: str | None = None, privacy_override: str | None = None,
-                  playlist: str | None = None):
+                  playlist: str | None = None, category_id: str = "27", thumbnail: str | None = None):
     youtube = get_authenticated_service()
 
     # privacy_override lets a caller (e.g. a manual re-upload for review
@@ -123,7 +123,7 @@ def upload_short(video_path: Path, title: str, description: str, tags: list[str]
             "title": title[:100],
             "description": description[:5000],
             "tags": tags,
-            "categoryId": "27",  # Education; consider "22" People & Blogs if it fits better
+            "categoryId": category_id,  # 27 Education (tax tips); 25 News & Politics for the news roundup
             # Declares the video's language explicitly instead of leaving
             # it unset - without this YouTube can misjudge which locale's
             # search/suggested results to surface the video in, which is
@@ -145,6 +145,13 @@ def upload_short(video_path: Path, title: str, description: str, tags: list[str]
     response = request.execute()
     video_id = response["id"]
     print(f"Uploaded ({privacy_status}): https://youtube.com/watch?v={video_id}")
+
+    if thumbnail:
+        try:
+            youtube.thumbnails().set(videoId=video_id, media_body=MediaFileUpload(thumbnail, mimetype="image/png")).execute()
+            print("Thumbnail set")
+        except Exception as exc:  # needs a verified channel; never fail the upload
+            print(f"Could not set thumbnail (non-fatal): {exc}", file=sys.stderr)
 
     # Playlists are public pages: skip them for private/unlisted review uploads.
     if playlist and privacy_status == "public":
@@ -256,6 +263,8 @@ if __name__ == "__main__":
     parser.add_argument("--title", default=None)
     parser.add_argument("--description", default=None)
     parser.add_argument("--tags", default="")
+    parser.add_argument("--category-id", default="27", help="YouTube category id (27 Education, 25 News)")
+    parser.add_argument("--thumbnail", default=None, help="PNG/JPG thumbnail for long videos")
     parser.add_argument("--publish-at", default=None, help="ISO 8601 UTC, e.g. 2026-09-29T23:58:24Z")
     parser.add_argument("--playlist", default=None,
                          help="Add the uploaded video to this playlist (created if missing). Only "
@@ -302,6 +311,8 @@ if __name__ == "__main__":
             args.publish_at,
             args.privacy,
             args.playlist,
+            args.category_id,
+            args.thumbnail,
         )
         result = {"action": "upload", "video_id": video_id, "privacy_status": privacy_status,
                    "url": f"https://youtube.com/watch?v={video_id}"}

@@ -1,0 +1,213 @@
+{
+  "_comment": "Tax explainer videos for the long-video slot. Written as original scripts from general IRS guidance; no year-specific dollar limits except stable ones. Fact-check against irs.gov before adding more. 'used' flips to true after upload.",
+  "videos": [
+    {
+      "slug": "tax-credits-people-forget",
+      "title": "7 Tax Deductions and Credits Most People Forget to Claim",
+      "thumb_line1": "7 TAX BREAKS",
+      "thumb_line2": "YOU MAY BE MISSING",
+      "hook": "FORGOTTEN TAX BREAKS",
+      "intro": "Every year, millions of Americans leave money on the table because they never claim tax breaks they qualify for. In this video, we walk through seven of the most commonly missed deductions and credits, in plain English. A quick note first: this is general information, not personal tax advice, and the rules and income limits change, so always confirm the details on irs.gov or with a tax professional.",
+      "points": [
+        {
+          "head": "The Earned Income Tax Credit",
+          "text": "The Earned Income Tax Credit is a refundable credit for low and moderate income workers, and it is one of the most valuable tax breaks in the country. Refundable means that if the credit is bigger than the tax you owe, you can still get the difference as a refund. The IRS estimates that a share of eligible people never claim it, often because they are not required to file a return. If you worked and earned a modest income, check the IRS eligibility tool, because the amount depends on your income, filing status, and number of qualifying children."
+        },
+        {
+          "head": "The Saver's Credit",
+          "text": "If you contribute to a retirement account like a 401k or an IRA and your income is within the limits, you may qualify for the Saver's Credit. It can be worth up to fifty percent of the first two thousand dollars you contribute, and it comes straight off your tax bill, which is better than a deduction. Many people who qualify have never heard of it, because it is claimed on Form 8880 and tax software only asks about it when you answer the right questions."
+        },
+        {
+          "head": "Student loan interest",
+          "text": "If you paid interest on a qualified student loan, you may be able to deduct up to twenty five hundred dollars of it, and you can take this deduction even if you do not itemize. Your lender will send you a Form 1098 E if you paid at least six hundred dollars in interest. The deduction phases out at higher incomes, so check the current limits for your filing status."
+        },
+        {
+          "head": "Education credits",
+          "text": "Two credits help with college costs. The American Opportunity Credit is worth up to twenty five hundred dollars per student for the first four years of college, and part of it can be refundable. The Lifetime Learning Credit is worth up to two thousand dollars per return and can be used for graduate school or classes to improve job skills. You cannot claim both for the same student in the same year, so compare them before you file."
+        },
+        {
+          "head": "Medical expenses",
+          "text": "If you itemize, you can deduct the part of your unreimbursed medical and dental expenses that is more than seven and a half percent of your adjusted gross income. That sounds like a lot, but in a year with surgery, braces, or a long illness, the total can add up. Keep your receipts, insurance statements, and even a log of mileage to medical appointments."
+        },
+        {
+          "head": "Child and dependent care credit",
+          "text": "If you pay for child care or care for another dependent so that you can work or look for work, you may qualify for the child and dependent care credit. It is a percentage of your care costs, up to a limit per dependent. You will need the care provider's name, address, and tax identification number, so ask for it when you pay, not months later."
+        },
+        {
+          "head": "Health Savings Account contributions",
+          "text": "If you have a high deductible health plan, a Health Savings Account gives you a rare triple tax advantage. Contributions are tax deductible, the money grows tax free, and withdrawals for qualified medical expenses are tax free too. Many people with a qualifying plan never open an account, or forget to report contributions made outside of payroll. Unused money rolls over every year, so it can also work like an extra retirement account for medical costs."
+        }
+      ],
+      "outro": "That is seven tax breaks that people commonly miss: the Earned Income Tax Credit, the Saver's Credit, student loan interest, education credits, medical expenses, the child and dependent care credit, and Health Savings Account contributions. Which one surprised you the most? Check the details at irs.gov or ask a tax professional, and subscribe to TaxSaveUSA for more practical money and tax tips every day.",
+      "tags": [
+        "tax deductions",
+        "tax credits",
+        "tax breaks you miss",
+        "earned income tax credit",
+        "savers credit",
+        "student loan interest deduction",
+        "how to save on taxes",
+        "irs tax tips",
+        "tax refund",
+        "taxes explained"
+      ],
+      "playlist": "Tax Tips",
+      "used": false
+    },
+    {
+      "slug": "avoid-irs-penalties",
+      "title": "7 Mistakes That Trigger IRS Penalties (And How to Avoid Them)",
+      "thumb_line1": "AVOID IRS",
+      "thumb_line2": "PENALTIES",
+      "hook": "AVOID IRS PENALTIES",
+      "intro": "IRS penalties are some of the most avoidable costs in personal finance, yet they catch millions of people every year. In this video, we cover seven common mistakes that lead to penalties and interest, and the simple habits that prevent them. This is general information, not personal tax advice, so confirm the details for your situation on irs.gov or with a tax professional.",
+      "points": [
+        {
+          "head": "Filing late",
+          "text": "The penalty for filing late is much bigger than the penalty for paying late. If you owe tax and file after the deadline, the failure to file penalty is generally five percent of the unpaid tax for each month, up to twenty five percent. Even if you cannot pay everything, file on time. The IRS also offers payment plans, which cost far less than ignoring the problem."
+        },
+        {
+          "head": "Thinking an extension gives you more time to pay",
+          "text": "Form 4868 gives you an automatic extension to file, usually until October, but it does not give you more time to pay. Interest and the failure to pay penalty, which is generally half a percent of the unpaid tax per month, start from the original due date. If you request an extension, estimate what you owe and pay as much as you can by the April deadline."
+        },
+        {
+          "head": "Underpaying during the year",
+          "text": "The United States has a pay as you go tax system. If you are self employed, earn investment income, or have side income without withholding, you may need to make quarterly estimated payments. To avoid an underpayment penalty, a common safe harbor is paying at least ninety percent of this year's tax or one hundred percent of last year's tax. If your income was higher, the prior year figure can be one hundred and ten percent. Employees can also fix this by adjusting the Form W 4 at work."
+        },
+        {
+          "head": "Income that does not match",
+          "text": "The IRS receives copies of your W 2s, 1099s, and other forms, and its systems compare them to your return. If you forget a 1099 for freelance work, interest, or a brokerage sale, you will probably get a notice. Before you file, gather every form, check your online IRS account, and report all income, even if you did not receive a form."
+        },
+        {
+          "head": "Small errors on the return",
+          "text": "Wrong Social Security numbers, a misspelled name, math mistakes, and incorrect bank account numbers delay refunds and cause notices. File electronically with direct deposit, because software catches many errors for you, and double check every number you type, especially your routing and account numbers."
+        },
+        {
+          "head": "Ignoring IRS letters",
+          "text": "Almost every IRS notice has a deadline printed on it. Ignoring a letter does not make it go away, it usually makes the amount larger and shortens your options. Read it carefully, compare it to your return, and respond by the date given. If you agree, pay or set up a plan. If you disagree, send your documents in writing, and consider asking a tax professional for help."
+        },
+        {
+          "head": "Not keeping records",
+          "text": "Generally, the IRS can audit a return for three years after you file it, and longer in some cases. Keep copies of your returns and the records that support every deduction and credit, like receipts, mileage logs, and statements. Digital copies are fine. Good records are your best protection if you are ever asked to prove a number."
+        }
+      ],
+      "outro": "To recap: file on time, remember that an extension does not extend payment, pay enough during the year, report all of your income, double check your return, answer IRS letters quickly, and keep good records. Do these seven things and you avoid most penalties. For more simple tax and money tips, subscribe to TaxSaveUSA.",
+      "tags": [
+        "irs penalties",
+        "avoid irs penalty",
+        "tax mistakes",
+        "late filing penalty",
+        "estimated taxes",
+        "tax extension",
+        "irs notice",
+        "how to avoid tax penalties",
+        "taxes explained",
+        "tax tips"
+      ],
+      "playlist": "Tax Tips",
+      "used": false
+    },
+    {
+      "slug": "get-your-refund-faster",
+      "title": "How to Get Your Tax Refund Faster: 6 Things That Actually Work",
+      "thumb_line1": "GET YOUR",
+      "thumb_line2": "REFUND FASTER",
+      "hook": "FASTER TAX REFUND",
+      "intro": "Waiting for a tax refund can feel like forever, especially when you are counting on that money. The good news is that a few simple choices make a real difference in how fast it arrives. In this video, we cover six things that actually work, based on how the IRS processes returns. This is general information, not personal tax advice.",
+      "points": [
+        {
+          "head": "File electronically",
+          "text": "An electronically filed return is processed much faster than a paper one. A paper return has to be opened, scanned, and typed in by hand, which can take weeks or even months. The IRS says that most e filed refunds are issued in less than twenty one days. If you can e file, do it."
+        },
+        {
+          "head": "Choose direct deposit",
+          "text": "Direct deposit is the fastest and safest way to receive your refund. A paper check has to be printed and mailed, and it can be lost, stolen, or delayed. Type your routing and account numbers slowly and check them twice, because a single wrong digit can send your refund to the wrong place or hold it up for weeks."
+        },
+        {
+          "head": "Get the details exactly right",
+          "text": "Most delays come from small errors. Names must match your Social Security card, the numbers must be right, and every form must be attached. If you moved or changed your name, update your records first. Software helps by checking for common mistakes before you submit."
+        },
+        {
+          "head": "Know the rules for certain credits",
+          "text": "By law, the IRS cannot issue refunds that include the Earned Income Tax Credit or the Additional Child Tax Credit before mid February. If you claim one of these credits, filing early still helps, because the IRS can start processing, but the money will not arrive until after that date."
+        },
+        {
+          "head": "Track it the right way",
+          "text": "Use the Where's My Refund tool on irs.gov or the IRS2Go app. You need your Social Security number, your filing status, and the exact refund amount from your return. The tool updates once a day, so checking more often does not help. Calling the IRS usually does not speed anything up unless the tool tells you to."
+        },
+        {
+          "head": "Do not wait to file",
+          "text": "If you are owed a refund, there is no reason to wait until the deadline. File as soon as you have all of your tax forms. Just make sure you have every document first, because filing too early without a form and then fixing it later with an amended return is slower than waiting a few days to file it correctly the first time."
+        }
+      ],
+      "outro": "So the plan is simple: e file, use direct deposit, double check every detail, understand the credit rules, track your refund on irs.gov, and file once you have all of your documents. If you found this useful, subscribe to TaxSaveUSA for more clear tax tips.",
+      "tags": [
+        "tax refund",
+        "get refund faster",
+        "irs refund",
+        "where is my refund",
+        "direct deposit tax refund",
+        "e file taxes",
+        "tax refund delays",
+        "earned income credit refund date",
+        "taxes explained",
+        "tax tips"
+      ],
+      "playlist": "Tax Tips",
+      "used": false
+    },
+    {
+      "slug": "self-employed-tax-guide",
+      "title": "Self-Employed Taxes Explained: 7 Things Every Freelancer Must Know",
+      "thumb_line1": "FREELANCER",
+      "thumb_line2": "TAX GUIDE",
+      "hook": "FREELANCER TAXES",
+      "intro": "Working for yourself is great, but the tax rules are different from having an employer, and surprises can be expensive. In this video, we explain seven things every freelancer, gig worker, and small business owner should know. This is general information, not personal tax advice, so verify details on irs.gov or with a tax professional.",
+      "points": [
+        {
+          "head": "You pay self employment tax",
+          "text": "When you work for yourself, you pay both halves of Social Security and Medicare tax. That is called self employment tax, and the rate is fifteen point three percent on most of your net earnings. It is on top of regular income tax. You can deduct half of it when you calculate your adjusted gross income, which softens the blow."
+        },
+        {
+          "head": "Quarterly estimated payments",
+          "text": "No one withholds tax from freelance income, so the IRS expects you to pay during the year. Estimated payments are made four times a year, using Form 1040 ES or your IRS online account. A good habit is to move a percentage of every payment into a separate savings account the day you get paid, so the money is there when the due date comes."
+        },
+        {
+          "head": "Track every business expense",
+          "text": "You are taxed on your profit, not your total income, so every legitimate business expense lowers your tax. Common ones include software, supplies, phone and internet used for business, professional fees, and advertising. Keep receipts and use a separate bank account and card for business so it is easy to prove what is business and what is personal."
+        },
+        {
+          "head": "The home office deduction",
+          "text": "If you use part of your home regularly and exclusively for your business, you may be able to deduct a portion of home costs. There is a simplified method that uses a flat rate per square foot, and a regular method that uses actual expenses. The key words are regularly and exclusively, so a desk in the corner of the living room where the family watches television may not qualify."
+        },
+        {
+          "head": "Mileage and vehicle costs",
+          "text": "If you drive for business, you can deduct either the standard mileage rate or your actual vehicle costs. The standard mileage rate is set by the IRS every year. The most important thing is a written log with the date, destination, purpose, and miles for every trip, kept at the time of the trip, not rebuilt at tax time."
+        },
+        {
+          "head": "The qualified business income deduction",
+          "text": "Many sole proprietors, partners, and owners of pass through businesses can deduct up to twenty percent of their qualified business income. There are limits based on income and the type of business, but for many small business owners this deduction can be significant. It is taken on your personal return, so make sure your software or preparer applies it."
+        },
+        {
+          "head": "Retirement and health insurance",
+          "text": "Self employed people have no employer plan, but there are options that also reduce your tax. A SEP IRA or a Solo 401k lets you put away a large part of your profit, and contributions are generally deductible. You may also be able to deduct health insurance premiums that you pay for yourself and your family, if you meet the requirements."
+        }
+      ],
+      "outro": "To recap: expect self employment tax, make quarterly payments, track your expenses, look into the home office and mileage deductions, claim the qualified business income deduction if you qualify, and use retirement and health insurance deductions. Organize your records now and tax time becomes much easier. Subscribe to TaxSaveUSA for more tax and money tips every day.",
+      "tags": [
+        "self employed taxes",
+        "freelancer taxes",
+        "self employment tax",
+        "quarterly estimated taxes",
+        "1099 taxes",
+        "gig worker taxes",
+        "small business tax deductions",
+        "home office deduction",
+        "qbi deduction",
+        "tax tips"
+      ],
+      "playlist": "Tax Tips",
+      "used": false
+    }
+  ]
+}

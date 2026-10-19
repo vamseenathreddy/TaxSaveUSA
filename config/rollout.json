@@ -1,23 +1,44 @@
 {
-  "_comment": "Rollout config. rollout_start_date marks when this pace took effect. Edit posts_per_day / windows_et as needed - no need to touch the workflow file to change pace.",
+  "_comment": "Rollout config. Stage 'mix_3shorts_1video' (set 2026-10-19): per day 2 trending-news Shorts, 1 tax-tip Short and 1 long video (news roundup or tax explainer, alternating). Each slot gets a random minute inside its US-Eastern window. 'fixed' stages ignore state/pace.json.",
   "rollout_start_date": "2026-10-18",
   "timezone_note": "windows_et are in US Eastern local time (America/New_York) and are DST-safe - the scheduler converts them to UTC/IST at run time using zoneinfo, so they stay correct across the Nov/Mar DST switch.",
   "randomness_note": "Six 4-hour windows tile the whole ET day; the scheduler picks a genuinely random minute inside each, so there is exactly one post per 4-hour block at an unpredictable time. To avoid overnight posts, shorten the first window (e.g. 05:00-07:59) or drop it and set posts_per_day to 5.",
   "stages": [
     {
-      "name": "trending_every_4h",
+      "name": "mix_3shorts_1video",
       "day_range": [
         0,
         null
       ],
-      "posts_per_day": 6,
+      "fixed": true,
+      "slots": [
+        {
+          "window": "07:00-09:59",
+          "kind": "short",
+          "source": "trending"
+        },
+        {
+          "window": "12:00-14:59",
+          "kind": "short",
+          "source": "tax"
+        },
+        {
+          "window": "16:00-18:29",
+          "kind": "short",
+          "source": "trending"
+        },
+        {
+          "window": "19:00-21:29",
+          "kind": "long",
+          "source": "auto"
+        }
+      ],
+      "posts_per_day": 4,
       "windows_et": [
-        "00:00-03:59",
-        "04:00-07:59",
-        "08:00-11:59",
-        "12:00-15:59",
-        "16:00-19:59",
-        "20:00-23:59"
+        "07:00-09:59",
+        "12:00-14:59",
+        "16:00-18:29",
+        "19:00-21:29"
       ]
     }
   ],

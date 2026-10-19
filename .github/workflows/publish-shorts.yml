@@ -1,20 +1,25 @@
 name: publish-shorts
 
-# PAUSED: no schedule trigger, so this only runs when started by hand.
-# To resume automatic posting (6 random-time Shorts/day, one inside each
-# 4-hour window in config/rollout.json), uncomment the schedule block
-# below and re-enable the workflow in the repo's Actions settings.
-# Idle ticks only run the tiny "decide" step and exit; this repo is
-# public, so Actions minutes are free.
+# Resumed 2026-10-19: 3 Shorts (2 trending news, 1 tax tip) and 1 long video a day, each at a
+# random minute inside its US-Eastern window (config/rollout.json, scripts/scheduler.py).
+# Idle ticks only run the tiny "decide" step and exit; this repo is public, so Actions minutes are free.
 on:
-  # schedule:
-  #   - cron: "*/30 * * * *"
+  schedule:
+    - cron: "*/15 * * * *"
   workflow_dispatch:
     inputs:
+      kind:
+        description: "What to post when run by hand: short | long"
+        required: false
+        default: "short"
       source:
-        description: "What to post when run by hand: auto | trending | tax"
+        description: "Short source / long format when run by hand: auto | trending | tax | news"
         required: false
         default: "auto"
+      privacy:
+        description: "Upload privacy for a manual run: public | unlisted (use unlisted to test)"
+        required: false
+        default: "public"
       force:
         description: "Post now regardless of the schedule (true/false)"
         required: false
@@ -47,14 +52,19 @@ jobs:
         run: |
           pip install --quiet tzdata
           if [ "${{ inputs.force }}" = "true" ]; then
-            echo "result=fire" >> "$GITHUB_OUTPUT"
+            result="fire-${{ inputs.kind || 'short' }}-${{ inputs.source || 'auto' }}"
           else
             result=$(python3 scripts/scheduler.py)
-            echo "result=$result" >> "$GITHUB_OUTPUT"
           fi
+          echo "result=$result" >> "$GITHUB_OUTPUT"
+          case "$result" in
+            fire-*) IFS=- read -r _ kind source <<< "$result"
+                    echo "fire=yes" >> "$GITHUB_OUTPUT"; echo "kind=$kind" >> "$GITHUB_OUTPUT"; echo "source=$source" >> "$GITHUB_OUTPUT";;
+            *) echo "fire=no" >> "$GITHUB_OUTPUT";;
+          esac
 
       - name: Install Python deps
-        if: steps.decide.outputs.result == 'fire'
+        if: steps.decide.outputs.fire == 'yes'
         run: |
           pip install --break-system-packages tzdata google-auth google-auth-oauthlib google-api-python-client edge-tts requests
 
@@ -65,18 +75,25 @@ jobs:
         # generate_video.py) - without it, ffmpeg's drawtext/subtitles
         # filters silently draw NO TEXT instead of failing. fc-cache
         # refreshes the font cache so the font is immediately visible.
-        if: steps.decide.outputs.result == 'fire'
+        if: steps.decide.outputs.fire == 'yes'
         run: |
           sudo apt-get update -y
           sudo apt-get install -y ffmpeg fonts-dejavu-core fontconfig
+          pip install --break-system-packages pillow
           fc-cache -f
 
-      - name: Generate video
-        if: steps.decide.outputs.result == 'fire'
-        run: python3 scripts/generate_video.py --source "${{ inputs.source || 'auto' }}" > build_meta.txt
+      - name: Generate Short
+        if: steps.decide.outputs.fire == 'yes' && steps.decide.outputs.kind == 'short'
+        run: python3 scripts/generate_video.py --source "${{ steps.decide.outputs.source }}" > build_meta.txt
+
+      - name: Generate long video
+        if: steps.decide.outputs.fire == 'yes' && steps.decide.outputs.kind == 'long'
+        run: |
+          mode="${{ steps.decide.outputs.source }}"
+          python3 scripts/generate_long.py --mode "${mode/trending/news}" ${{ inputs.privacy == 'unlisted' && '--keep-queue' || '' }} > build_meta.txt
 
       - name: Parse build metadata
-        if: steps.decide.outputs.result == 'fire'
+        if: steps.decide.outputs.fire == 'yes'
         run: |
           title=$(grep '^title:' build_meta.txt | cut -d' ' -f2-)
           description_raw=$(grep '^description:' build_meta.txt | cut -d' ' -f2-)
@@ -84,7 +101,9 @@ jobs:
           video_path=$(grep '^rendered:' build_meta.txt | cut -d' ' -f2-)
           tags=$(grep '^tags:' build_meta.txt | cut -d' ' -f2-)
           playlist=$(grep '^playlist:' build_meta.txt | cut -d' ' -f2-)
+          thumb=$(grep '^thumb:' build_meta.txt | cut -d' ' -f2-)
           {
+            echo "THUMB=$thumb"
             echo "TITLE=$title"
             echo "VIDEO_PATH=$video_path"
             echo "TAGS=$tags"
@@ -95,7 +114,7 @@ jobs:
           } >> "$GITHUB_ENV"
 
       - name: Upload to YouTube
-        if: steps.decide.outputs.result == 'fire'
+        if: steps.decide.outputs.fire == 'yes'
         env:
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
@@ -106,10 +125,13 @@ jobs:
             --title "$TITLE" \
             --description "$DESCRIPTION" \
             --tags "$TAGS" \
-            --playlist "$PLAYLIST"
+            --playlist "$PLAYLIST" \
+            ${{ steps.decide.outputs.kind == 'long' && '--category-id 27' || '' }} \
+            ${{ steps.decide.outputs.kind == 'long' && '--thumbnail "$THUMB"' || '' }} \
+            ${{ inputs.privacy == 'unlisted' && '--privacy unlisted' || '' }}
 
       - name: Host video temporarily for Instagram
-        if: steps.decide.outputs.result == 'fire'
+        if: steps.decide.outputs.fire == 'yes' && steps.decide.outputs.kind == 'short' && inputs.privacy != 'unlisted'
         id: host
         run: |
           tag="reel-${{ github.run_id }}-${{ github.run_attempt }}"
@@ -122,7 +144,7 @@ jobs:
           sleep 10  # brief propagation buffer before Instagram fetches it
 
       - name: Publish to Instagram
-        if: steps.decide.outputs.result == 'fire'
+        if: steps.decide.outputs.fire == 'yes' && steps.decide.outputs.kind == 'short' && inputs.privacy != 'unlisted'
         env:
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
@@ -142,7 +164,7 @@ jobs:
         run: |
           git config user.name "shorts-automation-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add state/ content/topics.json content/comment_prompts.json
+          git add state/ content/topics.json content/comment_prompts.json content/long_tax.json
           git diff --cached --quiet || git commit -m "chore: update scheduler state / consumed topic queue"
           git pull --rebase origin main || true
           git push
