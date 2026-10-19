@@ -126,6 +126,7 @@ jobs:
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
         run: |
+          set +e
           python3 scripts/upload_to_youtube.py \
             --video "$VIDEO_PATH" \
             --title "$TITLE" \
@@ -134,7 +135,14 @@ jobs:
             --playlist "$PLAYLIST" \
             ${{ steps.decide.outputs.kind == 'long' && '--category-id 27' || '' }} \
             ${{ steps.decide.outputs.kind == 'long' && '--thumbnail "$THUMB"' || '' }} \
-            ${{ inputs.privacy == 'unlisted' && '--privacy unlisted' || '' }}
+            ${{ inputs.privacy == 'unlisted' && '--privacy unlisted' || '' }} > upload_out.txt 2> upload_err.txt
+          rc=$?
+          cat upload_out.txt
+          if [ $rc -ne 0 ]; then
+            echo "::error::upload exit $rc: $(tail -c 900 upload_err.txt | tr '\n' '|')"
+            exit $rc
+          fi
+          echo "::notice title=uploaded::$(grep -m1 'Uploaded' upload_out.txt)"
 
       - name: Host video temporarily for Instagram
         if: steps.decide.outputs.fire == 'yes' && steps.decide.outputs.kind == 'short' && inputs.privacy != 'unlisted'
