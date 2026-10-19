@@ -1,0 +1,13 @@
+{
+  "_comment": "Fill these in as you sign up. Anything left empty is simply left out of video descriptions and the website; nothing breaks. Links appear only when set, always with an affiliate disclosure.",
+  "site_live": false,
+  "site_url": "https://vamseenathreddy.github.io/TaxSaveUSA/",
+  "newsletter_url": "",
+  "lead_magnet_text": "Free 2027 tax checklist",
+  "affiliate_links": [
+    {"label": "File your taxes online", "url": ""},
+    {"label": "Open a high-yield savings account", "url": ""},
+    {"label": "Free budgeting tool", "url": ""}
+  ],
+  "disclosure": "Some links are affiliate links. If you use them, the channel may earn a commission at no extra cost to you."
+}

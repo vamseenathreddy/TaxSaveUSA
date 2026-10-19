@@ -65,6 +65,23 @@ h1.page{font-size:30px;margin:28px 0 0}
 """
 
 
+def money_block():
+    """Newsletter and affiliate links from config/monetization.json (empty -> nothing shown)."""
+    try:
+        m = json.loads((ROOT / "config" / "monetization.json").read_text(encoding="utf-8-sig"))
+    except (OSError, json.JSONDecodeError):
+        return ""
+    parts = []
+    if m.get("newsletter_url"):
+        parts.append(f'<a href="{esc(m["newsletter_url"])}">{esc(m.get("lead_magnet_text") or "Get our free tax checklist")}</a>')
+    links = [a for a in m.get("affiliate_links", []) if a.get("url")]
+    parts += [f'<a href="{esc(a["url"])}" rel="sponsored nofollow noopener">{esc(a["label"])}</a>' for a in links]
+    if not parts:
+        return ""
+    note = f'<br><small>{esc(m.get("disclosure", ""))}</small>' if links else ""
+    return "<p>" + " &middot; ".join(parts) + note + "</p>"
+
+
 def esc(s):
     return html.escape(str(s), quote=True)
 
@@ -129,6 +146,7 @@ def page(cfg, title, desc, canonical, body, extra_head="", active=""):
 {body}
 </main>
 <footer><div class="wrap">
+{money_block()}
 <p>Short news briefs rewritten from public reporting, with the original source linked on every story.<br>
 Not financial, legal or tax advice. <a href="{base}/about/">About</a> &middot; <a href="{base}/feed.xml">RSS</a> &middot; <a href="{esc(cfg['youtube_url'])}">YouTube</a></p>
 </div></footer>

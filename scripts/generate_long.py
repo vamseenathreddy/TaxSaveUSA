@@ -297,7 +297,11 @@ def main() -> int:
     desc = plan["desc_head"] + "\n".join(f"{_ts(ts)} {label}" for ts, label in chapters)
     if plan["kind"] == "tax":
         desc = plan["desc_head"].split("In this video:")[0] + "Chapters:\n" + "\n".join(f"{_ts(ts)} {label}" for ts, label in chapters)
-    desc += f"\n\n{plan['footer']}\n\nSubscribe to TaxSaveUSA: https://youtube.com/@TaxSaveUSA\n\n{plan['hashtags']}"
+    import monetization
+    desc += f"\n\n{plan['footer']}"
+    if monetization.footer():
+        desc += f"\n\n{monetization.footer()}"
+    desc += f"\n\nSubscribe to TaxSaveUSA: https://youtube.com/@TaxSaveUSA\n\n{plan['hashtags']}"
     if plan.get("mark_used") and not args.keep_queue:
         data = json.loads(LONG_TAX.read_text(encoding="utf-8"))
         for v in data["videos"]:

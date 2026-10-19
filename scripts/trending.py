@@ -57,13 +57,6 @@ CATEGORIES = [
      "Here's a trending tech story.",
      [("https://feeds.bbci.co.uk/news/technology/rss.xml", "BBC News"),
       ("https://feeds.arstechnica.com/arstechnica/index", "Ars Technica")]),
-    ("sports", "SPORTS BUZZ", "Sports Highlights",
-     "Here's a trending sports story.",
-     [("https://www.espn.com/espn/rss/news", "ESPN"),
-      ("https://www.cbssports.com/rss/headlines/", "CBS Sports")]),
-    ("entertainment", "ENTERTAINMENT", "Entertainment News",
-     "Here's a trending entertainment story.",
-     [("https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml", "BBC News")]),
     ("money", "MONEY NEWS", "Money and Business News",
      "Here's a money and business headline.",
      [("https://feeds.npr.org/1006/rss.xml", "NPR"),
@@ -78,7 +71,7 @@ CATEGORY_TAGS = {
     "entertainment": ["entertainment news", "celebrity news", "movies", "tv shows", "pop culture"],
     "money": ["business news", "economy", "stock market", "money news", "finance news"],
 }
-BASE_TAGS = ["shorts", "youtube shorts", "trending", "usa", "news shorts", "today", "explained"]
+BASE_TAGS = ["shorts", "youtube shorts", "personal finance", "money news", "economy", "usa", "finance news", "money tips", "explained"]
 
 # Skip anything touching these - tragedies, graphic or adult content, and
 # campaign politics. Matched on word starts, case-insensitive. A trailing
@@ -98,6 +91,27 @@ BLOCK_PATTERN = re.compile(
     r"\b(?:" + "|".join(re.escape(w.strip()) + (r"\b" if w.endswith(" ") else "") for w in BLOCK_WORDS) + r")",
     re.I,
 )
+
+
+# Money focus: finance advertisers pay several times more per view than
+# sports or celebrity news, and a tight niche is what the recommendation
+# system needs to learn who to show the channel to. When FINANCE_ONLY is
+# True a story must mention at least one of these topics to be used.
+FINANCE_ONLY = True
+FINANCE_WORDS = [
+    "tax", "irs", "refund", "social security", "medicare", "medicaid", "retire", "401k", "401(k)", "ira ",
+    "pension", "inflation", "interest rate", "mortgage", "housing", "home price", "rent ", "rents", "federal reserve",
+    "fed ", "jobs report", "unemploy", "layoff", "wage", "salary", "paycheck", "minimum wage", "gas price",
+    "grocery", "prices", "tariff", "economy", "economic", "recession", "stock", "stocks", "dow ", "nasdaq", "s&p",
+    "wall street", "bank", "credit", "debt", "loan", "savings", "insurance", "benefit", "stimulus", "budget",
+    "treasury", "gdp", "earnings", "consumer", "shopping", "cost of living", "deduction", "bonus", "payroll",
+    "student loan", "scam", "fraud", "fee", "bills", "utility", "electric bill", "health care costs",
+]
+FINANCE_PATTERN = re.compile(r"\b(?:" + "|".join(re.escape(w.strip()) for w in FINANCE_WORDS) + r")", re.I)
+
+
+def _on_topic(*texts):
+    return (not FINANCE_ONLY) or bool(FINANCE_PATTERN.search(" ".join(texts)))
 
 
 class NoTrendingAvailable(Exception):
@@ -301,6 +315,8 @@ def _candidates_for(category, now):
             blob = " ".join([t["term"]] + [n["title"] for n in t["news"]])
             if BLOCK_PATTERN.search(blob):
                 continue
+            if not _on_topic(blob):
+                continue
             n = t["news"][0]
             headline = _strip_publisher(n["title"])
             term = t["term"][:1].upper() + t["term"][1:]
@@ -319,6 +335,8 @@ def _candidates_for(category, now):
             if not _fresh(it["published"], now):
                 continue
             if BLOCK_PATTERN.search(it["title"] + " " + it["summary"]):
+                continue
+            if not _on_topic(it["title"], it["summary"]):
                 continue
             headline = it["title"]
             core = f"{intro} {_sentence(headline)}"

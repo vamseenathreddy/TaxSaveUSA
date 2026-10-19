@@ -952,7 +952,8 @@ def main():
 
     tags = build_tags(topic)
     seo_title = _with_shorts_tag_in_title(topic["title"])
-    seo_description = _with_shorts_tag_in_description(topic["description"])
+    import monetization
+    seo_description = _with_shorts_tag_in_description(monetization.append_to(topic["description"]))
     # Description may contain embedded newlines (e.g. the hashtag line).
     # build_meta.txt is parsed line-by-line downstream (grep '^description:'),
     # which would otherwise silently truncate to just the first line - so
