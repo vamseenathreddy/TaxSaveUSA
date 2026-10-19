@@ -215,7 +215,7 @@ def news_plan(rng) -> dict:
                 continue
             cat = next(c for c in trending.CATEGORIES if c[0] == category)
             for headline, core, link, publisher in trending._candidates_for(category, now):
-                if trending._is_dup(headline, st["seen"]) or any(trending._is_dup(headline, [{"tokens": sorted(trending._tokens(p["headline"]))}]) for p in picked):
+                if trending._is_dup(headline, st["seen"]) or trending._is_dup(headline, [{"key": "", "tokens": sorted(trending._tokens(p["headline"]))} for p in picked]):
                     continue
                 text = core[len(cat[3]):].strip() if core.startswith(cat[3]) else core
                 picked.append({"category": category, "label": cat[1], "headline": headline, "say": text, "link": link, "publisher": publisher})
@@ -225,7 +225,7 @@ def news_plan(rng) -> dict:
         print(f"::error::only {len(picked)} safe stories found")
         raise SystemExit(f"only {len(picked)} safe stories found (need {MIN_NEWS}); try again later")
     for p in picked:
-        st["seen"].append({"key": re.sub(r"\W", "", p["headline"].lower())[:12], "tokens": sorted(trending._tokens(p["headline"])),
+        st["seen"].append({"key": __import__("hashlib").sha1(trending._norm(p["headline"]).encode()).hexdigest()[:12], "tokens": sorted(trending._tokens(p["headline"])),
                            "t": now.isoformat(), "category": p["category"]})
     trending.save_state(st)
     today = date.today()
