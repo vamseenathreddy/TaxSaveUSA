@@ -1,0 +1,122 @@
+{
+  "count": 0,
+  "seen": [
+    {
+      "key": "f9d358cc301e",
+      "tokens": [
+        "going",
+        "know",
+        "midterm",
+        "races",
+        "real",
+        "reason",
+        "some",
+        "take",
+        "while"
+      ],
+      "t": "2026-10-19T16:55:29.307862+00:00",
+      "category": "news"
+    },
+    {
+      "key": "689ae5679bce",
+      "tokens": [
+        "affected",
+        "gomez",
+        "says",
+        "selena",
+        "vaping",
+        "voice"
+      ],
+      "t": "2026-10-19T16:55:29.307862+00:00",
+      "category": "entertainment"
+    },
+    {
+      "key": "d2c0d2251359",
+      "tokens": [
+        "10192026",
+        "golazo"
+      ],
+      "t": "2026-10-19T16:55:29.307862+00:00",
+      "category": "sports"
+    },
+    {
+      "key": "6e4e23732370",
+      "tokens": [
+        "blocks",
+        "french",
+        "goods",
+        "listing",
+        "looters",
+        "sale",
+        "stolen",
+        "vinted"
+      ],
+      "t": "2026-10-19T16:55:29.307862+00:00",
+      "category": "money"
+    },
+    {
+      "key": "ea8f0e82e537",
+      "tokens": [
+        "accused",
+        "court",
+        "device",
+        "exopenai",
+        "filing",
+        "planting",
+        "saudi",
+        "says",
+        "support",
+        "worker"
+      ],
+      "t": "2026-10-19T16:55:29.307862+00:00",
+      "category": "tech"
+    },
+    {
+      "key": "74548478e53b",
+      "tokens": [
+        "couldnt",
+        "face",
+        "have",
+        "launch",
+        "prepared",
+        "something",
+        "will"
+      ],
+      "t": "2026-10-19T16:55:29.307862+00:00",
+      "category": "trending"
+    },
+    {
+      "key": "506314582723",
+      "tokens": [
+        "coast",
+        "coming",
+        "kelvin",
+        "levels",
+        "more",
+        "raised",
+        "wave",
+        "west"
+      ],
+      "t": "2026-10-19T16:55:29.307862+00:00",
+      "category": "news"
+    },
+    {
+      "key": "09289dfd012e",
+      "tokens": [
+        "debut",
+        "fashion",
+        "jenners",
+        "kylie",
+        "mixed",
+        "reaction",
+        "secret",
+        "show",
+        "sparks",
+        "victorias"
+      ],
+      "t": "2026-10-19T16:55:29.307862+00:00",
+      "category": "entertainment"
+    }
+  ],
+  "recent_categories": []
+}
