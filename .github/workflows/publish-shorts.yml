@@ -90,7 +90,13 @@ jobs:
         if: steps.decide.outputs.fire == 'yes' && steps.decide.outputs.kind == 'long'
         run: |
           mode="${{ steps.decide.outputs.source }}"
-          python3 scripts/generate_long.py --mode "${mode/trending/news}" ${{ inputs.privacy == 'unlisted' && '--keep-queue' || '' }} > build_meta.txt
+          set +e
+          python3 scripts/generate_long.py --mode "${mode/trending/news}" ${{ inputs.privacy == 'unlisted' && '--keep-queue' || '' }} > build_meta.txt 2> gen_err.txt
+          rc=$?
+          if [ $rc -ne 0 ]; then
+            echo "::error::generate_long exit $rc: $(tail -c 700 gen_err.txt | tr '\n' '|') OUT: $(tail -c 400 build_meta.txt | tr '\n' '|')"
+            exit $rc
+          fi
 
       - name: Parse build metadata
         if: steps.decide.outputs.fire == 'yes'
