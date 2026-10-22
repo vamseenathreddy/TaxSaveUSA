@@ -484,7 +484,8 @@
       ],
       "script": "Run a small business, freelance, or have rental income? This 2026 number affects your tax bill. The IRS raised the income thresholds for the Qualified Business Income deduction, also called Section 199A. For 2026, the full 20 percent deduction phases in once your taxable income crosses 201,750 dollars if you're single, or 403,500 dollars if you're married filing jointly. Below those numbers, most pass-through business owners, think sole proprietors, S corporations, and partnerships, can generally deduct 20 percent of their qualified business income without extra limits. Above those thresholds, extra rules kick in based on wages paid and the type of business you run. This deduction was made permanent under the new tax law. Talk to a CPA to see how much of your business income qualifies.",
       "description": "The 2026 Qualified Business Income (Section 199A) deduction thresholds are $201,750 for single filers and $403,500 for married filing jointly, above which extra wage and business-type limits apply. Here's how this permanent 20% pass-through deduction works for small business owners.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS Revenue Procedure 2025-32. Consult a CPA for your specific situation.\n\n#QBIdeduction #section199A #smallbusiness #taxtips2026 #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-10-22"
     },
     {
       "slug": "net-investment-income-tax-2026",
