@@ -349,6 +349,93 @@
       ],
       "t": "2026-10-22T02:57:11.333926+00:00",
       "category": "gadgets"
+    },
+    {
+      "key": "85f1ecf4e5ee",
+      "tokens": [
+        "decision",
+        "federal",
+        "interest",
+        "october",
+        "rate",
+        "reserve"
+      ],
+      "t": "2026-10-22T03:15:15.230523+00:00",
+      "category": "upcoming"
+    },
+    {
+      "key": "fabd4a7c580e",
+      "tokens": [
+        "begins",
+        "enrollment",
+        "marketplace",
+        "november",
+        "open"
+      ],
+      "t": "2026-10-22T03:15:15.230523+00:00",
+      "category": "upcoming"
+    },
+    {
+      "key": "d3d1cc612dd3",
+      "tokens": [
+        "november",
+        "veterans"
+      ],
+      "t": "2026-10-22T03:15:15.230523+00:00",
+      "category": "upcoming"
+    },
+    {
+      "key": "441c003f554b",
+      "tokens": [
+        "leonid",
+        "meteor",
+        "november",
+        "peaks",
+        "shower"
+      ],
+      "t": "2026-10-22T03:15:15.230523+00:00",
+      "category": "upcoming"
+    },
+    {
+      "key": "74dac9fde56f",
+      "tokens": [
+        "november",
+        "thanksgiving"
+      ],
+      "t": "2026-10-22T03:15:15.230523+00:00",
+      "category": "upcoming"
+    },
+    {
+      "key": "b3d9c5bfad1e",
+      "tokens": [
+        "black",
+        "friday",
+        "november"
+      ],
+      "t": "2026-10-22T03:15:15.230523+00:00",
+      "category": "upcoming"
+    },
+    {
+      "key": "0f37d18a9a9f",
+      "tokens": [
+        "cyber",
+        "monday",
+        "november"
+      ],
+      "t": "2026-10-22T03:15:15.230523+00:00",
+      "category": "upcoming"
+    },
+    {
+      "key": "b7ee1a2e5e82",
+      "tokens": [
+        "december",
+        "ends",
+        "enrollment",
+        "medicare",
+        "open"
+      ],
+      "t": "2026-10-22T03:15:15.230523+00:00",
+      "category": "upcoming"
     }
   ],
   "recent_categories": []
