@@ -1,5 +1,5 @@
 {
-  "count": 0,
+  "count": 1,
   "seen": [
     {
       "key": "f9d358cc301e",
@@ -541,7 +541,23 @@
       ],
       "t": "2026-10-22T03:20:23.679072+00:00",
       "category": "science"
+    },
+    {
+      "key": "37419525bcde",
+      "tokens": [
+        "canada",
+        "government",
+        "offline",
+        "over",
+        "taken",
+        "vulnerability",
+        "websites"
+      ],
+      "t": "2026-10-22T03:26:12.182847+00:00",
+      "category": "gadgets"
     }
   ],
-  "recent_categories": []
+  "recent_categories": [
+    "gadgets"
+  ]
 }
