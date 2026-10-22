@@ -466,7 +466,8 @@
       ],
       "script": "If your kid has a custodial brokerage account, this 2026 rule matters. The IRS kiddie tax applies to a child's unearned income, interest, dividends, and capital gains, not wages from a job. For 2026, the first 1,350 dollars of that income is tax free. The next 1,350, so up to 2,700 total, gets taxed at the child's own lower rate. Anything above 2,700 dollars gets taxed at the parent's higher marginal rate instead. That's the whole point, stopping parents from parking investments in a kid's name to dodge taxes. This mostly hits families with custodial UTMA or UGMA accounts. Keep every 1099 your child receives each year so you don't get caught off guard at filing time.",
       "description": "For 2026, the IRS kiddie tax lets a child's first $1,350 of unearned income (interest, dividends, capital gains) go tax-free, with the next $1,350 taxed at the child's rate and anything above $2,700 taxed at the parent's rate. Here's why this rule exists and who it affects.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS Revenue Procedure 2025-32. Consult a CPA or CFP for your specific situation.\n\n#kiddietax #taxtips2026 #personalfinance #IRS #custodialaccount",
-      "used": false
+      "used": true,
+      "used_date": "2026-10-22"
     },
     {
       "slug": "qbi-deduction-2026",
