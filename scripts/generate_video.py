@@ -345,7 +345,7 @@ def pick_topic(source: str):
         return topic, used
 
 
-def synthesize_voiceover(script_text: str, out_path: Path, voice_index: int):
+def synthesize_voiceover(script_text: str, out_path: Path, voice_index: int, rate: str = "-3%"):
     """
     edge-tts: free, no API key, no billing account. Uses Microsoft
     Edge's neural voices (same ones behind Edge's "Read Aloud").
@@ -365,7 +365,7 @@ def synthesize_voiceover(script_text: str, out_path: Path, voice_index: int):
     VOICE_NAME = VOICES[voice_index % len(VOICES)]
 
     async def _run():
-        communicate = edge_tts.Communicate(script_text, voice=VOICE_NAME, rate="-3%")
+        communicate = edge_tts.Communicate(script_text, voice=VOICE_NAME, rate=rate)
         out_path.parent.mkdir(parents=True, exist_ok=True)
         boundaries = []
         with open(out_path, "wb") as audio_file:
@@ -559,9 +559,32 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 SUBSCRIBE_WINDOW_SECONDS = 4.0  # how long the subscribe banner stays up at the end
 
 
+NEWS_RATE = "+14%"   # fast anchor-style delivery for news Shorts
+TICKER_Y, TICKER_H = 1352, 84
+
+
+def make_newsroom_overlay(path: Path, font_path: Path, label: str = "TAXSAVEUSA NEWS") -> Path:
+    """RGBA 1080x1920 overlay for news Shorts: dark top/bottom fades, a LIVE pill, and the red label block that
+    sits on top of the scrolling ticker (the ticker band itself and its text are drawn by ffmpeg)."""
+    from PIL import Image, ImageDraw, ImageFont
+
+    ov = Image.new("RGBA", (1080, 1920), (0, 0, 0, 0))
+    d = ImageDraw.Draw(ov)
+    for y in range(0, 230):                       # top fade
+        d.line([(0, y), (1080, y)], fill=(4, 10, 30, int(200 * (1 - y / 230))))
+    d.rounded_rectangle([40, 44, 230, 104], radius=12, fill=(214, 28, 40, 255))
+    d.ellipse([60, 63, 80, 83], fill=(255, 255, 255, 255))
+    d.text((92, 52), "LIVE", font=ImageFont.truetype(str(font_path), 40), fill=(255, 255, 255, 255))
+    d.text((262, 54), label, font=ImageFont.truetype(str(font_path), 38), fill=(255, 255, 255, 255), stroke_width=2, stroke_fill=(0, 0, 0, 255))
+    d.rectangle([0, TICKER_Y + 4, 250, TICKER_Y + TICKER_H], fill=(214, 28, 40, 255))
+    d.text((18, TICKER_Y + 24), "HEADLINES", font=ImageFont.truetype(str(font_path), 34), fill=(255, 255, 255, 255))
+    ov.save(path)
+    return path
+
+
 def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_text: str,
                   out_path: Path, subscribe_text: str, font_path: Path, sentence_end_times=(),
-                  congrats_end_time=None):
+                  congrats_end_time=None, newsroom=False, ticker_text=""):
     """
     Vertical 1080x1920 render: loops/crops the background clip to
     length, burns in the word-synced captions, and opens with a
@@ -686,11 +709,13 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
         f"drawbox=x=0:y={CAPTION_BAND_TOP}:w=iw:h=4:color=white@0.6:t=fill"
     )
 
+    news_tint = "colorbalance=bs=0.35:bm=0.25:bh=0.1:rs=-0.15," if newsroom else ""
     base_vf = (
         f"[0:v]scale=1080:1920:force_original_aspect_ratio=increase,"
         f"crop=1080:1920,"
         f"{background_dim},"
         f"{background_blur},"
+        f"{news_tint}"
         f"{caption_band_drawbox},"
         f"{caption_band_accent},"
         f"subtitles='{ass_escaped}':fontsdir='{font_dir_escaped}',"
@@ -773,6 +798,20 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
         )
     else:
         af = "[1:a][2:a]amix=inputs=2:duration=first:dropout_transition=0,volume=1.8[aout]"
+
+    if newsroom:
+        ov_path = OUTPUT_DIR / f"{out_path.stem}_newsroom.png"
+        make_newsroom_overlay(ov_path, font_path)
+        ov_idx = (3 + n_emoji + (1 if have_applause else 0))
+        cmd += ["-i", str(ov_path)]
+        tk = (ticker_text or "TaxSaveUSA NEWS").replace("'", "\u2019").replace(":", "\\:").replace(",", " ").replace("%", "pct")
+        tk = ("   \u25CF   ".join([tk] * 4)) + "   "
+        tk_escaped = tk
+        tail = vf.rsplit("[vout]", 1)[0]
+        vf = (f"{tail}[vpre];[vpre]drawbox=x=0:y={TICKER_Y}:w=iw:h={TICKER_H}:color=0x061028@0.92:t=fill,"
+              f"drawbox=x=0:y={TICKER_Y}:w=iw:h=4:color=0xd61c28@1:t=fill,"
+              f"drawtext=fontfile='{font_path_escaped}':text='{tk_escaped}':fontcolor=white:fontsize=40:"
+              f"x=w-mod(t*230\\,w+text_w):y={TICKER_Y + 22}[vtk];[vtk][{ov_idx}:v]overlay=0:0[vout]")
 
     cmd += [
         "-filter_complex", f"{vf};{af}",
@@ -886,7 +925,8 @@ def main():
     # deterministic per video without the two lists' choices being coupled.
     subscribe_text = rng.choice(TRENDING_SUBSCRIBE_CTAS if topic.get("pre_condensed") else SUBSCRIBE_CTAS)
 
-    word_boundaries = synthesize_voiceover(full_script, audio_path, voice_index=already_used_count)
+    is_news = bool(topic.get("pre_condensed"))
+    word_boundaries = synthesize_voiceover(full_script, audio_path, voice_index=already_used_count, rate=NEWS_RATE if is_news else "-3%")
 
     # The actual spoken audio length - the one reliable source of truth
     # for how long the video is. Deliberately NOT derived from
@@ -948,7 +988,8 @@ def main():
         raise SystemExit(f"Missing background clip: {background_clip} - pull one into assets/backgrounds/ from Drive.")
 
     render_video(audio_path, background_clip, ass_path, topic["caption_headline"], out_path, subscribe_text,
-                 font_path, sentence_end_times, congrats_end_time=congrats_end_time)
+                 font_path, sentence_end_times, congrats_end_time=congrats_end_time,
+                 newsroom=is_news, ticker_text=f"{topic['title']}  \u25CF  {topic.get('source_publisher', '')}")
 
     tags = build_tags(topic)
     seo_title = _with_shorts_tag_in_title(topic["title"])

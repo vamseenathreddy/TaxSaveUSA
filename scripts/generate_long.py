@@ -43,6 +43,7 @@ PALETTES = [((9, 30, 66), (24, 82, 160)), ((12, 40, 52), (18, 110, 120)), ((40, 
             ((60, 24, 24), (150, 52, 52)), ((18, 38, 30), (44, 112, 76)), ((30, 30, 52), (74, 84, 140))]
 VOICES = ["en-US-GuyNeural", "en-US-AriaNeural"]
 PAUSE = 0.8
+NEWS_RATE, NEWS_PAUSE = "+14%", 0.3      # fast anchor-style delivery for the news formats
 MIN_NEWS = 5
 MAX_NEWS = 8
 
@@ -75,6 +76,93 @@ def _gradient(c1, c2) -> Image.Image:
         t = y / (H - 1)
         px.line([(0, y), (W, y)], fill=tuple(int(c1[i] + (c2[i] - c1[i]) * t) for i in range(3)))
     return im
+
+
+RED, NAVY = (214, 28, 40), (6, 16, 42)
+TICKER_H = 84
+
+
+def _newsroom_bg() -> Image.Image:
+    """Dark navy studio backdrop: soft vertical gradient, a faint world-grid and a right-side glow."""
+    im = _gradient((5, 12, 34), (14, 40, 88))
+    ov = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    od = ImageDraw.Draw(ov)
+    for x in range(-200, W + 400, 120):          # perspective-ish meridians
+        od.line([(x, 96), (W // 2 + (x - W // 2) * 2.2, H - TICKER_H)], fill=(120, 170, 255, 22), width=2)
+    for k in range(1, 9):                          # parallels
+        y = 96 + int((H - 96 - TICKER_H) * (k / 9) ** 1.5)
+        od.line([(0, y), (W, y)], fill=(120, 170, 255, 20), width=2)
+    for r, a in ((520, 14), (380, 18), (240, 22)):  # glow
+        od.ellipse([W - 360 - r, 300 - r, W - 360 + r, 300 + r], fill=(60, 130, 255, a))
+    return Image.alpha_composite(im.convert("RGBA"), ov).convert("RGB")
+
+
+def news_slide(head: str, body: str, tag: str, idx: int, out: Path, big: bool = False) -> Path:
+    im = _newsroom_bg()
+    d = ImageDraw.Draw(im)
+    d.rectangle([0, 0, W, 96], fill=NAVY)
+    d.rectangle([0, 92, W, 98], fill=RED)
+    d.rounded_rectangle([60, 22, 230, 74], radius=10, fill=RED)           # LIVE pill
+    d.ellipse([78, 40, 96, 58], fill=WHITE)
+    d.text((108, 28), "LIVE", font=_font(34), fill=WHITE)
+    d.text((262, 24), "TaxSaveUSA NEWS", font=_font(46), fill=WHITE)
+    tf = _font(34)
+    d.text((W - 70 - d.textlength(tag.upper(), font=tf), 31), tag.upper(), font=tf, fill=GOLD)
+    margin = 110
+    hs = 100 if big else 80
+    while hs > 52:
+        hf = _font(hs)
+        hl = _wrap(d, head, hf, W - 2 * margin - 60)
+        if len(hl) <= 3:
+            break
+        hs -= 6
+    # lower-third style headline block: white text on a dark panel with a red edge
+    block_h = len(hl) * int(hs * 1.22) + 60
+    top = 180 if body else (H - TICKER_H - block_h) // 2
+    d.rectangle([margin - 30, top, W - margin + 30, top + block_h], fill=(8, 20, 52))
+    d.rectangle([margin - 30, top, margin - 14, top + block_h], fill=RED)
+    y = top + 30
+    for ln in hl:
+        d.text((margin + 20, y), ln, font=hf, fill=WHITE, stroke_width=1, stroke_fill=(0, 0, 0))
+        y += int(hs * 1.22)
+    if body:
+        y = top + block_h + 40
+        bs = 44
+        while bs > 30:
+            bf = _font(bs, bold=False)
+            bl = _wrap(d, body, bf, W - 2 * margin - 40)
+            if y + len(bl) * int(bs * 1.42) <= H - TICKER_H - 40:
+                break
+            bs -= 2
+        for ln in bl:
+            d.text((margin + 20, y), ln, font=bf, fill=SOFT)
+            y += int(bs * 1.42)
+    d.rectangle([0, H - TICKER_H, W, H], fill=NAVY)
+    d.rectangle([0, H - TICKER_H, W, H - TICKER_H + 5], fill=RED)
+    im.save(out)
+    return out
+
+
+def ticker_assets(headlines: list[str], out_dir: Path) -> tuple[Path, int, Path]:
+    """-> (scrolling strip png, period px, static red label png). The strip holds the headlines twice so
+    ffmpeg can scroll it seamlessly by shifting x = -mod(t*speed, period)."""
+    f = _font(40)
+    unit = "   \u25CF   ".join(h[:90] for h in headlines) + "   \u25CF   "
+    probe = ImageDraw.Draw(Image.new("RGB", (10, 10)))
+    period = max(int(probe.textlength(unit, font=f)), W)
+    strip = Image.new("RGBA", (period * 2 + W, TICKER_H), (0, 0, 0, 0))
+    sd = ImageDraw.Draw(strip)
+    for k in range(3):
+        sd.text((k * period, 20), unit, font=f, fill=WHITE)
+    sp = out_dir / "ticker.png"
+    strip.save(sp)
+    lab = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    ld = ImageDraw.Draw(lab)
+    ld.rectangle([0, H - TICKER_H + 5, 330, H], fill=RED)
+    ld.text((26, H - TICKER_H + 20), "HEADLINES", font=_font(38), fill=WHITE)
+    lp = out_dir / "ticker_label.png"
+    lab.save(lp)
+    return sp, period, lp
 
 
 def slide(head: str, body: str, tag: str, idx: int, out: Path, big: bool = False) -> Path:
@@ -141,7 +229,7 @@ def duration(path: Path) -> float:
     return float(out)
 
 
-def speak(text: str, voice: str, out: Path) -> Path:
+def speak(text: str, voice: str, out: Path, rate: str = "-3%") -> Path:
     import os
 
     if os.environ.get("FAKE_TTS") == "1":
@@ -155,7 +243,7 @@ def speak(text: str, voice: str, out: Path) -> Path:
     for v in (voice, VOICES[0], VOICES[1]):
         for _ in range(2):
             try:
-                asyncio.run(edge_tts.Communicate(text, v, rate="-3%").save(str(out)))
+                asyncio.run(edge_tts.Communicate(text, v, rate=rate).save(str(out)))
                 if out.exists() and out.stat().st_size > 1000:
                     return out
             except Exception as exc:  # noqa: BLE001
@@ -168,6 +256,18 @@ def silence(path: Path, secs: float) -> Path:
     subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i", "anullsrc=r=24000:cl=mono", "-t", f"{secs:.2f}",
                     "-c:a", "libmp3lame", str(path)], check=True)
     return path
+
+
+def clip_news(image: Path, seconds: float, out: Path, strip: Path, period: int, label: Path, t0: float) -> Path:
+    """Slow zoom on the slide + a scrolling headline ticker along the bottom (continuous across slides via t0)."""
+    frames = int(seconds * 24)
+    fc = (f"[0:v]scale=2400:-1,zoompan=z='min(1+0.0004*on,1.07)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={frames}:s={W}x{H}:fps=24[bg];"
+          f"[bg][1:v]overlay=x='330-mod((t+{t0:.2f})*170\\,{period})':y={H - TICKER_H + 5}[tk];"
+          f"[tk][2:v]overlay=0:0,fade=t=in:st=0:d=0.3,fade=t=out:st={max(seconds - 0.3, 0.1):.2f}:d=0.3,format=yuv420p[v]")
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-loop", "1", "-i", str(image), "-loop", "1", "-i", str(strip), "-loop", "1", "-i", str(label),
+                    "-filter_complex", fc, "-map", "[v]", "-t", f"{seconds:.2f}", "-r", "24", "-c:v", "libx264", "-preset", "veryfast", "-crf", "22", str(out)],
+                   check=True)
+    return out
 
 
 def clip(image: Path, seconds: float, out: Path) -> Path:
@@ -315,17 +415,24 @@ def main() -> int:
 
     voice = VOICES[today.toordinal() % 2]
     clips, voice_parts, chapters, t = [], [], [], 0.0
-    gap = silence(out / "gap.mp3", PAUSE)
+    is_news = plan["kind"] == "news"
+    pause = NEWS_PAUSE if is_news else PAUSE
+    gap = silence(out / "gap.mp3", pause)
+    if is_news:
+        heads = [x["head"] for x in plan["sections"][1:-1]] or [plan["title"]]
+        tk_strip, tk_period, tk_label = ticker_assets(heads, out)
     for i, s in enumerate(plan["sections"]):
-        a = speak(s["say"], voice, out / f"v{i}.mp3")
-        secs = duration(a) + PAUSE
-        img = slide(s["head"], s.get("caption") if s.get("caption") and plan["kind"] == "tax" and False else s.get("body", ""),
-                    s.get("tag", "Tax Tips" if plan["kind"] == "tax" else "Trending"), i, out / f"s{i}.png", big=s.get("big", False))
-        if s.get("caption") and plan["kind"] == "news":
-            img = slide(s["head"], s["caption"], s.get("tag", "Trending"), i, out / f"s{i}.png")
-        elif s.get("caption") and plan["kind"] == "tax":
-            img = slide(s["head"], s["caption"], "Tax Tips", i, out / f"s{i}.png")
-        clips.append(clip(img, secs, out / f"c{i}.mp4"))
+        a = speak(s["say"], voice, out / f"v{i}.mp3", rate=NEWS_RATE if is_news else "-3%")
+        secs = duration(a) + pause
+        if is_news:
+            img = news_slide(s["head"], s.get("caption") or s.get("body", ""), s.get("tag", plan["title"].split(" ")[1] if False else "Top Stories"),
+                             i, out / f"s{i}.png", big=s.get("big", False))
+            clips.append(clip_news(img, secs, out / f"c{i}.mp4", tk_strip, tk_period, tk_label, t))
+        else:
+            img = slide(s["head"], s.get("body", ""), s.get("tag", "Tax Tips"), i, out / f"s{i}.png", big=s.get("big", False))
+            if s.get("caption"):
+                img = slide(s["head"], s["caption"], "Tax Tips", i, out / f"s{i}.png")
+            clips.append(clip(img, secs, out / f"c{i}.mp4"))
         voice_parts += [a, gap]
         chapters.append((t, s["chapter"]))
         t += secs
