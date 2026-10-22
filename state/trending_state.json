@@ -1,5 +1,5 @@
 {
-  "count": 2,
+  "count": 3,
   "seen": [
     {
       "key": "f9d358cc301e",
@@ -821,10 +821,23 @@
       ],
       "t": "2026-10-22T05:02:08.067465+00:00",
       "category": "movies"
+    },
+    {
+      "key": "085eab5dcb3d",
+      "tokens": [
+        "found",
+        "government",
+        "minister",
+        "says",
+        "vulnerabilities"
+      ],
+      "t": "2026-10-22T13:54:27.035320+00:00",
+      "category": "tech"
     }
   ],
   "recent_categories": [
     "gadgets",
-    "science"
+    "science",
+    "tech"
   ]
 }
