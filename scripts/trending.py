@@ -384,9 +384,13 @@ def _candidates_for(category, now):
 UPCOMING_PATH = ROOT / "content" / "upcoming.json"
 
 
-def upcoming_candidates(now, horizon_days=21):
+UPCOMING_HORIZON = 21
+
+
+def upcoming_candidates(now, horizon_days=None):
     """Dates from content/upcoming.json that fall in the next `horizon_days`, soonest first:
     [(headline, script_core, link, publisher)]. Curated from official sources (IRS, Fed, CMS, NASA)."""
+    horizon_days = horizon_days or UPCOMING_HORIZON
     try:
         events = json.loads(UPCOMING_PATH.read_text(encoding="utf-8"))["events"]
     except (OSError, ValueError, KeyError):

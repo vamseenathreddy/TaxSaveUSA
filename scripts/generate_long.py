@@ -224,7 +224,7 @@ LONG_KINDS = {
                   intro="Here are {n} important dates coming up in the United States, as of {nice}.",
                   playlist="Coming Up: Dates to Know", thumb=("DATES YOU", "MUST KNOW"), kicker="COMING UP",
                   tags=["important dates", "week ahead", "upcoming dates", "tax deadlines", "fed meeting", "open enrollment", "money dates", "what's coming", "usa dates"],
-                  hashtags="#WeekAhead #TaxDeadlines #Money #TaxSaveUSA", hours=36, lo=3, hi=8, wrap="upcoming deadlines and dates that matter"),
+                  hashtags="#WeekAhead #TaxDeadlines #Money #TaxSaveUSA", hours=36, horizon=75, lo=3, hi=8, wrap="upcoming deadlines and dates that matter"),
 }
 WEEKDAY_KIND = {0: "ahead", 1: "tax", 2: "tech", 3: "science", 4: "news", 5: "tax", 6: "news"}  # Mon..Sun
 
@@ -236,6 +236,7 @@ def news_plan(rng, kind: str = "news") -> dict:
     order = list(cfg["cats"])
     rng.shuffle(order)
     trending.MAX_AGE_HOURS = cfg["hours"]
+    trending.UPCOMING_HORIZON = cfg.get("horizon", 21)
     MIN_NEWS, MAX_NEWS = cfg["lo"], cfg["hi"]
     picked, per_cat = [], {}
     for rnd in range(max(2, -(-MAX_NEWS // len(order)))):   # pass 1: one story per category; later passes fill up
