@@ -1,6 +1,5 @@
 {
-  "action": "upload",
-  "video_id": "mEvERKpKcg8",
-  "privacy_status": "unlisted",
-  "url": "https://youtube.com/watch?v=mEvERKpKcg8"
+  "action": "set-privacy",
+  "video_id": "V269vWxwh40",
+  "privacy_status": "public"
 }
