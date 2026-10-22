@@ -72,6 +72,12 @@ CATEGORIES = [
      "Here's a money and business headline.",
      [("https://feeds.npr.org/1006/rss.xml", "NPR"),
       ("https://feeds.bbci.co.uk/news/business/rss.xml", "BBC News")]),
+    ("movies", "MOVIE NEWS", "Movie and TV News",
+     "Here's a trending movie news story.",
+     [("https://variety.com/feed/", "Variety"),
+      ("https://deadline.com/feed/", "Deadline"),
+      ("https://www.hollywoodreporter.com/feed/", "The Hollywood Reporter"),
+      ("https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml", "BBC News")]),
     ("upcoming", "COMING UP", "Coming Up: Dates to Know",
      "Here's a date coming up that matters.", []),  # fed by content/upcoming.json
 ]
@@ -85,18 +91,23 @@ CATEGORY_TAGS = {
     "money": ["business news", "economy", "stock market", "money news", "finance news"],
     "gadgets": ["gadgets", "tech reviews", "new gadgets", "smartphones", "tech gadgets 2026"],
     "science": ["science news", "space news", "nasa", "science explained", "discoveries"],
+    "movies": ["movie news", "hollywood", "box office", "new movies", "tv shows", "streaming news", "trailers"],
     "upcoming": ["upcoming", "what's coming", "dates to know", "important dates", "week ahead"],
 }
 HASHTAG_BY_CATEGORY = {"trending": "Viral", "news": "BreakingNews", "tech": "TechNews", "sports": "SportsNews",
                        "entertainment": "CelebNews", "money": "BusinessNews", "gadgets": "Gadgets",
-                       "science": "ScienceNews", "upcoming": "ComingUp"}
+                       "science": "ScienceNews", "upcoming": "ComingUp", "movies": "MovieNews"}
 PLAYLIST_DESCRIPTIONS = {
     "Trending Now in the US": "What Americans are searching for right now. New Shorts every day. Trending news in the USA explained in 30 seconds.",
     "US News Today": "Top US news headlines in under a minute, always credited to the publisher. Daily US news Shorts.",
     "Tech News": "Technology news from the US and the world: AI, apps, software, the internet. Daily tech news Shorts.",
     "Gadgets and Tech Reviews": "New gadgets, phones, laptops and smart devices. Quick daily gadget news Shorts.",
     "Science and Space News": "Science discoveries, NASA and space news explained simply. Daily science Shorts.",
+    "Movie and TV News": "Hollywood and streaming news in 30 seconds: new movies, trailers, box office and TV. Daily movie news Shorts.",
     "Money and Business News": "Money, markets, jobs and prices that affect your wallet. Daily money news Shorts.",
+    "Daily Motivation Quotes": "Short motivational quotes to start your day. New quote Shorts every day.",
+    "Health Tips": "Simple everyday health and wellness tips in under a minute. General information, not medical advice.",
+    "Habits and Life Hacks": "Small habits and life hacks that make days easier and money go further. New Shorts every day.",
     "Coming Up: Dates to Know": "Upcoming deadlines, Fed meetings, tax dates and events that matter. Know it before it happens.",
 }
 

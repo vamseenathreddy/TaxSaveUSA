@@ -319,6 +319,29 @@ def load_next_topic():
     return topic, already_used_count
 
 
+EVERGREEN_PATH = Path(__file__).resolve().parent.parent / "content" / "evergreen.json"
+
+
+def load_next_evergreen():
+    """Next unused evergreen Short (quote / health tip / habit) from content/evergreen.json. Rotates the three
+    kinds so the feed alternates; marks the item used and returns it like load_next_topic()."""
+    with open(EVERGREEN_PATH, encoding="utf-8") as f:
+        data = json.load(f)
+    items = data["items"]
+    used_n = sum(1 for t in items if t.get("used"))
+    kinds = ["quote", "health", "habit"]
+    want = kinds[used_n % 3]
+    pending = [t for t in items if not t.get("used")]
+    if not pending:
+        raise SystemExit("No unused items left in content/evergreen.json")
+    topic = next((t for t in pending if t.get("kind") == want), pending[0])
+    topic["used"] = True
+    topic["used_date"] = date.today().isoformat()
+    with open(EVERGREEN_PATH, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+    return topic, used_n
+
+
 def pick_topic(source: str):
     """Chooses where the next Short comes from - see --source. Trending
     stories are built on the fly (scripts/trending.py) and never touch
@@ -327,6 +350,12 @@ def pick_topic(source: str):
 
     if source == "tax":
         return load_next_topic()
+    if source == "evergreen":
+        try:
+            return load_next_evergreen()
+        except SystemExit:
+            print("evergreen queue empty - using a tax tip instead")
+            return load_next_topic()
     if source == "auto" and trending.due_for_tax_tip():
         try:
             topic, used = load_next_topic()
@@ -559,6 +588,17 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 SUBSCRIBE_WINDOW_SECONDS = 4.0  # how long the subscribe banner stays up at the end
 
 
+BEDS_DIR = ASSETS_DIR / "audio" / "beds"
+BED_FOR_CATEGORY = {"tech": "tech", "gadgets": "tech", "science": "science", "evergreen": "calm", "tax": "calm", "money": "calm"}
+BED_VOLUME = 0.20    # music relative to the voice (voice = 1.0)
+
+
+def bed_for(topic) -> Path | None:
+    name = BED_FOR_CATEGORY.get(topic.get("category", "tax"), "news")
+    path = BEDS_DIR / f"{name}.mp3"
+    return path if path.exists() else None
+
+
 NEWS_RATE = "+14%"   # fast anchor-style delivery for news Shorts
 TICKER_Y, TICKER_H = 1352, 84
 
@@ -584,7 +624,7 @@ def make_newsroom_overlay(path: Path, font_path: Path, label: str = "TAXSAVEUSA 
 
 def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_text: str,
                   out_path: Path, subscribe_text: str, font_path: Path, sentence_end_times=(),
-                  congrats_end_time=None, newsroom=False, ticker_text=""):
+                  congrats_end_time=None, newsroom=False, ticker_text="", bed=None):
     """
     Vertical 1080x1920 render: loops/crops the background clip to
     length, burns in the word-synced captions, and opens with a
@@ -794,10 +834,10 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
         )
         af = (
             f"{applause_filter};"
-            f"[1:a][2:a][sfx]amix=inputs=3:duration=first:dropout_transition=0,volume=1.8[aout]"
+            f"[1:a][2:a][sfx]amix=inputs=3:duration=first:dropout_transition=0,volume=1.8[amain]"
         )
     else:
-        af = "[1:a][2:a]amix=inputs=2:duration=first:dropout_transition=0,volume=1.8[aout]"
+        af = "[1:a][2:a]amix=inputs=2:duration=first:dropout_transition=0,volume=1.8[amain]"
 
     if newsroom:
         ov_path = OUTPUT_DIR / f"{out_path.stem}_newsroom.png"
@@ -812,6 +852,14 @@ def render_video(audio_path: Path, background_clip: Path, ass_path: Path, hook_t
               f"drawbox=x=0:y={TICKER_Y}:w=iw:h=4:color=0xd61c28@1:t=fill,"
               f"drawtext=fontfile='{font_path_escaped}':text='{tk_escaped}':fontcolor=white:fontsize=40:"
               f"x=w-mod(t*230\\,w+text_w):y={TICKER_Y + 22}[vtk];[vtk][{ov_idx}:v]overlay=0:0[vout]")
+
+    if bed is not None:
+        bed_idx = 3 + n_emoji + (1 if have_applause else 0) + (1 if newsroom else 0)
+        cmd += ["-stream_loop", "-1", "-i", str(bed)]
+        af += (f";[{bed_idx}:a]volume={BED_VOLUME},afade=t=in:st=0:d=1.5,afade=t=out:st={max(audio_duration - 2.0, 0.5):.2f}:d=2[bd];"
+               f"[amain][bd]amix=inputs=2:duration=first:weights=1 1:normalize=0[aout]")
+    else:
+        af += ";[amain]anull[aout]"
 
     cmd += [
         "-filter_complex", f"{vf};{af}",
@@ -875,7 +923,7 @@ def main():
              "Used to fix and re-publish a specific video.",
     )
     parser.add_argument(
-        "--source", choices=["auto", "trending", "tax"], default="auto",
+        "--source", choices=["auto", "trending", "tax", "evergreen"], default="auto",
         help="Where the next Short comes from: 'trending' (live US trending story), 'tax' (next "
              "unused topic in content/topics.json), or 'auto' (trending, with every 6th Short a "
              "tax tip; falls back to a tax tip if no safe trending story can be fetched).",
@@ -918,14 +966,16 @@ def main():
     # congrats_end_time param), then the outro_cta plays over/after it.
     congrats_line = rng.choice(CONGRATS_LINES)
     outro_cta = rng.choice(OUTRO_CTAS)
-    full_script = f"{condensed_script.rstrip()} {congrats_line} {outro_cta}"
+    evergreen = topic.get("category") == "evergreen"
+    full_script = (f"{condensed_script.rstrip()} {outro_cta}" if evergreen
+                   else f"{condensed_script.rstrip()} {congrats_line} {outro_cta}")
 
     # Visual-only "subscribe" banner (see SUBSCRIBE_CTAS / render_video) -
     # drawn from the same per-slug rng right after outro_cta so picks stay
     # deterministic per video without the two lists' choices being coupled.
     subscribe_text = rng.choice(TRENDING_SUBSCRIBE_CTAS if topic.get("pre_condensed") else SUBSCRIBE_CTAS)
 
-    is_news = bool(topic.get("pre_condensed"))
+    is_news = bool(topic.get("pre_condensed")) and topic.get("category") != "evergreen"
     word_boundaries = synthesize_voiceover(full_script, audio_path, voice_index=already_used_count, rate=NEWS_RATE if is_news else "-3%")
 
     # The actual spoken audio length - the one reliable source of truth
@@ -965,7 +1015,9 @@ def main():
     # (len < 2) in case condense_script ever collapses everything into
     # fewer sentences than expected than compute_sentence_end_times can
     # split on.
-    if len(sentence_end_times) >= 2:
+    if evergreen:
+        congrats_end_time = None
+    elif len(sentence_end_times) >= 2:
         congrats_end_time = sentence_end_times[-2]
     elif sentence_end_times:
         congrats_end_time = sentence_end_times[-1]
@@ -989,7 +1041,7 @@ def main():
 
     render_video(audio_path, background_clip, ass_path, topic["caption_headline"], out_path, subscribe_text,
                  font_path, sentence_end_times, congrats_end_time=congrats_end_time,
-                 newsroom=is_news, ticker_text=f"{topic['title']}  \u25CF  {topic.get('source_publisher', '')}")
+                 newsroom=is_news, bed=bed_for(topic), ticker_text=f"{topic['title']}  \u25CF  {topic.get('source_publisher', '')}")
 
     tags = build_tags(topic)
     seo_title = _with_shorts_tag_in_title(topic["title"])

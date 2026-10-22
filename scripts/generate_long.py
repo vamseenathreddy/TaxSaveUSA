@@ -320,13 +320,20 @@ LONG_KINDS = {
                     playlist="Science and Space Weekly", thumb=("SCIENCE & SPACE", "THIS WEEK"), kicker="{nice}",
                     tags=["science news", "space news", "nasa", "science this week", "discoveries", "science explained", "space exploration", "science roundup", "usa science news"],
                     hashtags="#Science #Space #NASA #Discovery #TaxSaveUSA", hours=168, lo=4, hi=7, wrap="weekly science and space news"),
+    "movies": dict(cats=["movies"], title="Top {n} Movie and TV News Stories This Week | {nice}",
+                   intro="Here are the top {n} movie and TV news stories this week, {nice}.",
+                   playlist="Movie and TV News Weekly", thumb=("MOVIE & TV NEWS", "THIS WEEK"), kicker="{nice}",
+                   tags=["movie news", "hollywood news", "box office", "new movies", "tv news", "streaming news", "movie trailers", "entertainment news this week", "movie news today"],
+                   hashtags="#MovieNews #Hollywood #BoxOffice #Streaming #TaxSaveUSA", hours=168, lo=4, hi=7, wrap="weekly movie and TV news"),
     "ahead": dict(cats=["upcoming"], title="The Week Ahead: {n} US Dates You Need to Know | {nice}",
                   intro="Here are {n} important dates coming up in the United States, as of {nice}.",
                   playlist="Coming Up: Dates to Know", thumb=("DATES YOU", "MUST KNOW"), kicker="COMING UP",
                   tags=["important dates", "week ahead", "upcoming dates", "tax deadlines", "fed meeting", "open enrollment", "money dates", "what's coming", "usa dates"],
                   hashtags="#WeekAhead #TaxDeadlines #Money #TaxSaveUSA", hours=36, horizon=75, lo=3, hi=8, wrap="upcoming deadlines and dates that matter"),
 }
-WEEKDAY_KIND = {0: "ahead", 1: "tax", 2: "tech", 3: "science", 4: "news", 5: "tax", 6: "news"}  # Mon..Sun
+WEEKDAY_KIND = {0: "ahead", 1: "tax", 2: "tech", 3: "science", 4: "news", 5: "movies", 6: "news"}
+BED_FOR_KIND = {"tax": "calm", "tech": "tech", "science": "science"}   # others use the news bed
+BED_VOLUME = 0.18  # Mon..Sun
 
 
 def news_plan(rng, kind: str = "news") -> dict:
@@ -366,7 +373,7 @@ def news_plan(rng, kind: str = "news") -> dict:
         secs.append({"head": p["headline"], "body": "", "tag": p["label"], "say": f"Story number {i}. {p['say']}", "chapter": p["headline"][:60], "caption": p["say"]})
     secs.append({"head": "Subscribe to TaxSaveUSA", "body": cfg["wrap"].capitalize() + ".", "say": f"That is the roundup. Subscribe to TaxSaveUSA for {cfg['wrap']}, and tell us in the comments which story surprised you most.", "chapter": "Wrap up", "big": True})
     src = "\n".join(f"- {p['headline']} ({p['publisher']}){': ' + p['link'] if p['link'] else ''}" for p in picked)
-    return {"kind": "news", "slug": f"{kind}-{today.isoformat()}", "title": cfg["title"].format(n=n, nice=nice),
+    return {"kind": "news", "sub": kind, "slug": f"{kind}-{today.isoformat()}", "title": cfg["title"].format(n=n, nice=nice),
             "sections": secs, "tags": cfg["tags"], "playlist": cfg["playlist"],
             "thumb": (*cfg["thumb"], cfg["kicker"].format(nice=nice.upper())),
             "desc_head": f"{cfg['intro'].format(n=n, nice=nice)} Summarized in plain English.\n\nStories and sources:\n{src}\n\nChapters:\n",
@@ -376,7 +383,7 @@ def news_plan(rng, kind: str = "news") -> dict:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--mode", choices=["auto", "news", "tax", "tech", "science", "ahead"], default="auto")
+    ap.add_argument("--mode", choices=["auto", "news", "tax", "tech", "science", "ahead", "movies"], default="auto")
     ap.add_argument("--out", default=str(ROOT / "build" / "long"))
     ap.add_argument("--keep-queue", action="store_true", help="do not mark the tax video as used (test runs)")
     args = ap.parse_args()
@@ -439,9 +446,17 @@ def main() -> int:
     (out / "clips.txt").write_text("".join(f"file '{c.resolve()}'\n" for c in clips), encoding="utf-8")
     (out / "voice.txt").write_text("".join(f"file '{p.resolve()}'\n" for p in voice_parts), encoding="utf-8")
     final = out / f"{plan['slug']}.mp4"
-    subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "concat", "-safe", "0", "-i", str(out / "clips.txt"), "-f", "concat", "-safe", "0",
-                    "-i", str(out / "voice.txt"), "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac", "-b:a", "160k", "-ar", "44100",
-                    "-shortest", "-movflags", "+faststart", str(final)], check=True)
+    bed = ROOT / "assets" / "audio" / "beds" / f"{BED_FOR_KIND.get(plan.get('sub', plan['kind']), 'news')}.mp3"
+    cmd = ["ffmpeg", "-y", "-v", "error", "-f", "concat", "-safe", "0", "-i", str(out / "clips.txt"), "-f", "concat", "-safe", "0",
+           "-i", str(out / "voice.txt")]
+    if bed.exists():
+        cmd += ["-stream_loop", "-1", "-i", str(bed), "-filter_complex",
+                f"[2:a]volume={BED_VOLUME},afade=t=in:st=0:d=2,afade=t=out:st={max(t - 3, 1):.1f}:d=3[bd];"
+                f"[1:a][bd]amix=inputs=2:duration=first:weights=1 1:normalize=0[a]", "-map", "0:v", "-map", "[a]"]
+    else:
+        cmd += ["-map", "0:v", "-map", "1:a"]
+    cmd += ["-c:v", "copy", "-c:a", "aac", "-b:a", "160k", "-ar", "44100", "-shortest", "-movflags", "+faststart", str(final)]
+    subprocess.run(cmd, check=True)
     thumb = thumbnail(*plan["thumb"][:2], plan["thumb"][2], rng.randint(0, 5), out / "thumb.png")
 
     desc = plan["desc_head"] + "\n".join(f"{_ts(ts)} {label}" for ts, label in chapters)
