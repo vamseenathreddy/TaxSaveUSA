@@ -26,6 +26,14 @@ with the peak in tax season. This plan maximises the chance of the top end.
 - Full ads: 1,000 subs plus either 4,000 public watch hours in 12 months or 10M Shorts views in 90 days.
 - Long videos are the quickest way to watch hours. Keep the daily long video.
 
+## Content pillars (widened 2026-10-22)
+Core stays tax and money. Added: US trending news, tech, gadgets, science and space, and "coming up" dates
+(Fed meetings, enrollment deadlines, tax dates; `content/upcoming.json`, add rows monthly from official sources).
+Shorts rotate across all pillars; tax tip every 6th Short. Long videos by weekday (`WEEKDAY_KIND` in
+`scripts/generate_long.py`): Mon week ahead, Tue tax explainer, Wed tech and gadgets, Thu science and space,
+Fri trending news, Sat tax explainer, Sun trending news. Each pillar has its own playlist with a description.
+Money category still requires a finance keyword (`FINANCE_STRICT`); other pillars are open but pass the safety filter.
+
 ## Content rules that raise earnings
 - Money, tax, jobs, prices, housing, retirement, benefits only. Off-niche stories are skipped
   (`FINANCE_ONLY` in `scripts/trending.py`).
