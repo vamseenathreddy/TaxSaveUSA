@@ -550,8 +550,9 @@
       "category": "evergreen",
       "playlist": "Habits and Life Hacks",
       "pre_condensed": true,
-      "used": false,
-      "description": "Money and Life Hack: Pay yourself first.\n\nQuick life hack. Pay yourself first. Set up an automatic transfer to savings on payday, before you can spend it. Even 25 dollars a week adds up.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #LifeHacks #MoneyTips"
+      "used": true,
+      "description": "Money and Life Hack: Pay yourself first.\n\nQuick life hack. Pay yourself first. Set up an automatic transfer to savings on payday, before you can spend it. Even 25 dollars a week adds up.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #LifeHacks #MoneyTips",
+      "used_date": "2026-10-22"
     },
     {
       "slug": "evergreen-habit-02",
