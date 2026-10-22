@@ -1,5 +1,5 @@
 {
-  "count": 1,
+  "count": 2,
   "seen": [
     {
       "key": "f9d358cc301e",
@@ -555,9 +555,21 @@
       ],
       "t": "2026-10-22T03:26:12.182847+00:00",
       "category": "gadgets"
+    },
+    {
+      "key": "64739905f97b",
+      "tokens": [
+        "find",
+        "fire",
+        "indonesia",
+        "peat"
+      ],
+      "t": "2026-10-22T04:24:55.471719+00:00",
+      "category": "science"
     }
   ],
   "recent_categories": [
-    "gadgets"
+    "gadgets",
+    "science"
   ]
 }
