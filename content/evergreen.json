@@ -285,8 +285,9 @@
       "category": "evergreen",
       "playlist": "Health Tips",
       "pre_condensed": true,
-      "used": false,
-      "description": "Health Tip: Drink a glass of water after you wake up.\n\nHealth tip. Drink a glass of water after you wake up. After hours without drinking, many people start the day a little low on fluids. Water first, coffee second. This is general information, not medical advice.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #HealthTips #Wellness"
+      "used": true,
+      "description": "Health Tip: Drink a glass of water after you wake up.\n\nHealth tip. Drink a glass of water after you wake up. After hours without drinking, many people start the day a little low on fluids. Water first, coffee second. This is general information, not medical advice.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #HealthTips #Wellness",
+      "used_date": "2026-10-22"
     },
     {
       "slug": "evergreen-health-02",
