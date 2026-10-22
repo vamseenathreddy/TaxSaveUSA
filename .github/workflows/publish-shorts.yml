@@ -84,7 +84,14 @@ jobs:
 
       - name: Generate Short
         if: steps.decide.outputs.fire == 'yes' && steps.decide.outputs.kind == 'short'
-        run: python3 scripts/generate_video.py --source "${{ steps.decide.outputs.source }}" > build_meta.txt
+        run: |
+          set +e
+          python3 scripts/generate_video.py --source "${{ steps.decide.outputs.source }}" > build_meta.txt 2> gen_err.txt
+          rc=$?
+          if [ $rc -ne 0 ]; then
+            echo "::error::generate_video exit $rc: $(tail -c 700 gen_err.txt | tr '\n' '|') OUT: $(tail -c 300 build_meta.txt | tr '\n' '|')"
+            exit $rc
+          fi
 
       - name: Generate long video
         if: steps.decide.outputs.fire == 'yes' && steps.decide.outputs.kind == 'long'
