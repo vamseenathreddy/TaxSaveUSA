@@ -238,7 +238,7 @@ def news_plan(rng, kind: str = "news") -> dict:
     trending.MAX_AGE_HOURS = cfg["hours"]
     MIN_NEWS, MAX_NEWS = cfg["lo"], cfg["hi"]
     picked, per_cat = [], {}
-    for rnd in range(2):          # first pass: one story per category; second pass: fill up
+    for rnd in range(max(2, -(-MAX_NEWS // len(order)))):   # pass 1: one story per category; later passes fill up
         for category in order:
             if len(picked) >= MAX_NEWS or per_cat.get(category, 0) > rnd:
                 continue
