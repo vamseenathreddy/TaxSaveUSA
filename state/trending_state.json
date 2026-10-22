@@ -436,6 +436,111 @@
       ],
       "t": "2026-10-22T03:15:15.230523+00:00",
       "category": "upcoming"
+    },
+    {
+      "key": "f706e2a3c77b",
+      "tokens": [
+        "combat",
+        "data",
+        "hints",
+        "human",
+        "inflammation",
+        "potential",
+        "psychedelics"
+      ],
+      "t": "2026-10-22T03:20:23.679072+00:00",
+      "category": "science"
+    },
+    {
+      "key": "9b26ef179fe5",
+      "tokens": [
+        "cost",
+        "does",
+        "much",
+        "pregnancy",
+        "prepared",
+        "these",
+        "tips",
+        "with"
+      ],
+      "t": "2026-10-22T03:20:23.679072+00:00",
+      "category": "science"
+    },
+    {
+      "key": "075a47292219",
+      "tokens": [
+        "moon",
+        "time",
+        "what"
+      ],
+      "t": "2026-10-22T03:20:23.679072+00:00",
+      "category": "science"
+    },
+    {
+      "key": "a3e86dea544f",
+      "tokens": [
+        "critically",
+        "dozens",
+        "endangered",
+        "from",
+        "indonesian",
+        "orangutans",
+        "rescued",
+        "wildfires"
+      ],
+      "t": "2026-10-22T03:20:23.679072+00:00",
+      "category": "science"
+    },
+    {
+      "key": "624ba85ce549",
+      "tokens": [
+        "flashes",
+        "insomnia",
+        "menopause",
+        "night",
+        "obgyns",
+        "rules",
+        "sweats",
+        "treatment"
+      ],
+      "t": "2026-10-22T03:20:23.679072+00:00",
+      "category": "science"
+    },
+    {
+      "key": "e0819a1b070f",
+      "tokens": [
+        "barn",
+        "captivated",
+        "family",
+        "into",
+        "manhattans",
+        "moved",
+        "owls",
+        "rare",
+        "side",
+        "upper",
+        "west",
+        "yorkers"
+      ],
+      "t": "2026-10-22T03:20:23.679072+00:00",
+      "category": "science"
+    },
+    {
+      "key": "7d2320f92e0c",
+      "tokens": [
+        "carcasses",
+        "covid",
+        "elephant",
+        "long",
+        "microbiome",
+        "monsters",
+        "patients",
+        "science",
+        "this",
+        "week"
+      ],
+      "t": "2026-10-22T03:20:23.679072+00:00",
+      "category": "science"
     }
   ],
   "recent_categories": []
