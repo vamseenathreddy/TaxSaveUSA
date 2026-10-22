@@ -1033,7 +1033,7 @@ def main():
     print(f"diag: script_words={len(full_script.split())} word_boundaries={len(word_boundaries)} "
           f"audio_duration={audio_duration:.2f}s word_boundaries_last_end={wb_last:.2f}s "
           f"caption_end={caption_end:.2f}s sentence_end_times={['%.2f' % t for t in sentence_end_times]} "
-          f"congrats_end_time={congrats_end_time:.2f}s")
+          f"congrats_end_time={congrats_end_time}")
 
     background_clip = ASSETS_DIR / "backgrounds" / topic.get("background", "default.mp4")
     if not background_clip.exists():
