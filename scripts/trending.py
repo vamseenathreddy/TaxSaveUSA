@@ -56,11 +56,24 @@ CATEGORIES = [
     ("tech", "TECH NEWS", "Tech News",
      "Here's a trending tech story.",
      [("https://feeds.bbci.co.uk/news/technology/rss.xml", "BBC News"),
-      ("https://feeds.arstechnica.com/arstechnica/index", "Ars Technica")]),
+      ("https://feeds.arstechnica.com/arstechnica/index", "Ars Technica"),
+      ("https://feeds.npr.org/1019/rss.xml", "NPR")]),
+    ("gadgets", "GADGETS", "Gadgets and Tech Reviews",
+     "Here's a trending gadget story.",
+     [("https://www.theverge.com/rss/index.xml", "The Verge"),
+      ("https://www.engadget.com/rss.xml", "Engadget"),
+      ("https://www.cnet.com/rss/news/", "CNET")]),
+    ("science", "SCIENCE AND SPACE", "Science and Space News",
+     "Here's a trending science story.",
+     [("https://feeds.npr.org/1007/rss.xml", "NPR"),
+      ("https://feeds.bbci.co.uk/news/science_and_environment/rss.xml", "BBC News"),
+      ("https://www.nasa.gov/feed/", "NASA")]),
     ("money", "MONEY NEWS", "Money and Business News",
      "Here's a money and business headline.",
      [("https://feeds.npr.org/1006/rss.xml", "NPR"),
       ("https://feeds.bbci.co.uk/news/business/rss.xml", "BBC News")]),
+    ("upcoming", "COMING UP", "Coming Up: Dates to Know",
+     "Here's a date coming up that matters.", []),  # fed by content/upcoming.json
 ]
 TRENDS_URL = "https://trends.google.com/trending/rss?geo=US"
 CATEGORY_TAGS = {
@@ -70,7 +83,23 @@ CATEGORY_TAGS = {
     "sports": ["sports news", "sports highlights", "nfl", "nba", "sports today"],
     "entertainment": ["entertainment news", "celebrity news", "movies", "tv shows", "pop culture"],
     "money": ["business news", "economy", "stock market", "money news", "finance news"],
+    "gadgets": ["gadgets", "tech reviews", "new gadgets", "smartphones", "tech gadgets 2026"],
+    "science": ["science news", "space news", "nasa", "science explained", "discoveries"],
+    "upcoming": ["upcoming", "what's coming", "dates to know", "important dates", "week ahead"],
 }
+HASHTAG_BY_CATEGORY = {"trending": "Viral", "news": "BreakingNews", "tech": "TechNews", "sports": "SportsNews",
+                       "entertainment": "CelebNews", "money": "BusinessNews", "gadgets": "Gadgets",
+                       "science": "ScienceNews", "upcoming": "ComingUp"}
+PLAYLIST_DESCRIPTIONS = {
+    "Trending Now in the US": "What Americans are searching for right now. New Shorts every day. Trending news in the USA explained in 30 seconds.",
+    "US News Today": "Top US news headlines in under a minute, always credited to the publisher. Daily US news Shorts.",
+    "Tech News": "Technology news from the US and the world: AI, apps, software, the internet. Daily tech news Shorts.",
+    "Gadgets and Tech Reviews": "New gadgets, phones, laptops and smart devices. Quick daily gadget news Shorts.",
+    "Science and Space News": "Science discoveries, NASA and space news explained simply. Daily science Shorts.",
+    "Money and Business News": "Money, markets, jobs and prices that affect your wallet. Daily money news Shorts.",
+    "Coming Up: Dates to Know": "Upcoming deadlines, Fed meetings, tax dates and events that matter. Know it before it happens.",
+}
+
 BASE_TAGS = ["shorts", "youtube shorts", "personal finance", "money news", "economy", "usa", "finance news", "money tips", "explained"]
 
 # Skip anything touching these - tragedies, graphic or adult content, and
@@ -98,6 +127,7 @@ BLOCK_PATTERN = re.compile(
 # system needs to learn who to show the channel to. When FINANCE_ONLY is
 # True a story must mention at least one of these topics to be used.
 FINANCE_ONLY = True
+FINANCE_STRICT = {"money"}   # only the money category must mention a finance topic; the other pillars are open
 FINANCE_WORDS = [
     "tax", "irs", "refund", "social security", "medicare", "medicaid", "retire", "401k", "401(k)", "ira ",
     "pension", "inflation", "interest rate", "mortgage", "housing", "home price", "rent ", "rents", "federal reserve",
@@ -110,8 +140,10 @@ FINANCE_WORDS = [
 FINANCE_PATTERN = re.compile(r"\b(?:" + "|".join(re.escape(w.strip()) for w in FINANCE_WORDS) + r")", re.I)
 
 
-def _on_topic(*texts):
-    return (not FINANCE_ONLY) or bool(FINANCE_PATTERN.search(" ".join(texts)))
+def _on_topic(*texts, category=""):
+    if not FINANCE_ONLY or category not in FINANCE_STRICT:
+        return True
+    return bool(FINANCE_PATTERN.search(" ".join(texts)))
 
 
 class NoTrendingAvailable(Exception):
@@ -276,7 +308,7 @@ def _build_topic(category, hook, playlist, script, title, link, publisher, headl
         f"Quick summary of a trending US story. Read the original report for full details"
         f"{': ' + link if link else ''}\n\n"
         f"General information only, not advice. Headlines can change as stories develop.\n\n"
-        + _hashtags(["TrendingNow", "USNews", {"trending": "Viral", "news": "BreakingNews", "tech": "TechNews", "sports": "SportsNews", "entertainment": "CelebNews", "money": "BusinessNews"}[category], "Today"])
+        + _hashtags(["TrendingNow", "USNews", HASHTAG_BY_CATEGORY[category], "Today"])
     )
     return {
         "slug": slug,
@@ -300,6 +332,8 @@ def _candidates_for(category, now):
     cat = next(c for c in CATEGORIES if c[0] == category)
     _, _, _, intro, feeds = cat
     out = []
+    if category == "upcoming":
+        return upcoming_candidates(now)
     if category == "trending":
         try:
             trends = parse_trends(fetch(TRENDS_URL))
@@ -315,7 +349,7 @@ def _candidates_for(category, now):
             blob = " ".join([t["term"]] + [n["title"] for n in t["news"]])
             if BLOCK_PATTERN.search(blob):
                 continue
-            if not _on_topic(blob):
+            if not _on_topic(blob, category=category):
                 continue
             n = t["news"][0]
             headline = _strip_publisher(n["title"])
@@ -336,7 +370,7 @@ def _candidates_for(category, now):
                 continue
             if BLOCK_PATTERN.search(it["title"] + " " + it["summary"]):
                 continue
-            if not _on_topic(it["title"], it["summary"]):
+            if not _on_topic(it["title"], it["summary"], category=category):
                 continue
             headline = it["title"]
             core = f"{intro} {_sentence(headline)}"
@@ -344,6 +378,30 @@ def _candidates_for(category, now):
                 core += f" {it['summary']}"
             core += f" That's according to {publisher}."
             out.append((headline, core, it["link"], publisher))
+    return out
+
+
+UPCOMING_PATH = ROOT / "content" / "upcoming.json"
+
+
+def upcoming_candidates(now, horizon_days=21):
+    """Dates from content/upcoming.json that fall in the next `horizon_days`, soonest first:
+    [(headline, script_core, link, publisher)]. Curated from official sources (IRS, Fed, CMS, NASA)."""
+    try:
+        events = json.loads(UPCOMING_PATH.read_text(encoding="utf-8"))["events"]
+    except (OSError, ValueError, KeyError):
+        return []
+    today = now.date()
+    out = []
+    for ev in sorted(events, key=lambda e: e["date"]):
+        d = datetime.strptime(ev["date"], "%Y-%m-%d").date()
+        days = (d - today).days
+        if not 0 <= days <= horizon_days:
+            continue
+        when = "today" if days == 0 else "tomorrow" if days == 1 else f"in {days} days, on {d.strftime('%B')} {d.day}"
+        headline = f"{ev['title']} ({d.strftime('%B')} {d.day})"
+        core = (f"Coming up {when}: {ev['title']}. {ev['say']} That's according to {ev['source']}.")
+        out.append((headline, core, ev.get("link", ""), ev["source"]))
     return out
 
 

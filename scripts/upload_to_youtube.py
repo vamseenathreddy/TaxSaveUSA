@@ -64,6 +64,16 @@ TRENDING_COMMENT_PROMPTS = [
 ]
 
 
+def _playlist_description(title: str) -> str:
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import trending
+        text = trending.PLAYLIST_DESCRIPTIONS.get(title)
+    except Exception:  # noqa: BLE001
+        text = None
+    return (text or f"{title}: new videos added automatically.") + "\n\nSubscribe to TaxSaveUSA for daily US news, tax tips, tech and science. https://youtube.com/@TaxSaveUSA"
+
+
 def get_or_create_playlist(youtube, title: str) -> str:
     """Finds this channel's playlist with exactly this title (listing the
     channel's own playlists, so a re-run never creates a duplicate), or
@@ -82,7 +92,7 @@ def get_or_create_playlist(youtube, title: str) -> str:
     created = youtube.playlists().insert(
         part="snippet,status",
         body={
-            "snippet": {"title": title[:150], "description": f"{title} - new Shorts added automatically.",
+            "snippet": {"title": title[:150], "description": _playlist_description(title),
                          "defaultLanguage": "en"},
             "status": {"privacyStatus": "public"},
         },

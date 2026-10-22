@@ -203,11 +203,40 @@ def tax_plan(rng) -> dict | None:
             "hashtags": "#Taxes #IRS #TaxTips #Money #TaxSaveUSA", "n": n}
 
 
-def news_plan(rng) -> dict:
+# long video formats: categories used, title, playlist, thumbnail, tags, hashtags, window (hours), min/max stories
+LONG_KINDS = {
+    "news": dict(cats=["trending", "news", "money", "tech", "science"], title="Top {n} Trending US Stories Today | {nice}",
+                 intro="Here are the top {n} trending stories in the United States today, {nice}.",
+                 playlist="Trending Now in the US", thumb=("TRENDING IN", "THE USA TODAY"), kicker="{nice}",
+                 tags=["trending news", "us news today", "news today", "trending in usa", "daily news roundup", "usa news", "top stories", "headlines today", "news summary"],
+                 hashtags="#TrendingNow #USNews #NewsToday #Headlines #TaxSaveUSA", hours=36, lo=5, hi=8, wrap="daily US trending news and tax tips"),
+    "tech": dict(cats=["tech", "gadgets"], title="Top {n} Tech and Gadget Stories This Week | {nice}",
+                 intro="Here are the top {n} tech and gadget stories this week, {nice}.",
+                 playlist="Tech and Gadgets Weekly", thumb=("TECH & GADGETS", "THIS WEEK"), kicker="{nice}",
+                 tags=["tech news", "gadgets", "new gadgets 2026", "tech news this week", "technology news", "ai news", "smartphones", "tech roundup", "usa tech news"],
+                 hashtags="#TechNews #Gadgets #Technology #AI #TaxSaveUSA", hours=168, lo=5, hi=8, wrap="weekly tech and gadget news"),
+    "science": dict(cats=["science"], title="Top {n} Science and Space Stories This Week | {nice}",
+                    intro="Here are the top {n} science and space stories this week, {nice}.",
+                    playlist="Science and Space Weekly", thumb=("SCIENCE & SPACE", "THIS WEEK"), kicker="{nice}",
+                    tags=["science news", "space news", "nasa", "science this week", "discoveries", "science explained", "space exploration", "science roundup", "usa science news"],
+                    hashtags="#Science #Space #NASA #Discovery #TaxSaveUSA", hours=168, lo=4, hi=7, wrap="weekly science and space news"),
+    "ahead": dict(cats=["upcoming"], title="The Week Ahead: {n} US Dates You Need to Know | {nice}",
+                  intro="Here are {n} important dates coming up in the United States, as of {nice}.",
+                  playlist="Coming Up: Dates to Know", thumb=("DATES YOU", "MUST KNOW"), kicker="COMING UP",
+                  tags=["important dates", "week ahead", "upcoming dates", "tax deadlines", "fed meeting", "open enrollment", "money dates", "what's coming", "usa dates"],
+                  hashtags="#WeekAhead #TaxDeadlines #Money #TaxSaveUSA", hours=36, lo=3, hi=8, wrap="upcoming deadlines and dates that matter"),
+}
+WEEKDAY_KIND = {0: "ahead", 1: "tax", 2: "tech", 3: "science", 4: "news", 5: "tax", 6: "news"}  # Mon..Sun
+
+
+def news_plan(rng, kind: str = "news") -> dict:
+    cfg = LONG_KINDS[kind]
     now = datetime.now(timezone.utc)
     st = trending.load_state()
-    order = [c[0] for c in trending.CATEGORIES]
+    order = list(cfg["cats"])
     rng.shuffle(order)
+    trending.MAX_AGE_HOURS = cfg["hours"]
+    MIN_NEWS, MAX_NEWS = cfg["lo"], cfg["hi"]
     picked, per_cat = [], {}
     for rnd in range(2):          # first pass: one story per category; second pass: fill up
         for category in order:
@@ -231,22 +260,22 @@ def news_plan(rng) -> dict:
     today = date.today()
     nice = f"{today.strftime('%B')} {today.day}, {today.year}"
     n = len(picked)
-    secs = [{"head": f"Top {n} Trending US Stories Today", "body": nice, "say": f"Here are the top {n} trending stories in the United States today, {nice}. Every story is credited to the publisher that reported it, with links in the description.", "chapter": "Intro", "big": True}]
+    secs = [{"head": cfg["title"].split(" |")[0].format(n=n, nice=nice), "body": nice, "say": cfg["intro"].format(n=n, nice=nice) + " Every story is credited to the source that reported it, with links in the description.", "chapter": "Intro", "big": True}]
     for i, p in enumerate(picked, 1):
         secs.append({"head": p["headline"], "body": "", "tag": p["label"], "say": f"Story number {i}. {p['say']}", "chapter": p["headline"][:60], "caption": p["say"]})
-    secs.append({"head": "Subscribe to TaxSaveUSA", "body": "Daily US trending news and tax tips.", "say": "That is the news roundup for today. Subscribe to TaxSaveUSA for daily trending news and practical tax tips.", "chapter": "Wrap up", "big": True})
+    secs.append({"head": "Subscribe to TaxSaveUSA", "body": cfg["wrap"].capitalize() + ".", "say": f"That is the roundup. Subscribe to TaxSaveUSA for {cfg['wrap']}, and tell us in the comments which story surprised you most.", "chapter": "Wrap up", "big": True})
     src = "\n".join(f"- {p['headline']} ({p['publisher']}){': ' + p['link'] if p['link'] else ''}" for p in picked)
-    return {"kind": "news", "slug": f"news-{today.isoformat()}", "title": f"Top {n} Trending US Stories Today | {nice}",
-            "sections": secs, "tags": ["trending news", "us news today", "news today", "trending in usa", "daily news roundup", "usa news", "top stories", "headlines today", "news summary"],
-            "playlist": "Trending Now in the US", "thumb": ("TRENDING IN", "THE USA TODAY", nice.upper()),
-            "desc_head": f"The top {n} trending stories in the United States on {nice}, summarized in plain English.\n\nStories and sources:\n{src}\n\nChapters:\n",
-            "footer": "Each story is a short summary of a report by the publisher named above. Open the link for the full report; details can change as stories develop. General information only.",
-            "hashtags": "#TrendingNow #USNews #NewsToday #Headlines #TaxSaveUSA", "n": n}
+    return {"kind": "news", "slug": f"{kind}-{today.isoformat()}", "title": cfg["title"].format(n=n, nice=nice),
+            "sections": secs, "tags": cfg["tags"], "playlist": cfg["playlist"],
+            "thumb": (*cfg["thumb"], cfg["kicker"].format(nice=nice.upper())),
+            "desc_head": f"{cfg['intro'].format(n=n, nice=nice)} Summarized in plain English.\n\nStories and sources:\n{src}\n\nChapters:\n",
+            "footer": "Each story is a short summary of a report by the source named above. Open the link for the full report; details can change as stories develop. General information only, not financial, tax or legal advice.",
+            "hashtags": cfg["hashtags"], "n": n}
 
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--mode", choices=["auto", "news", "tax"], default="auto")
+    ap.add_argument("--mode", choices=["auto", "news", "tax", "tech", "science", "ahead"], default="auto")
     ap.add_argument("--out", default=str(ROOT / "build" / "long"))
     ap.add_argument("--keep-queue", action="store_true", help="do not mark the tax video as used (test runs)")
     args = ap.parse_args()
@@ -255,18 +284,31 @@ def main() -> int:
     today = date.today()
     rng = random.Random(today.isoformat())
     plan = None
-    if args.mode == "tax" or (args.mode == "auto" and today.toordinal() % 2 == 0):
+    mode = args.mode
+    if mode == "auto":
+        mode = WEEKDAY_KIND[today.weekday()]
+    if mode == "tax":
         plan = tax_plan(rng)
         if plan is None and args.mode == "tax":
             raise SystemExit("no unused tax explainer left in content/long_tax.json")
     if plan is None:
+        kind = mode if mode in LONG_KINDS else "news"
         try:
-            plan = news_plan(rng)
+            plan = news_plan(rng, kind)
         except SystemExit as exc:
-            if args.mode == "news":
+            if args.mode not in ("auto", "tax"):
                 raise
-            print(f"news roundup unavailable ({exc}); using a tax explainer")
-            plan = tax_plan(rng)
+            print(f"{kind} roundup unavailable ({exc}); trying the others")
+            for alt in ["news", "tech", "ahead"]:
+                if alt == kind:
+                    continue
+                try:
+                    plan = news_plan(rng, alt)
+                    break
+                except SystemExit:
+                    continue
+            if plan is None:
+                plan = tax_plan(rng)
             if plan is None:
                 raise SystemExit("no content available for the long video")
 
