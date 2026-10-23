@@ -1,5 +1,5 @@
 {
-  "count": 3,
+  "count": 4,
   "seen": [
     {
       "key": "f9d358cc301e",
@@ -833,11 +833,25 @@
       ],
       "t": "2026-10-22T13:54:27.035320+00:00",
       "category": "tech"
+    },
+    {
+      "key": "db0a6c4d8a1a",
+      "tokens": [
+        "defense",
+        "memes",
+        "odenkirk",
+        "saulid",
+        "strong",
+        "with"
+      ],
+      "t": "2026-10-23T00:11:37.515224+00:00",
+      "category": "trending"
     }
   ],
   "recent_categories": [
     "gadgets",
     "science",
-    "tech"
+    "tech",
+    "trending"
   ]
 }
