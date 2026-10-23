@@ -1,5 +1,5 @@
 {
-  "count": 5,
+  "count": 6,
   "seen": [
     {
       "key": "f9d358cc301e",
@@ -976,6 +976,17 @@
       ],
       "t": "2026-10-23T09:43:41.780307+00:00",
       "category": "tech"
+    },
+    {
+      "key": "28444f97c1e8",
+      "tokens": [
+        "biden",
+        "hunter",
+        "signs",
+        "with"
+      ],
+      "t": "2026-10-23T18:38:11.917988+00:00",
+      "category": "movies"
     }
   ],
   "recent_categories": [
@@ -983,6 +994,7 @@
     "science",
     "tech",
     "trending",
-    "news"
+    "news",
+    "movies"
   ]
 }
