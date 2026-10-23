@@ -146,7 +146,7 @@ FINANCE_WORDS = [
     "grocery", "prices", "tariff", "economy", "economic", "recession", "stock", "stocks", "dow ", "nasdaq", "s&p",
     "wall street", "bank", "credit", "debt", "loan", "savings", "insurance", "benefit", "stimulus", "budget",
     "treasury", "gdp", "earnings", "consumer", "shopping", "cost of living", "deduction", "bonus", "payroll",
-    "student loan", "scam", "fraud", "fee", "bills", "utility", "electric bill", "health care costs",
+    "student loan", "scam*", "fraud*", "fee", "bills", "utility", "electric bill", "health care costs",
 ]
 FINANCE_PATTERN = re.compile(r"\b(?:" + "|".join(re.escape(w.strip()) for w in FINANCE_WORDS) + r")", re.I)
 
@@ -304,6 +304,52 @@ def _traffic_phrase(traffic):
     return f" with over {n:,} searches" if n >= 1000 else ""
 
 
+def _traffic_short(traffic):
+    m = re.match(r"(\d[\d,]*)\+?", traffic or "")
+    if not m:
+        return ""
+    n = int(m.group(1).replace(",", ""))
+    if n < 1000:
+        return ""
+    return (f"{n // 1000}K+" if n < 1_000_000 else f"{n / 1_000_000:.1f}M+") + " searches"
+
+
+# Mood decides the card colour: green = good news, red = bad news, blue = neutral.
+GOOD_WORDS = ["win", "wins", "won", "record high", "surge", "soar", "rally", "boost", "gain", "jump", "rise in wages",
+              "raise", "relief", "approv*", "launch", "breakthrough", "discover*", "success", "saves", "save ", "cheaper",
+              "lower prices", "drop in prices", "prices fall", "rates fall", "rate cut", "cuts rates", "refund", "bonus",
+              "hiring", "growth", "grows", "improve*", "celebrat*", "award", "best", "free", "deal", "discount", "sale",
+              "recover*", "rebound", "milestone", "opens", "new feature", "returns", "hope"]
+BAD_WORDS = ["fall", "falls", "fell", "drop", "drops", "plunge", "slump", "tumble", "sink", "crash", "loss", "losses",
+             "cut jobs", "layoff*", "lays off", "shortage", "warning", "warns", "risk", "scam*", "fraud*", "hack", "breach",
+             "recall*", "ban", "banned", "fine", "fined", "hike", "hikes", "higher prices", "prices rise", "prices up",
+             "costs more", "price increase", "rate hike", "tariff", "cancel", "delay", "outage", "fail", "fails",
+             "decline", "worst", "slow", "weak", "threat", "backlash", "concern", "fears", "crisis", "inflation rises"]
+
+
+def classify_mood(text):
+    t = " " + re.sub(r"[^a-z0-9 ]", " ", text.lower()) + " "
+    def hits(words):
+        n = 0
+        for w in words:
+            w = w.strip()
+            pat = r"\b" + re.escape(w[:-1]) if w.endswith("*") else r"\b" + re.escape(w) + r"\b"
+            n += bool(re.search(pat, t))
+        return n
+    good, bad = hits(GOOD_WORDS), hits(BAD_WORDS)
+    # prices / costs / rates going UP is bad news; going DOWN is good news
+    if re.search(r"\b(price|prices|cost|costs|rate|rates|bill|bills|rent|fees?)\b.{0,25}\b(rise|rises|rising|jump|jumps|up|climb|climbs|hike|hikes|surge|surges)\b", t):
+        bad += 2
+    if re.search(r"\b(price|prices|cost|costs|rate|rates|bill|bills|rent|fees?)\b.{0,25}\b(fall|falls|falling|drop|drops|down|cut|cuts|ease|eases|lower)\b", t):
+        good += 2
+        bad = max(bad - 2, 0)
+    if good > bad:
+        return "good"
+    if bad > good:
+        return "bad"
+    return "neutral"
+
+
 def _hashtags(words):
     return " ".join("#" + re.sub(r"\W", "", w) for w in words)
 
@@ -367,7 +413,9 @@ def _candidates_for(category, now):
             term = t["term"][:1].upper() + t["term"][1:]
             core = (f"{term} is trending across the US right now{_traffic_phrase(t['traffic'])}. "
                     f"{_sentence(headline)} That's according to {n['publisher'] or 'news reports'}.")
-            out.append((headline, core, n["link"], n["publisher"] or "news reports"))
+            kicker = f"TRENDING: {term}" + (f"  |  {_traffic_short(t['traffic'])}" if _traffic_short(t["traffic"]) else "")
+            out.append((headline, core, n["link"], n["publisher"] or "news reports",
+                        {"kicker": kicker, "summary": ""}))
         return out
 
     for url, publisher in feeds:
@@ -388,7 +436,8 @@ def _candidates_for(category, now):
             if it["summary"] and _norm(it["summary"]) not in _norm(headline) and _norm(headline) not in _norm(it["summary"]):
                 core += f" {it['summary']}"
             core += f" That's according to {publisher}."
-            out.append((headline, core, it["link"], publisher))
+            summ = it["summary"] if it["summary"] and _norm(it["summary"]) not in _norm(headline) else ""
+            out.append((headline, core, it["link"], publisher, {"kicker": "", "summary": summ}))
     return out
 
 
@@ -416,7 +465,9 @@ def upcoming_candidates(now, horizon_days=None):
         when = "today" if days == 0 else "tomorrow" if days == 1 else f"in {days} days, on {d.strftime('%B')} {d.day}"
         headline = f"{ev['title']} ({d.strftime('%B')} {d.day})"
         core = (f"Coming up {when}: {ev['title']}. {ev['say']} That's according to {ev['source']}.")
-        out.append((headline, core, ev.get("link", ""), ev["source"]))
+        out.append((headline, core, ev.get("link", ""), ev["source"],
+                    {"kicker": "COMING " + ("TODAY" if days == 0 else "TOMORROW" if days == 1 else f"IN {days} DAYS"),
+                     "summary": ev["say"]}))
     return out
 
 
@@ -432,10 +483,12 @@ def pick_trending_topic(seed=None):
 
     for category in order:
         cat = next(c for c in CATEGORIES if c[0] == category)
-        for headline, core, link, publisher in _candidates_for(category, now):
+        for headline, core, link, publisher, card in _candidates_for(category, now):
             if _is_dup(headline, st["seen"]):
                 continue
             topic = _build_topic(category, cat[1], cat[2], core, headline, link, publisher, headline, rng)
+            topic["card"] = {"kicker": card.get("kicker", ""), "summary": card.get("summary", ""),
+                             "mood": classify_mood(headline + " " + card.get("summary", ""))}
             count_before = st["count"]
             st["seen"].append({"key": hashlib.sha1(_norm(headline).encode()).hexdigest()[:12],
                                "tokens": sorted(_tokens(headline)), "t": now.isoformat(), "category": category})

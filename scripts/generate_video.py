@@ -947,6 +947,23 @@ def main():
 
     rng = random.Random(slug)
 
+    # Trending news Shorts are silent read-it-yourself cards (no voice-over):
+    # a USA-flag card tinted green / red / blue by mood. Tax tips and evergreen
+    # Shorts keep the voice-over path below.
+    if topic.get("pre_condensed") and topic.get("category") != "evergreen" and topic.get("card"):
+        import news_card
+        dur = news_card.render_video(topic, font_path, out_path, ROOT / "build" / "cards")
+        tags = build_tags(topic)
+        import monetization
+        seo_description = _with_shorts_tag_in_description(monetization.append_to(topic["description"]))
+        print(f"diag: news card mood={topic['card']['mood']} category={topic['category']} duration={dur:.1f}s")
+        print(f"rendered: {out_path}")
+        print(f"title: {_with_shorts_tag_in_title(topic['title'])}")
+        print(f"description: {seo_description.replace(chr(10), chr(92) + 'n')}")
+        print(f"tags: {','.join(tags)}")
+        print(f"playlist: {topic.get('playlist', 'Tax Tips')}")
+        return
+
     # Condense the script down to one short, clear message (its lead
     # sentence(s), within CORE_SCRIPT_WORD_BUDGET words) instead of the
     # full script, then append a spoken + on-screen outro CTA asking the
