@@ -575,8 +575,9 @@
       "category": "evergreen",
       "playlist": "Habits and Life Hacks",
       "pre_condensed": true,
-      "used": false,
-      "description": "Money and Life Hack: Use a 24 hour rule before buying.\n\nQuick life hack. Use a 24 hour rule before buying. For anything that is not a necessity, wait a full day. Many impulse buys lose their shine overnight.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #LifeHacks #MoneyTips"
+      "used": true,
+      "description": "Money and Life Hack: Use a 24 hour rule before buying.\n\nQuick life hack. Use a 24 hour rule before buying. For anything that is not a necessity, wait a full day. Many impulse buys lose their shine overnight.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #LifeHacks #MoneyTips",
+      "used_date": "2026-10-23"
     },
     {
       "slug": "evergreen-habit-03",
