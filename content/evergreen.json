@@ -309,8 +309,9 @@
       "category": "evergreen",
       "playlist": "Health Tips",
       "pre_condensed": true,
-      "used": false,
-      "description": "Health Tip: Take a 10 minute walk after meals.\n\nHealth tip. Take a 10 minute walk after meals. Studies suggest light walking after eating can help keep blood sugar steadier, and it is easy to fit into a day. This is general information, not medical advice.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #HealthTips #Wellness"
+      "used": true,
+      "description": "Health Tip: Take a 10 minute walk after meals.\n\nHealth tip. Take a 10 minute walk after meals. Studies suggest light walking after eating can help keep blood sugar steadier, and it is easy to fit into a day. This is general information, not medical advice.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #HealthTips #Wellness",
+      "used_date": "2026-10-23"
     },
     {
       "slug": "evergreen-health-03",
