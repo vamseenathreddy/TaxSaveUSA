@@ -1,5 +1,5 @@
 {
-  "count": 4,
+  "count": 5,
   "seen": [
     {
       "key": "f9d358cc301e",
@@ -846,12 +846,28 @@
       ],
       "t": "2026-10-23T00:11:37.515224+00:00",
       "category": "trending"
+    },
+    {
+      "key": "2e6447badfdb",
+      "tokens": [
+        "federal",
+        "field",
+        "judge",
+        "looking",
+        "noncitizen",
+        "operations",
+        "restricts",
+        "voters"
+      ],
+      "t": "2026-10-23T04:47:54.498951+00:00",
+      "category": "news"
     }
   ],
   "recent_categories": [
     "gadgets",
     "science",
     "tech",
-    "trending"
+    "trending",
+    "news"
   ]
 }
