@@ -502,7 +502,8 @@
       ],
       "script": "If you have investment income and you're a higher earner, this tax might be sneaking up on you. It's called the Net Investment Income Tax, or NIIT, and the IRS applies it at 3.8 percent on top of your regular capital gains or investment taxes. It kicks in once your modified adjusted gross income crosses 200,000 dollars if you're single or head of household, or 250,000 dollars if you're married filing jointly. It applies to the smaller of your net investment income or the amount you're over that threshold, and it covers things like interest, dividends, capital gains, and rental income. This tax has stayed at the same thresholds for years, it's not adjusted for inflation. If you're near these numbers and selling investments, this is worth running the math on first.",
       "description": "The 3.8% Net Investment Income Tax (NIIT) applies once modified AGI crosses $200,000 (single/head of household) or $250,000 (married filing jointly) in 2026, on interest, dividends, capital gains, and rental income. Here's how the tax is calculated and why these thresholds never move.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Topic no. 559, Net Investment Income Tax). Consult a CPA or CFP for your specific situation.\n\n#NIIT #investingtaxes #taxtips2026 #personalfinance #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-10-24"
     },
     {
       "slug": "additional-medicare-tax-2026",
