@@ -333,8 +333,9 @@
       "category": "evergreen",
       "playlist": "Health Tips",
       "pre_condensed": true,
-      "used": false,
-      "description": "Health Tip: Try the 20 20 20 rule for your eyes.\n\nHealth tip. Try the 20 20 20 rule for your eyes. Every 20 minutes, look at something 20 feet away for 20 seconds. It can ease eye strain from screens. This is general information, not medical advice.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #HealthTips #Wellness"
+      "used": true,
+      "description": "Health Tip: Try the 20 20 20 rule for your eyes.\n\nHealth tip. Try the 20 20 20 rule for your eyes. Every 20 minutes, look at something 20 feet away for 20 seconds. It can ease eye strain from screens. This is general information, not medical advice.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #HealthTips #Wellness",
+      "used_date": "2026-10-24"
     },
     {
       "slug": "evergreen-health-04",
