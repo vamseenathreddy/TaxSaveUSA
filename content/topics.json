@@ -520,7 +520,8 @@
       ],
       "script": "Here's a payroll tax a lot of higher earners don't realize exists separately. It's called the Additional Medicare Tax, and the IRS charges an extra 0.9 percent on top of the regular 1.45 percent Medicare tax. It applies once your wages or self-employment income cross 200,000 dollars if you're single, 250,000 dollars if you're married filing jointly, or 125,000 if you're married filing separately. Your employer is required to start withholding this extra amount automatically once your wages with them cross 200,000 dollars, regardless of your filing status, so you might owe more or less when you file depending on your actual household numbers. If you have two jobs or you're self-employed too, double check the math yourself using Form 8959 so you're not surprised at tax time.",
       "description": "The Additional Medicare Tax adds 0.9% on top of the regular Medicare tax once wages or self-employment income cross $200,000 single, $250,000 married filing jointly, or $125,000 married filing separately. Here's why your employer's withholding might not match what you actually owe.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Additional Medicare Tax). Consult a CPA for your specific situation.\n\n#medicaretax #taxtips2026 #personalfinance #payrolltax #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-10-24"
     },
     {
       "slug": "ev-tax-credit-ended-2026",
