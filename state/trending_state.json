@@ -1,5 +1,5 @@
 {
-  "count": 6,
+  "count": 7,
   "seen": [
     {
       "key": "f9d358cc301e",
@@ -987,14 +987,27 @@
       ],
       "t": "2026-10-23T18:38:11.917988+00:00",
       "category": "movies"
+    },
+    {
+      "key": "50fcd3a3ecb9",
+      "tokens": [
+        "back",
+        "bang",
+        "latest",
+        "look",
+        "science",
+        "space"
+      ],
+      "t": "2026-10-24T04:34:12.935259+00:00",
+      "category": "science"
     }
   ],
   "recent_categories": [
-    "gadgets",
     "science",
     "tech",
     "trending",
     "news",
-    "movies"
+    "movies",
+    "science"
   ]
 }
