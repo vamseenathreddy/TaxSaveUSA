@@ -1,5 +1,5 @@
 {
-  "count": 8,
+  "count": 9,
   "seen": [
     {
       "key": "f9d358cc301e",
@@ -1153,14 +1153,28 @@
       ],
       "t": "2026-10-24T13:20:37.118355+00:00",
       "category": "movies"
+    },
+    {
+      "key": "eb4cb96e063f",
+      "tokens": [
+        "compare",
+        "countries",
+        "does",
+        "other",
+        "pension",
+        "state",
+        "with"
+      ],
+      "t": "2026-10-24T19:13:50.053299+00:00",
+      "category": "money"
     }
   ],
   "recent_categories": [
-    "tech",
     "trending",
     "news",
     "movies",
     "science",
-    "gadgets"
+    "gadgets",
+    "money"
   ]
 }
