@@ -600,8 +600,9 @@
       "category": "evergreen",
       "playlist": "Habits and Life Hacks",
       "pre_condensed": true,
-      "used": false,
-      "description": "Money and Life Hack: Check your credit report for free.\n\nQuick life hack. Check your credit report for free. You can get free credit reports from all three bureaus at annualcreditreport dot com. Look for mistakes you can dispute.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #LifeHacks #MoneyTips"
+      "used": true,
+      "description": "Money and Life Hack: Check your credit report for free.\n\nQuick life hack. Check your credit report for free. You can get free credit reports from all three bureaus at annualcreditreport dot com. Look for mistakes you can dispute.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #LifeHacks #MoneyTips",
+      "used_date": "2026-10-25"
     },
     {
       "slug": "evergreen-habit-04",
