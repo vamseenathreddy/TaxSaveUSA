@@ -538,7 +538,8 @@
       ],
       "script": "Thinking about buying an electric vehicle in 2026? Here's a tax break that's no longer there to help. The IRS confirms the federal Clean Vehicle Tax Credit, for new EVs, used EVs, and commercial clean vehicles, ended for any vehicle acquired after September 30th, 2025. It was eliminated under the new tax law passed in 2025, officially called the One Big Beautiful Bill. If you signed a binding purchase contract and made a payment on or before September 30th, 2025, you may still qualify even if you take delivery later, so dig up your paperwork if you were in that window. For any EV purchase from here on in 2026, don't count on a federal credit anymore. Some states, utility companies, and even manufacturers still offer their own separate EV incentives, so it's worth checking those before you buy.",
       "description": "The federal Clean Vehicle Tax Credit (new, used, and commercial EVs) ended for any vehicle acquired after September 30, 2025, eliminated under 2025's tax law. Here's the binding-contract exception that might still apply to you, and where to look for remaining incentives.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Clean Vehicle Tax Credits). Consult a CPA for your specific situation.\n\n#EVtaxcredit #electricvehicle #taxtips2026 #IRS #cleanenergy",
-      "used": false
+      "used": true,
+      "used_date": "2026-10-25"
     },
     {
       "slug": "ssdi-sga-amount-2026",
