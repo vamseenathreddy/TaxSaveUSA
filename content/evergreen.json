@@ -89,8 +89,9 @@
       "category": "evergreen",
       "playlist": "Daily Motivation Quotes",
       "pre_condensed": true,
-      "used": false,
-      "description": "Quote of the Day: Your future is built on the days you do not feel like it.\n\nQuote of the day. Your future is built on the days you do not feel like it. Motivation comes and goes. Showing up is what counts.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #Motivation #Quotes"
+      "used": true,
+      "description": "Quote of the Day: Your future is built on the days you do not feel like it.\n\nQuote of the day. Your future is built on the days you do not feel like it. Motivation comes and goes. Showing up is what counts.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #Motivation #Quotes",
+      "used_date": "2026-10-25"
     },
     {
       "slug": "evergreen-quote-05",
