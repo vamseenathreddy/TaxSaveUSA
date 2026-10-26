@@ -357,8 +357,9 @@
       "category": "evergreen",
       "playlist": "Health Tips",
       "pre_condensed": true,
-      "used": false,
-      "description": "Health Tip: Get some daylight soon after you wake up.\n\nHealth tip. Get some daylight soon after you wake up. Morning light helps set your body clock, which can make it easier to fall asleep at night. This is general information, not medical advice.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #HealthTips #Wellness"
+      "used": true,
+      "description": "Health Tip: Get some daylight soon after you wake up.\n\nHealth tip. Get some daylight soon after you wake up. Morning light helps set your body clock, which can make it easier to fall asleep at night. This is general information, not medical advice.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #HealthTips #Wellness",
+      "used_date": "2026-10-26"
     },
     {
       "slug": "evergreen-health-05",
