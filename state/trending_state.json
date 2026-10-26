@@ -1,5 +1,5 @@
 {
-  "count": 13,
+  "count": 14,
   "seen": [
     {
       "key": "f9d358cc301e",
@@ -1349,14 +1349,30 @@
       ],
       "t": "2026-10-26T03:36:39.133001+00:00",
       "category": "money"
+    },
+    {
+      "key": "01b56483ca6f",
+      "tokens": [
+        "biggest",
+        "challenges",
+        "loggers",
+        "repeal",
+        "roadless",
+        "rule",
+        "solve",
+        "their",
+        "wont"
+      ],
+      "t": "2026-10-26T09:22:58.605231+00:00",
+      "category": "news"
     }
   ],
   "recent_categories": [
-    "gadgets",
     "money",
     "trending",
     "movies",
     "gadgets",
-    "money"
+    "money",
+    "news"
   ]
 }
