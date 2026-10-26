@@ -1365,6 +1365,50 @@
       ],
       "t": "2026-10-26T09:22:58.605231+00:00",
       "category": "news"
+    },
+    {
+      "key": "2c58171012ae",
+      "tokens": [
+        "december",
+        "geminid",
+        "meteor",
+        "peaks",
+        "shower"
+      ],
+      "t": "2026-10-26T16:51:32.611837+00:00",
+      "category": "upcoming"
+    },
+    {
+      "key": "21d99bed8d1f",
+      "tokens": [
+        "coverage",
+        "deadline",
+        "december",
+        "enroll",
+        "health",
+        "january"
+      ],
+      "t": "2026-10-26T16:51:32.611837+00:00",
+      "category": "upcoming"
+    },
+    {
+      "key": "3990145519b4",
+      "tokens": [
+        "christmas",
+        "december"
+      ],
+      "t": "2026-10-26T16:51:32.611837+00:00",
+      "category": "upcoming"
+    },
+    {
+      "key": "32ce921dc7cf",
+      "tokens": [
+        "deadline",
+        "december",
+        "yearend"
+      ],
+      "t": "2026-10-26T16:51:32.611837+00:00",
+      "category": "upcoming"
     }
   ],
   "recent_categories": [
