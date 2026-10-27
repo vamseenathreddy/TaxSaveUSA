@@ -556,7 +556,8 @@
       ],
       "script": "If you're on Social Security Disability and thinking about working, this 2026 number is the one to know. The Social Security Administration sets a monthly earnings limit called substantial gainful activity, or SGA. For 2026, that limit is 1,690 dollars a month for most people, and 2,830 dollars a month if you're blind. Earn under that amount doing work, and it generally doesn't count against your disability eligibility. Go over it consistently, and the SSA may decide you're no longer disabled under their rules. There's also a trial work period that lets you test working for 1,210 dollars a month or more without immediately losing benefits. These numbers update most years, so if you're receiving SSDI and picking up work, check your pay against the current limit before you commit to more hours.",
       "description": "The 2026 Social Security substantial gainful activity (SGA) limit is $1,690/month for most SSDI recipients, and $2,830/month if you're blind, with a $1,210/month trial work period threshold. Here's how working while on disability affects your benefits.\n\nGeneral education only, not personalized tax or financial advice. Source: SSA.gov (Red Book, What's New in 2026). Consult SSA directly or a disability advocate for your specific situation.\n\n#SSDI #socialsecuritydisability #SSA #disabilitybenefits #personalfinance",
-      "used": false
+      "used": true,
+      "used_date": "2026-10-27"
     },
     {
       "slug": "medicare-part-a-premium-2026",
