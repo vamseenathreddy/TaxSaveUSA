@@ -325,13 +325,18 @@ LONG_KINDS = {
                    playlist="Movie and TV News Weekly", thumb=("MOVIE & TV NEWS", "THIS WEEK"), kicker="{nice}",
                    tags=["movie news", "hollywood news", "box office", "new movies", "tv news", "streaming news", "movie trailers", "entertainment news this week", "movie news today"],
                    hashtags="#MovieNews #Hollywood #BoxOffice #Streaming #TaxSaveUSA", hours=168, lo=4, hi=7, wrap="weekly movie and TV news"),
+    "money": dict(cats=["money", "upcoming"], title="Top {n} Money and Tax Stories This Week | {nice}",
+                  intro="Here are the top {n} money and tax stories for Americans this week, {nice}.",
+                  playlist="Money News Weekly", thumb=("MONEY NEWS", "THIS WEEK"), kicker="{nice}",
+                  tags=["money news", "tax news", "personal finance", "irs news", "economy news", "savings", "taxes 2026", "money tips", "usa money news"],
+                  hashtags="#MoneyNews #Taxes #PersonalFinance #IRS #TaxSaveUSA", hours=168, horizon=45, lo=3, hi=7, wrap="weekly money and tax news"),
     "ahead": dict(cats=["upcoming"], title="The Week Ahead: {n} US Dates You Need to Know | {nice}",
                   intro="Here are {n} important dates coming up in the United States, as of {nice}.",
                   playlist="Coming Up: Dates to Know", thumb=("DATES YOU", "MUST KNOW"), kicker="COMING UP",
                   tags=["important dates", "week ahead", "upcoming dates", "tax deadlines", "fed meeting", "open enrollment", "money dates", "what's coming", "usa dates"],
                   hashtags="#WeekAhead #TaxDeadlines #Money #TaxSaveUSA", hours=36, horizon=75, lo=3, hi=8, wrap="upcoming deadlines and dates that matter"),
 }
-WEEKDAY_KIND = {0: "ahead", 1: "tax", 2: "tech", 3: "science", 4: "news", 5: "movies", 6: "news"}
+WEEKDAY_KIND = {0: "ahead", 1: "tax", 2: "tax", 3: "money", 4: "ahead", 5: "tax", 6: "money"}   # 2026-10-27: tax and money only (was tech, science, movies, general news)
 BED_FOR_KIND = {"tax": "calm", "tech": "tech", "science": "science"}   # others use the news bed
 BED_VOLUME = 0.18  # Mon..Sun
 
@@ -400,14 +405,14 @@ def main() -> int:
         if plan is None and args.mode == "tax":
             raise SystemExit("no unused tax explainer left in content/long_tax.json")
     if plan is None:
-        kind = mode if mode in LONG_KINDS else "news"
+        kind = mode if mode in LONG_KINDS else "money"
         try:
             plan = news_plan(rng, kind)
         except SystemExit as exc:
             if args.mode not in ("auto", "tax"):
                 raise
             print(f"{kind} roundup unavailable ({exc}); trying the others")
-            for alt in ["news", "tech", "ahead"]:
+            for alt in ["money", "ahead"]:
                 if alt == kind:
                     continue
                 try:

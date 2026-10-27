@@ -471,6 +471,16 @@ def upcoming_candidates(now, horizon_days=None):
     return out
 
 
+# 2026-10-27: the channel gets under 10 views per Short; a new channel needs ONE clear subject. Until FOCUS_UNTIL only money
+# and upcoming-dates stories are picked (tax and money is the channel's niche).
+FOCUS_CATEGORIES = {"money", "upcoming"}
+FOCUS_UNTIL = "2026-12-15"
+
+
+def focus_active(now=None):
+    return (now or datetime.now(timezone.utc)).date().isoformat() <= FOCUS_UNTIL
+
+
 def pick_trending_topic(seed=None):
     """Chooses the next trending story, records it in state, returns (topic, state_count)."""
     rng = random.Random(seed if seed is not None else datetime.now(timezone.utc).isoformat())
@@ -480,6 +490,8 @@ def pick_trending_topic(seed=None):
     order = [c[0] for c in CATEGORIES]
     rng.shuffle(order)
     order.sort(key=lambda c: c in recent)  # categories not used lately go first
+    if focus_active(now):
+        order = [c for c in order if c in FOCUS_CATEGORIES]
 
     for category in order:
         cat = next(c for c in CATEGORIES if c[0] == category)

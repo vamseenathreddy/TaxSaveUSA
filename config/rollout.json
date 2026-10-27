@@ -1,5 +1,5 @@
 {
-  "_comment": "Rollout config. Stage 'mix_3shorts_1video' (set 2026-10-19): per day 3 trending-news Shorts, 2 evergreen Shorts (quotes, health tips, habits), 1 tax-tip Short and 1 long video (news roundup or tax explainer, alternating). Each slot gets a random minute inside its US-Eastern window. 'fixed' stages ignore state/pace.json.",
+  "_comment": "Rollout config. Stage 'mix_3shorts_1video' (set 2026-10-19): per day 3 trending-news Shorts, 2 evergreen Shorts (quotes, health tips, habits), 1 tax-tip Short and 1 long video (news roundup or tax explainer, alternating). Each slot gets a random minute inside its US-Eastern window. 'fixed' stages ignore state/pace.json. 2026-10-27: focus mode. 2 money-news Shorts, 1 tax tip and 1 long video a day, all on tax and money (no quotes or health tips).",
   "rollout_start_date": "2026-10-18",
   "timezone_note": "windows_et are in US Eastern local time (America/New_York) and are DST-safe - the scheduler converts them to UTC/IST at run time using zoneinfo, so they stay correct across the Nov/Mar DST switch.",
   "randomness_note": "Six 4-hour windows tile the whole ET day; the scheduler picks a genuinely random minute inside each, so there is exactly one post per 4-hour block at an unpredictable time. To avoid overnight posts, shorten the first window (e.g. 05:00-07:59) or drop it and set posts_per_day to 5.",
@@ -18,19 +18,9 @@
           "source": "trending"
         },
         {
-          "window": "10:00-11:59",
-          "kind": "short",
-          "source": "evergreen"
-        },
-        {
           "window": "12:00-14:59",
           "kind": "short",
           "source": "tax"
-        },
-        {
-          "window": "15:00-15:59",
-          "kind": "short",
-          "source": "trending"
         },
         {
           "window": "16:00-18:29",
@@ -41,22 +31,14 @@
           "window": "19:00-21:29",
           "kind": "long",
           "source": "auto"
-        },
-        {
-          "window": "21:30-22:59",
-          "kind": "short",
-          "source": "evergreen"
         }
       ],
-      "posts_per_day": 7,
+      "posts_per_day": 4,
       "windows_et": [
         "07:00-09:59",
-        "10:00-11:59",
         "12:00-14:59",
-        "15:00-15:59",
         "16:00-18:29",
-        "19:00-21:29",
-        "21:30-22:59"
+        "19:00-21:29"
       ]
     }
   ],
