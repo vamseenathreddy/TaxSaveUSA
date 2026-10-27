@@ -625,8 +625,9 @@
       "category": "evergreen",
       "playlist": "Habits and Life Hacks",
       "pre_condensed": true,
-      "used": false,
-      "description": "Money and Life Hack: Review your subscriptions every month.\n\nQuick life hack. Review your subscriptions every month. Open your bank statement and cancel what you do not use. Small monthly charges quietly add up to hundreds a year.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #LifeHacks #MoneyTips"
+      "used": true,
+      "description": "Money and Life Hack: Review your subscriptions every month.\n\nQuick life hack. Review your subscriptions every month. Open your bank statement and cancel what you do not use. Small monthly charges quietly add up to hundreds a year.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #LifeHacks #MoneyTips",
+      "used_date": "2026-10-27"
     },
     {
       "slug": "evergreen-habit-05",
