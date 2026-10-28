@@ -381,8 +381,9 @@
       "category": "evergreen",
       "playlist": "Health Tips",
       "pre_condensed": true,
-      "used": false,
-      "description": "Health Tip: Keep a steady bedtime, even on weekends.\n\nHealth tip. Keep a steady bedtime, even on weekends. Most adults need at least seven hours of sleep, and a regular schedule makes good sleep easier. This is general information, not medical advice.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #HealthTips #Wellness"
+      "used": true,
+      "description": "Health Tip: Keep a steady bedtime, even on weekends.\n\nHealth tip. Keep a steady bedtime, even on weekends. Most adults need at least seven hours of sleep, and a regular schedule makes good sleep easier. This is general information, not medical advice.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #HealthTips #Wellness",
+      "used_date": "2026-10-28"
     },
     {
       "slug": "evergreen-health-06",
