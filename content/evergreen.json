@@ -112,8 +112,9 @@
       "category": "evergreen",
       "playlist": "Daily Motivation Quotes",
       "pre_condensed": true,
-      "used": false,
-      "description": "Quote of the Day: Progress is quiet. Keep going even when nobody is clapping.\n\nQuote of the day. Progress is quiet. Keep going even when nobody is clapping. The results usually show up long after the effort does.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #Motivation #Quotes"
+      "used": true,
+      "description": "Quote of the Day: Progress is quiet. Keep going even when nobody is clapping.\n\nQuote of the day. Progress is quiet. Keep going even when nobody is clapping. The results usually show up long after the effort does.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #Motivation #Quotes",
+      "used_date": "2026-10-28"
     },
     {
       "slug": "evergreen-quote-06",
