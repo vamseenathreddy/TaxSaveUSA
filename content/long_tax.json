@@ -52,7 +52,8 @@
         "taxes explained"
       ],
       "playlist": "Tax Tips",
-      "used": false
+      "used": true,
+      "used_date": "2026-10-28"
     },
     {
       "slug": "avoid-irs-penalties",
