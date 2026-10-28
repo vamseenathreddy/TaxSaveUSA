@@ -1,5 +1,5 @@
 {
-  "count": 17,
+  "count": 18,
   "seen": [
     {
       "key": "f9d358cc301e",
@@ -1449,13 +1449,29 @@
       ],
       "t": "2026-10-27T20:41:24.607235+00:00",
       "category": "money"
+    },
+    {
+      "key": "47dd87c826d2",
+      "tokens": [
+        "4062",
+        "best",
+        "budget",
+        "from",
+        "heres",
+        "trying",
+        "want",
+        "what",
+        "year"
+      ],
+      "t": "2026-10-28T11:39:40.009341+00:00",
+      "category": "money"
     }
   ],
   "recent_categories": [
-    "gadgets",
     "money",
     "news",
     "trending",
+    "money",
     "money",
     "money"
   ]
