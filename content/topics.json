@@ -574,7 +574,8 @@
       ],
       "script": "Most people think Medicare Part A is free, and for many it is, but not everyone. Here's the 2026 numbers from CMS. If you or your spouse paid Medicare taxes for at least 10 years, 40 quarters, your Part A premium is zero. If you have between 30 and 39 quarters, you pay a reduced premium of 311 dollars a month. Under 30 quarters, the full premium is 565 dollars a month. Separately, if you're admitted to the hospital, the Part A deductible is now 1,736 dollars per benefit period, and that can apply more than once a year if you're readmitted after a 60 day gap. This deductible covers your first 60 days of inpatient care. Check your work history with Social Security if you're unsure which premium tier applies to you before you enroll.",
       "description": "For 2026, CMS set the Medicare Part A hospital inpatient deductible at $1,736 per benefit period, with premiums of $0 (40+ work quarters), $311 (30-39 quarters), or $565/month (under 30 quarters) for those who owe one. Here's how the quarters-worked rule determines what you pay.\n\nGeneral education only, not personalized tax or financial advice. Source: CMS.gov (2026 Medicare Parts A & B Premiums and Deductibles fact sheet). Consult a Medicare advisor for your specific situation.\n\n#medicare #medicarepartA #retirementplanning #personalfinance #CMS",
-      "used": false
+      "used": true,
+      "used_date": "2026-10-28"
     },
     {
       "slug": "child-dependent-care-credit-2026",
