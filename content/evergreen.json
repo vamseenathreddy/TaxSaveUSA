@@ -650,8 +650,9 @@
       "category": "evergreen",
       "playlist": "Habits and Life Hacks",
       "pre_condensed": true,
-      "used": false,
-      "description": "Money and Life Hack: Build a starter emergency fund.\n\nQuick life hack. Build a starter emergency fund. Aim for one thousand dollars first, then grow it toward three to six months of expenses.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #LifeHacks #MoneyTips"
+      "used": true,
+      "description": "Money and Life Hack: Build a starter emergency fund.\n\nQuick life hack. Build a starter emergency fund. Aim for one thousand dollars first, then grow it toward three to six months of expenses.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #LifeHacks #MoneyTips",
+      "used_date": "2026-10-29"
     },
     {
       "slug": "evergreen-habit-06",
