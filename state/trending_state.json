@@ -1575,6 +1575,88 @@
       ],
       "t": "2026-10-30T10:52:00.590802+00:00",
       "category": "upcoming"
+    },
+    {
+      "key": "b7981084296e",
+      "tokens": [
+        "about",
+        "candy",
+        "cost",
+        "halloween",
+        "know",
+        "prices",
+        "scared",
+        "stiff",
+        "this",
+        "what",
+        "year"
+      ],
+      "t": "2026-10-30T16:55:57.135518+00:00",
+      "category": "money"
+    },
+    {
+      "key": "d3d1cc612dd3",
+      "tokens": [
+        "november",
+        "veterans"
+      ],
+      "t": "2026-10-30T16:55:57.135518+00:00",
+      "category": "upcoming"
+    },
+    {
+      "key": "0ad8bbdffaef",
+      "tokens": [
+        "cost",
+        "falls",
+        "fears",
+        "over",
+        "sharp",
+        "stocks",
+        "tech"
+      ],
+      "t": "2026-10-30T16:55:57.135518+00:00",
+      "category": "money"
+    },
+    {
+      "key": "22bbb28ea50e",
+      "tokens": [
+        "december",
+        "decision",
+        "federal",
+        "interest",
+        "rate",
+        "reserve"
+      ],
+      "t": "2026-10-30T16:55:57.135518+00:00",
+      "category": "upcoming"
+    },
+    {
+      "key": "383100713ece",
+      "tokens": [
+        "after",
+        "boss",
+        "downgraded",
+        "firm",
+        "resigns",
+        "water",
+        "yorkshire"
+      ],
+      "t": "2026-10-30T16:55:57.135518+00:00",
+      "category": "money"
+    },
+    {
+      "key": "5c36d64b5a2b",
+      "tokens": [
+        "defence",
+        "denies",
+        "down",
+        "kicking",
+        "road",
+        "spending",
+        "streeting"
+      ],
+      "t": "2026-10-30T16:55:57.135518+00:00",
+      "category": "money"
     }
   ],
   "recent_categories": [
