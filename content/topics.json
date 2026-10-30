@@ -592,7 +592,8 @@
       ],
       "script": "Paying for daycare, a babysitter, or after school care so you can work? There's a tax credit for that, separate from a dependent care FSA at work. It's called the Child and Dependent Care Credit, and the IRS lets you count up to 3,000 dollars of care expenses for one qualifying child or dependent, or up to 6,000 dollars if you have two or more. You then get a percentage of those expenses back as a credit, based on your income, the lower your income, the higher your percentage. This covers daycare, summer day camp, and care for a dependent who can't care for themselves while you work or look for work. You'll need the care provider's tax ID to claim it on Form 2441. Check your receipts and provider info before you file this year's return.",
       "description": "The Child and Dependent Care Credit lets you count up to $3,000 in care expenses for one qualifying dependent, or $6,000 for two or more, with the credit percentage based on your income. Here's what counts as a qualifying expense and what you'll need to claim it on Form 2441.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Topic no. 602, Child and Dependent Care Credit). Consult a CPA or CFP for your specific situation.\n\n#dependentcarecredit #childcare #taxtips2026 #personalfinance #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-10-30"
     },
     {
       "slug": "unemployment-benefits-taxable-2026",
