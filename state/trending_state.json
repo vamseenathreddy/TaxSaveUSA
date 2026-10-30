@@ -1,5 +1,5 @@
 {
-  "count": 21,
+  "count": 22,
   "seen": [
     {
       "key": "f9d358cc301e",
@@ -1563,6 +1563,18 @@
       ],
       "t": "2026-10-29T23:46:26.089615+00:00",
       "category": "money"
+    },
+    {
+      "key": "fabd4a7c580e",
+      "tokens": [
+        "begins",
+        "enrollment",
+        "marketplace",
+        "november",
+        "open"
+      ],
+      "t": "2026-10-30T10:52:00.590802+00:00",
+      "category": "upcoming"
     }
   ],
   "recent_categories": [
@@ -1571,6 +1583,6 @@
     "money",
     "money",
     "money",
-    "money"
+    "upcoming"
   ]
 }
