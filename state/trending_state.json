@@ -1,5 +1,5 @@
 {
-  "count": 22,
+  "count": 23,
   "seen": [
     {
       "key": "f9d358cc301e",
@@ -1657,6 +1657,18 @@
       ],
       "t": "2026-10-30T16:55:57.135518+00:00",
       "category": "money"
+    },
+    {
+      "key": "441c003f554b",
+      "tokens": [
+        "leonid",
+        "meteor",
+        "november",
+        "peaks",
+        "shower"
+      ],
+      "t": "2026-10-30T21:22:48.651184+00:00",
+      "category": "upcoming"
     }
   ],
   "recent_categories": [
@@ -1664,7 +1676,7 @@
     "money",
     "money",
     "money",
-    "money",
+    "upcoming",
     "upcoming"
   ]
 }
