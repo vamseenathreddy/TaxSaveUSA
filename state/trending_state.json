@@ -1,5 +1,5 @@
 {
-  "count": 23,
+  "count": 24,
   "seen": [
     {
       "key": "f9d358cc301e",
@@ -1669,14 +1669,27 @@
       ],
       "t": "2026-10-30T21:22:48.651184+00:00",
       "category": "upcoming"
+    },
+    {
+      "key": "66e94d30503b",
+      "tokens": [
+        "falls",
+        "nears",
+        "sharp",
+        "spending",
+        "stocks",
+        "tech"
+      ],
+      "t": "2026-10-31T06:36:25.205966+00:00",
+      "category": "money"
     }
   ],
   "recent_categories": [
     "money",
     "money",
     "money",
-    "money",
     "upcoming",
-    "upcoming"
+    "upcoming",
+    "money"
   ]
 }
