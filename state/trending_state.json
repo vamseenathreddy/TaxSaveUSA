@@ -1,5 +1,5 @@
 {
-  "count": 24,
+  "count": 25,
   "seen": [
     {
       "key": "f9d358cc301e",
@@ -1682,14 +1682,28 @@
       ],
       "t": "2026-10-31T06:36:25.205966+00:00",
       "category": "money"
+    },
+    {
+      "key": "147b621df593",
+      "tokens": [
+        "500bn",
+        "google",
+        "hits",
+        "plunges",
+        "sales",
+        "search",
+        "value"
+      ],
+      "t": "2026-10-31T17:43:44.447423+00:00",
+      "category": "money"
     }
   ],
   "recent_categories": [
     "money",
     "money",
+    "upcoming",
+    "upcoming",
     "money",
-    "upcoming",
-    "upcoming",
     "money"
   ]
 }
