@@ -610,7 +610,8 @@
       ],
       "script": "If you collected unemployment benefits this year, don't skip this at tax time. The IRS is clear, unemployment compensation counts as taxable income, and you have to report all of it. Your state will send you a Form 1099-G showing the total amount paid to you in box one, and if you had any federal tax withheld, that shows up in box four. You report that income on Schedule 1 of your Form 1040. A lot of people don't realize taxes aren't automatically taken out of unemployment checks unless you specifically request withholding when you file your claim. That means you could owe money at tax time if you didn't plan for it. If you're currently on unemployment, log into your state's unemployment portal and opt into withholding now so you're not surprised later.",
       "description": "The IRS requires you to report all unemployment compensation as taxable income, shown in Box 1 of your Form 1099-G and reported on Schedule 1 of Form 1040. Here's why taxes often aren't withheld automatically, and how to opt into withholding before it costs you at filing time.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Topic no. 418, Unemployment Compensation). Consult a CPA for your specific situation.\n\n#unemployment #taxtips2026 #personalfinance #1099G #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-10-31"
     },
     {
       "slug": "home-sale-gain-exclusion-2026",
