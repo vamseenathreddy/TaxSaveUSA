@@ -628,7 +628,8 @@
       ],
       "script": "Selling your home this year? This IRS rule could save you a huge tax bill. If you sell your primary residence, you can exclude up to 250,000 dollars of capital gains from tax if you're single, or up to 500,000 dollars if you're married filing jointly. To qualify, you generally need to have owned the home and lived in it as your main residence for at least 2 of the last 5 years before the sale, and those two years don't have to be consecutive. You also can't have used this exclusion on a different home sale within the past two years. If your gain is bigger than these limits, only the amount above the exclusion gets taxed as a capital gain. Keep records of home improvements, they can increase your cost basis and lower your taxable gain even further.",
       "description": "The IRS lets you exclude up to $250,000 of home-sale capital gains ($500,000 married filing jointly) if you owned and lived in the home as your main residence for at least 2 of the last 5 years. Here's how the ownership and use tests work and why keeping improvement records matters.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Topic no. 701, Sale of Your Home). Consult a CPA for your specific situation.\n\n#homesale #capitalgains #realestate #taxtips2026 #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-10-31"
     },
     {
       "slug": "lifetime-learning-credit-2026",
