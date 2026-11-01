@@ -646,7 +646,8 @@
       ],
       "script": "Taking classes to boost your career, even grad school or just one course? There's a tax credit for that too, and it's different from the one aimed at undergrads. The Lifetime Learning Credit lets you claim 20 percent of up to 10,000 dollars in qualified education expenses, for a maximum credit of 2,000 dollars per tax return, not per student. Unlike the American Opportunity Credit, there's no limit on how many years you can claim it, and you don't need to be pursuing a degree or going at least half time. To qualify, your modified adjusted gross income has to be under 90,000 dollars if you're single, or 180,000 dollars if you're married filing jointly. This one's great for career changers, grad students, and anyone taking a single course to upskill. Grab your 1098-T from the school before you file.",
       "description": "The Lifetime Learning Credit is worth up to $2,000 per tax return (20% of up to $10,000 in expenses), with no limit on years claimed and no degree or enrollment-status requirement, phasing out at $90,000 MAGI single / $180,000 married filing jointly. Here's who it's for and how it differs from the American Opportunity Credit.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Education Credits - AOTC and LLC comparison). Consult a CPA or CFP for your specific situation.\n\n#lifetimelearningcredit #educationtaxcredit #taxtips2026 #personalfinance #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-01"
     }
   ]
 }
