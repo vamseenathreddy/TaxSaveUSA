@@ -1,5 +1,5 @@
 {
-  "count": 27,
+  "count": 28,
   "seen": [
     {
       "key": "f9d358cc301e",
@@ -1812,11 +1812,23 @@
       ],
       "t": "2026-11-01T11:05:58.245761+00:00",
       "category": "money"
+    },
+    {
+      "key": "ae26746bd8a1",
+      "tokens": [
+        "bills",
+        "doesnt",
+        "energy",
+        "enough",
+        "help"
+      ],
+      "t": "2026-11-01T21:11:47.769330+00:00",
+      "category": "money"
     }
   ],
   "recent_categories": [
     "upcoming",
-    "upcoming",
+    "money",
     "money",
     "money",
     "money",
