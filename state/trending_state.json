@@ -1,5 +1,5 @@
 {
-  "count": 26,
+  "count": 27,
   "seen": [
     {
       "key": "f9d358cc301e",
@@ -1797,12 +1797,27 @@
       ],
       "t": "2026-11-01T03:57:57.145352+00:00",
       "category": "money"
+    },
+    {
+      "key": "870677e09647",
+      "tokens": [
+        "63bn",
+        "after",
+        "binance",
+        "covers",
+        "crypto",
+        "firm",
+        "hack",
+        "losses"
+      ],
+      "t": "2026-11-01T11:05:58.245761+00:00",
+      "category": "money"
     }
   ],
   "recent_categories": [
+    "upcoming",
+    "upcoming",
     "money",
-    "upcoming",
-    "upcoming",
     "money",
     "money",
     "money"
