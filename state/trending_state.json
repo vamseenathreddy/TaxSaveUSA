@@ -1710,6 +1710,93 @@
       ],
       "t": "2026-10-31T23:49:01.230213+00:00",
       "category": "money"
+    },
+    {
+      "key": "6b08e29bcc11",
+      "tokens": [
+        "budget",
+        "deliberate",
+        "faisal",
+        "islam",
+        "micro",
+        "that",
+        "this"
+      ],
+      "t": "2026-11-01T03:57:57.145352+00:00",
+      "category": "money"
+    },
+    {
+      "key": "74dac9fde56f",
+      "tokens": [
+        "november",
+        "thanksgiving"
+      ],
+      "t": "2026-11-01T03:57:57.145352+00:00",
+      "category": "upcoming"
+    },
+    {
+      "key": "bd460e94e3e0",
+      "tokens": [
+        "economy",
+        "grows",
+        "held",
+        "interest",
+        "means",
+        "rates",
+        "steady",
+        "what"
+      ],
+      "t": "2026-11-01T03:57:57.145352+00:00",
+      "category": "money"
+    },
+    {
+      "key": "b3d9c5bfad1e",
+      "tokens": [
+        "black",
+        "friday",
+        "november"
+      ],
+      "t": "2026-11-01T03:57:57.145352+00:00",
+      "category": "upcoming"
+    },
+    {
+      "key": "81fa4530f67b",
+      "tokens": [
+        "bank",
+        "bills",
+        "budget",
+        "energy",
+        "first",
+        "healey",
+        "unveils"
+      ],
+      "t": "2026-11-01T03:57:57.145352+00:00",
+      "category": "money"
+    },
+    {
+      "key": "0f37d18a9a9f",
+      "tokens": [
+        "cyber",
+        "monday",
+        "november"
+      ],
+      "t": "2026-11-01T03:57:57.145352+00:00",
+      "category": "upcoming"
+    },
+    {
+      "key": "cc1f83a51759",
+      "tokens": [
+        "cost",
+        "german",
+        "living",
+        "looted",
+        "protests",
+        "shops",
+        "turn",
+        "violent"
+      ],
+      "t": "2026-11-01T03:57:57.145352+00:00",
+      "category": "money"
     }
   ],
   "recent_categories": [
