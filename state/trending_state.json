@@ -1824,6 +1824,45 @@
       ],
       "t": "2026-11-01T21:11:47.769330+00:00",
       "category": "money"
+    },
+    {
+      "key": "b7ee1a2e5e82",
+      "tokens": [
+        "december",
+        "ends",
+        "enrollment",
+        "medicare",
+        "open"
+      ],
+      "t": "2026-11-02T00:44:59.180696+00:00",
+      "category": "upcoming"
+    },
+    {
+      "key": "2f2bdf54d7fa",
+      "tokens": [
+        "estimated",
+        "fourth",
+        "january",
+        "payment",
+        "quarter"
+      ],
+      "t": "2026-11-02T00:44:59.180696+00:00",
+      "category": "upcoming"
+    },
+    {
+      "key": "23f11ab2bb27",
+      "tokens": [
+        "ends",
+        "enrollment",
+        "health",
+        "january",
+        "marketplace",
+        "most",
+        "open",
+        "plans"
+      ],
+      "t": "2026-11-02T00:44:59.180696+00:00",
+      "category": "upcoming"
     }
   ],
   "recent_categories": [
