@@ -664,7 +664,8 @@
       ],
       "script": "Quick tax tip. If you earn tips, you may be able to deduct up to 25,000 dollars of qualified tips from your taxable income. The IRS says this deduction runs for tax years 2025 through 2028. It starts to shrink once your modified adjusted gross income is above 150,000 dollars, or 300,000 dollars if you file jointly. If you're self employed, the deduction can't be more than the net income from that business. You don't have to itemize to claim it. Keep records of your tips, and check the IRS page on the no tax on tips deduction to see if your job qualifies.",
       "description": "The IRS says qualified tips can be deducted up to $25,000 for tax years 2025 through 2028, with a phase-out above $150,000 ($300,000 joint) of modified adjusted gross income. You don't need to itemize.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov. Consult a CPA or CFP for your specific situation.\n\n#taxtips #notaxontips #personalfinance #IRS #taxes2026",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-02"
     },
     {
       "slug": "no-tax-on-overtime-2026",
