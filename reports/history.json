@@ -7,5 +7,14 @@
   "median_settled": 2,
   "median_short": 2,
   "median_long": null
+ },
+ {
+  "date": "2026-11-02",
+  "subs": 2,
+  "total_views": 974,
+  "uploads_7d": 33,
+  "median_settled": 3.0,
+  "median_short": 4,
+  "median_long": 0
  }
 ]
