@@ -210,6 +210,104 @@
       ],
       "playlist": "Tax Tips",
       "used": false
+    },
+    {
+      "slug": "new-deductions-2025-2028",
+      "title": "4 New Tax Deductions for 2025 to 2028: Tips, Overtime, Car Loans, Seniors",
+      "thumb_line1": "4 NEW",
+      "thumb_line2": "TAX DEDUCTIONS",
+      "hook": "NEW TAX DEDUCTIONS",
+      "intro": "Four new federal deductions are available for tax years 2025 through 2028, and many people have not heard about them. In this video we walk through each one, using figures from the IRS. This is general information, not personal tax advice.",
+      "points": [
+        {
+          "head": "No tax on tips",
+          "text": "The IRS says you can deduct up to 25,000 dollars of qualified tips. It starts to phase out when modified adjusted gross income is above 150,000 dollars, or 300,000 dollars for joint filers. If you are self employed, the deduction is capped at the net income from that business."
+        },
+        {
+          "head": "No tax on overtime",
+          "text": "You can deduct up to 12,500 dollars of qualified overtime pay, or 25,000 dollars if you file jointly. The same income thresholds apply, starting at 150,000 dollars, or 300,000 dollars for joint filers."
+        },
+        {
+          "head": "Car loan interest",
+          "text": "Up to 10,000 dollars of qualified passenger vehicle loan interest can be deducted. The phase out starts above 100,000 dollars of modified adjusted gross income, or 200,000 dollars for joint filers. There are rules about the vehicle and the loan, so check the IRS guidance and your lender's interest statement."
+        },
+        {
+          "head": "The senior deduction",
+          "text": "If you are 65 or older, you may be able to deduct an extra 6,000 dollars, or 12,000 dollars if both spouses qualify. It begins to phase out above 75,000 dollars of income, or 150,000 dollars for joint filers."
+        },
+        {
+          "head": "You do not have to itemize",
+          "text": "The IRS says these deductions are available whether you itemize or take the standard deduction. That makes them useful for a lot of people who normally just take the standard deduction."
+        },
+        {
+          "head": "What to do now",
+          "text": "Keep your pay stubs, tip records, and loan interest statements. Then read the IRS pages on the Working Families Tax Cuts before you file, so you know exactly which rules apply to you."
+        }
+      ],
+      "outro": "So there are four deductions to remember: tips, overtime, car loan interest, and the senior deduction. Check the IRS page for the full rules. If this helped, subscribe to TaxSaveUSA for more clear tax tips.",
+      "tags": [
+        "new tax deductions",
+        "no tax on tips",
+        "no tax on overtime",
+        "car loan interest deduction",
+        "senior deduction",
+        "working families tax cuts",
+        "tax deductions 2026",
+        "taxes explained",
+        "tax tips",
+        "IRS"
+      ],
+      "playlist": "Tax Tips",
+      "used": false
+    },
+    {
+      "slug": "irs-2026-numbers-cheat-sheet",
+      "title": "2026 IRS Numbers Cheat Sheet: Standard Deduction, Brackets, Credits",
+      "thumb_line1": "2026 IRS",
+      "thumb_line2": "CHEAT SHEET",
+      "hook": "2026 TAX NUMBERS",
+      "intro": "The IRS has published its 2026 inflation adjusted numbers. In this video we go through the figures most people need: the standard deduction, tax brackets, the zero percent capital gains rate, and a few credits. This is general information, not personal tax advice.",
+      "points": [
+        {
+          "head": "Standard deduction",
+          "text": "For 2026 it is 16,100 dollars for single filers, 24,150 dollars for head of household, and 32,200 dollars for married couples filing jointly."
+        },
+        {
+          "head": "Tax brackets for single filers",
+          "text": "The 12 percent bracket goes up to 50,400 dollars of taxable income, and the 22 percent bracket goes up to 105,700 dollars. These are marginal rates, so only the dollars inside each bracket are taxed at that rate."
+        },
+        {
+          "head": "Zero percent capital gains",
+          "text": "Long term capital gains can be taxed at zero percent if your taxable income is at or below 49,450 dollars for single filers, 66,200 dollars for head of household, or 98,900 dollars for married couples filing jointly."
+        },
+        {
+          "head": "Earned Income Tax Credit",
+          "text": "The maximum credit is 664 dollars with no qualifying children, 4,427 dollars with one child, 7,316 dollars with two children, and 8,231 dollars with three or more."
+        },
+        {
+          "head": "Commuter benefits",
+          "text": "The monthly limit is 340 dollars for transit passes and commuter vehicles, and 340 dollars for qualified parking."
+        },
+        {
+          "head": "Adoption credit",
+          "text": "The maximum credit for 2026 is 17,670 dollars of qualified expenses, and it starts to phase out when modified adjusted gross income passes 265,080 dollars."
+        }
+      ],
+      "outro": "Those are the main 2026 numbers from the IRS. Always check irs.gov for the figures that apply to your situation. If this helped, subscribe to TaxSaveUSA for more clear tax tips.",
+      "tags": [
+        "2026 tax numbers",
+        "2026 standard deduction",
+        "2026 tax brackets",
+        "capital gains 2026",
+        "eitc 2026",
+        "IRS inflation adjustments",
+        "taxes explained",
+        "tax tips",
+        "tax cheat sheet",
+        "IRS"
+      ],
+      "playlist": "Tax Tips",
+      "used": false
     }
   ]
 }

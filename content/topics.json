@@ -648,6 +648,210 @@
       "description": "The Lifetime Learning Credit is worth up to $2,000 per tax return (20% of up to $10,000 in expenses), with no limit on years claimed and no degree or enrollment-status requirement, phasing out at $90,000 MAGI single / $180,000 married filing jointly. Here's who it's for and how it differs from the American Opportunity Credit.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Education Credits - AOTC and LLC comparison). Consult a CPA or CFP for your specific situation.\n\n#lifetimelearningcredit #educationtaxcredit #taxtips2026 #personalfinance #IRS",
       "used": true,
       "used_date": "2026-11-01"
+    },
+    {
+      "slug": "no-tax-on-tips-2026",
+      "title": "No Tax on Tips: Deduct Up to $25,000 (IRS)",
+      "caption_headline": "No Tax on Tips: $25,000",
+      "background": "bg2.mp4",
+      "tags": [
+        "no tax on tips",
+        "tip income deduction",
+        "working families tax cuts",
+        "tax deduction 2026",
+        "tipped workers taxes",
+        "IRS tips deduction"
+      ],
+      "script": "Quick tax tip. If you earn tips, you may be able to deduct up to 25,000 dollars of qualified tips from your taxable income. The IRS says this deduction runs for tax years 2025 through 2028. It starts to shrink once your modified adjusted gross income is above 150,000 dollars, or 300,000 dollars if you file jointly. If you're self employed, the deduction can't be more than the net income from that business. You don't have to itemize to claim it. Keep records of your tips, and check the IRS page on the no tax on tips deduction to see if your job qualifies.",
+      "description": "The IRS says qualified tips can be deducted up to $25,000 for tax years 2025 through 2028, with a phase-out above $150,000 ($300,000 joint) of modified adjusted gross income. You don't need to itemize.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov. Consult a CPA or CFP for your specific situation.\n\n#taxtips #notaxontips #personalfinance #IRS #taxes2026",
+      "used": false
+    },
+    {
+      "slug": "no-tax-on-overtime-2026",
+      "title": "No Tax on Overtime: Up to $12,500 Deduction (IRS)",
+      "caption_headline": "No Tax on Overtime",
+      "background": "bg3.mp4",
+      "tags": [
+        "no tax on overtime",
+        "overtime deduction",
+        "working families tax cuts",
+        "tax deduction 2026",
+        "overtime pay taxes",
+        "IRS overtime deduction"
+      ],
+      "script": "Quick tax tip. If you work overtime, part of that pay may be deductible. The IRS says you can deduct up to 12,500 dollars of qualified overtime pay, or 25,000 dollars if you file jointly, for tax years 2025 through 2028. The deduction starts to phase out when your modified adjusted gross income is above 150,000 dollars, or 300,000 dollars for joint filers. You can claim it whether or not you itemize. It's a deduction, so it lowers your taxable income, it doesn't erase the overtime from your paycheck. Check your pay stubs and the IRS guidance before you file.",
+      "description": "The IRS says qualified overtime pay can be deducted up to $12,500 ($25,000 joint) for tax years 2025 through 2028, phasing out above $150,000 ($300,000 joint) of modified adjusted gross income.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov. Consult a CPA or CFP for your specific situation.\n\n#taxtips #overtime #personalfinance #IRS #taxes2026",
+      "used": false
+    },
+    {
+      "slug": "car-loan-interest-deduction-2026",
+      "title": "Car Loan Interest Deduction: Up to $10,000 (IRS)",
+      "caption_headline": "Car Loan Interest: $10,000",
+      "background": "bg4.mp4",
+      "tags": [
+        "car loan interest deduction",
+        "no tax on car loan interest",
+        "auto loan tax deduction",
+        "tax deduction 2026",
+        "working families tax cuts",
+        "IRS car loan"
+      ],
+      "script": "Quick tax tip. You may be able to deduct the interest on a car loan. The IRS says the deduction is up to 10,000 dollars of qualified passenger vehicle loan interest, for tax years 2025 through 2028. It starts to phase out when your modified adjusted gross income is above 100,000 dollars, or 200,000 dollars if you file jointly. You can take it even if you don't itemize. There are specific eligibility rules for the vehicle and the loan, so check the IRS guidance and your lender's year end interest statement before you file.",
+      "description": "The IRS says up to $10,000 of qualified passenger vehicle loan interest may be deductible for tax years 2025 through 2028, phasing out above $100,000 ($200,000 joint) of modified adjusted gross income.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov. Consult a CPA or CFP for your specific situation.\n\n#taxtips #carloan #personalfinance #IRS #taxes2026",
+      "used": false
+    },
+    {
+      "slug": "senior-deduction-65-plus-2026",
+      "title": "Age 65 or Older? Extra $6,000 Tax Deduction (IRS)",
+      "caption_headline": "Seniors: Extra $6,000",
+      "background": "default.mp4",
+      "tags": [
+        "senior deduction",
+        "65 and older tax deduction",
+        "retirement taxes",
+        "tax deduction 2026",
+        "working families tax cuts",
+        "IRS seniors"
+      ],
+      "script": "Quick tax tip for seniors. If you're 65 or older, the IRS says you may be able to claim an extra 6,000 dollar deduction, for tax years 2025 through 2028. If you and your spouse both qualify, that's up to 12,000 dollars. The deduction starts to phase out once your modified adjusted gross income is above 75,000 dollars, or 150,000 dollars if you file jointly. It's available whether you itemize or take the standard deduction. Make sure your Social Security number is on your return, and check the IRS page for the full rules.",
+      "description": "The IRS says a $6,000 deduction per eligible person age 65 or older is available for tax years 2025 through 2028, phasing out above $75,000 ($150,000 joint) of modified adjusted gross income.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov. Consult a CPA or CFP for your specific situation.\n\n#taxtips #seniors #retirement #IRS #taxes2026",
+      "used": false
+    },
+    {
+      "slug": "trump-accounts-1000-pilot",
+      "title": "Trump Accounts: $1,000 for Babies Born 2025 to 2028 (IRS)",
+      "caption_headline": "Trump Accounts: $1,000",
+      "background": "bg2.mp4",
+      "tags": [
+        "trump accounts",
+        "trump account 1000",
+        "form 4547",
+        "child savings account",
+        "baby savings account",
+        "IRS trump accounts"
+      ],
+      "script": "Quick money tip for parents. The IRS says eligible U.S. citizen children born from January 1st, 2025 through December 31st, 2028 can receive a one time 1,000 dollar federal pilot contribution into a Trump Account. To qualify, the child needs a valid Social Security number. You request it with IRS Form 4547, the Trump Account election, which you can submit through the Trump Accounts website, the app, or your IRS online account. The IRS also says some eligible children are being enrolled automatically, but parents still have to claim the account and elect the 1,000 dollars. Check the IRS Trump Accounts page for the latest steps.",
+      "description": "The IRS says children born 2025 through 2028 may receive a one time $1,000 pilot contribution into a Trump Account. Elect it on Form 4547 and check irs.gov/trumpaccounts for current steps.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov. Consult a CPA or CFP for your specific situation.\n\n#trumpaccounts #parenting #personalfinance #IRS #taxes2026",
+      "used": false
+    },
+    {
+      "slug": "tax-brackets-2026-single",
+      "title": "2026 Tax Brackets: 12% Up to $50,400, 22% Up to $105,700",
+      "caption_headline": "2026 Brackets: Single",
+      "background": "bg3.mp4",
+      "tags": [
+        "2026 tax brackets",
+        "tax brackets single",
+        "12 percent bracket",
+        "22 percent bracket",
+        "IRS 2026 inflation adjustments",
+        "marginal tax rate"
+      ],
+      "script": "Quick tax tip. Here are two 2026 tax brackets for single filers, straight from the IRS. The 12 percent bracket goes up to 50,400 dollars of taxable income. The 22 percent bracket goes up to 105,700 dollars. Remember, these are marginal rates. Only the dollars inside each bracket are taxed at that rate, so moving into a higher bracket never makes your whole income taxed higher. And these numbers apply to taxable income, which is what's left after your deductions. For 2026, the standard deduction for single filers is 16,100 dollars.",
+      "description": "IRS Rev. Proc. 2025-32: for 2026 single filers, the 12% bracket tops out at $50,400 of taxable income and the 22% bracket at $105,700. The standard deduction is $16,100.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS Rev. Proc. 2025-32. Consult a CPA or CFP for your specific situation.\n\n#taxbrackets #taxtips #personalfinance #IRS #taxes2026",
+      "used": false
+    },
+    {
+      "slug": "transit-parking-benefit-2026",
+      "title": "2026 Commuter Benefit Limit: $340 a Month (IRS)",
+      "caption_headline": "Commuter Limit: $340/mo",
+      "background": "bg4.mp4",
+      "tags": [
+        "commuter benefits",
+        "transit benefit 2026",
+        "parking benefit",
+        "pretax commuter",
+        "IRS 2026 limits",
+        "employee benefits"
+      ],
+      "script": "Quick tax tip. If your employer offers commuter benefits, the IRS set the 2026 limit at 340 dollars a month for transit passes and commuter vehicle rides, and another 340 dollars a month for qualified parking. That money can be set aside before tax, which lowers your taxable pay. It's a use it or lose it style benefit in many plans, so check how your employer handles unused balances. Ask your HR team how to sign up and how to change your monthly election.",
+      "description": "IRS Rev. Proc. 2025-32 sets the 2026 monthly limit for transit passes and commuter highway vehicles at $340, and qualified parking at $340.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS Rev. Proc. 2025-32. Consult a CPA or CFP for your specific situation.\n\n#commuterbenefits #taxtips #personalfinance #IRS #taxes2026",
+      "used": false
+    },
+    {
+      "slug": "eitc-no-children-2026",
+      "title": "2026 EITC With No Kids: Up to $664 (IRS)",
+      "caption_headline": "EITC No Kids: $664",
+      "background": "default.mp4",
+      "tags": [
+        "earned income credit no children",
+        "eitc 2026",
+        "eitc childless",
+        "tax credit 2026",
+        "IRS eitc",
+        "refundable tax credit"
+      ],
+      "script": "Quick tax tip. You don't need kids to claim the Earned Income Tax Credit. For 2026, the IRS says the maximum credit with no qualifying children is 664 dollars. The credit starts to phase out at 10,860 dollars of income for most filers, or 18,140 dollars if you file jointly, and it's completely gone at 19,540 dollars, or 26,820 dollars for joint filers. You need earned income from work to qualify, and there are other rules on age and investment income. Check the IRS EITC assistant to see if you qualify.",
+      "description": "IRS Rev. Proc. 2025-32: for 2026 the maximum EITC with no qualifying children is $664, with the phase-out beginning at $10,860 ($18,140 joint) and ending at $19,540 ($26,820 joint).\n\nGeneral education only, not personalized tax or financial advice. Source: IRS Rev. Proc. 2025-32. Consult a CPA or CFP for your specific situation.\n\n#eitc #taxcredits #personalfinance #IRS #taxes2026",
+      "used": false
+    },
+    {
+      "slug": "head-of-household-standard-deduction-2026",
+      "title": "Head of Household? 2026 Standard Deduction Is $24,150 (IRS)",
+      "caption_headline": "Head of Household: $24,150",
+      "background": "bg2.mp4",
+      "tags": [
+        "head of household",
+        "standard deduction 2026",
+        "filing status",
+        "single parent taxes",
+        "IRS 2026",
+        "tax filing status"
+      ],
+      "script": "Quick tax tip. Your filing status changes your standard deduction a lot. For 2026, the IRS says it's 16,100 dollars for single filers, 24,150 dollars for head of household, and 32,200 dollars for married couples filing jointly. If you're unmarried and you pay more than half the cost of keeping up a home for a qualifying person, you may be able to file as head of household instead of single, which means a bigger deduction. There are specific rules, so check the IRS filing status tool before you choose.",
+      "description": "IRS Rev. Proc. 2025-32: 2026 standard deduction is $16,100 single, $24,150 head of household, $32,200 married filing jointly.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS Rev. Proc. 2025-32. Consult a CPA or CFP for your specific situation.\n\n#headofhousehold #taxtips #standarddeduction #IRS #taxes2026",
+      "used": false
+    },
+    {
+      "slug": "foreign-earned-income-exclusion-2026",
+      "title": "2026 Foreign Earned Income Exclusion: $132,900 (IRS)",
+      "caption_headline": "Abroad? Exclude $132,900",
+      "background": "bg3.mp4",
+      "tags": [
+        "foreign earned income exclusion",
+        "expat taxes",
+        "living abroad taxes",
+        "2026 irs limits",
+        "form 2555",
+        "american abroad taxes"
+      ],
+      "script": "Quick tax tip for Americans living abroad. For 2026, the IRS says the foreign earned income exclusion is 132,900 dollars. If you qualify, you can exclude that much of your foreign earned income from U.S. tax. You still generally have to file a U.S. return, and you have to meet either the bona fide residence test or the physical presence test. You claim the exclusion by filing a form with your return. Check the IRS page for U.S. citizens abroad to see if you qualify.",
+      "description": "IRS Rev. Proc. 2025-32: the 2026 foreign earned income exclusion is $132,900. You still generally must file a U.S. return and meet residence or physical presence tests.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS Rev. Proc. 2025-32. Consult a CPA or CFP for your specific situation.\n\n#expattax #taxtips #personalfinance #IRS #taxes2026",
+      "used": false
+    },
+    {
+      "slug": "estimated-tax-q4-jan-15-2027",
+      "title": "Self-Employed? Final 2026 Estimated Tax Payment Due Jan 15, 2027",
+      "caption_headline": "Estimated Tax Due Jan 15",
+      "background": "bg4.mp4",
+      "tags": [
+        "estimated tax payment",
+        "quarterly taxes",
+        "self employed taxes",
+        "form 1040-ES",
+        "tax deadline",
+        "freelancer taxes"
+      ],
+      "script": "Quick tax tip for freelancers and small business owners. The fourth quarter estimated tax payment for 2026 is due January 15th, 2027. If you don't have enough tax withheld, the IRS expects you to pay as you earn during the year, using Form 1040 E S. Generally you can avoid an underpayment penalty by paying at least 90 percent of this year's tax, or 100 percent of last year's tax, and 110 percent if last year's adjusted gross income was over 150,000 dollars. You can pay online with IRS Direct Pay. Mark the date now.",
+      "description": "The fourth quarter 2026 estimated tax payment is due January 15, 2027. Pay online with IRS Direct Pay. Check Form 1040-ES and IRS Publication 505 for the safe harbor rules.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS Form 1040-ES and Publication 505. Consult a CPA or CFP for your specific situation.\n\n#estimatedtax #selfemployed #taxtips #IRS #taxes2026",
+      "used": false
+    },
+    {
+      "slug": "capital-loss-3000-limit",
+      "title": "Stock Losses? Deduct Up to $3,000 Against Other Income (IRS)",
+      "caption_headline": "Stock Losses: $3,000",
+      "background": "default.mp4",
+      "tags": [
+        "capital loss deduction",
+        "tax loss harvesting",
+        "stock losses taxes",
+        "3000 loss limit",
+        "investing taxes",
+        "capital loss carryover"
+      ],
+      "script": "Quick tax tip for investors. If you sold investments at a loss, the IRS lets you use those losses to offset capital gains. If your losses are bigger than your gains, you can deduct up to 3,000 dollars of the extra loss against your other income each year, or 1,500 dollars if you're married filing separately. Anything left over carries forward to future years. That's why it can pay to keep track of your losses before the year ends. Check IRS Topic 409 on capital gains and losses for the details.",
+      "description": "Net capital losses can offset other income up to $3,000 a year ($1,500 married filing separately), with the rest carried forward. See IRS Topic 409.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS Topic 409. Consult a CPA or CFP for your specific situation.\n\n#taxlossharvesting #investing #taxtips #IRS #taxes2026",
+      "used": false
     }
   ]
 }
