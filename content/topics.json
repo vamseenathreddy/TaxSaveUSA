@@ -682,7 +682,8 @@
       ],
       "script": "Quick tax tip. If you work overtime, part of that pay may be deductible. The IRS says you can deduct up to 12,500 dollars of qualified overtime pay, or 25,000 dollars if you file jointly, for tax years 2025 through 2028. The deduction starts to phase out when your modified adjusted gross income is above 150,000 dollars, or 300,000 dollars for joint filers. You can claim it whether or not you itemize. It's a deduction, so it lowers your taxable income, it doesn't erase the overtime from your paycheck. Check your pay stubs and the IRS guidance before you file.",
       "description": "The IRS says qualified overtime pay can be deducted up to $12,500 ($25,000 joint) for tax years 2025 through 2028, phasing out above $150,000 ($300,000 joint) of modified adjusted gross income.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov. Consult a CPA or CFP for your specific situation.\n\n#taxtips #overtime #personalfinance #IRS #taxes2026",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-03"
     },
     {
       "slug": "car-loan-interest-deduction-2026",
