@@ -1,5 +1,5 @@
 {
-  "count": 29,
+  "count": 30,
   "seen": [
     {
       "key": "f9d358cc301e",
@@ -1878,6 +1878,19 @@
         "wildly"
       ],
       "t": "2026-11-02T23:47:29.368536+00:00",
+      "category": "money"
+    },
+    {
+      "key": "09c825eaa197",
+      "tokens": [
+        "could",
+        "economy",
+        "heres",
+        "hitting",
+        "quiet",
+        "quitting"
+      ],
+      "t": "2026-11-03T12:47:44.847768+00:00",
       "category": "money"
     }
   ],
