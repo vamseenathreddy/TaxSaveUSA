@@ -1,5 +1,5 @@
 {
-  "_comment": "Rollout config. Stage 'mix_3shorts_1video' (set 2026-10-19): per day 3 trending-news Shorts, 2 evergreen Shorts (quotes, health tips, habits), 1 tax-tip Short and 1 long video (news roundup or tax explainer, alternating). Each slot gets a random minute inside its US-Eastern window. 'fixed' stages ignore state/pace.json. 2026-10-27: focus mode. 2 money-news Shorts, 1 tax tip and 1 long video a day, all on tax and money (no quotes or health tips). 2026-11-02: evening trending Short removed (reach collapse, median 3 views): 1 money-news Short, 1 tax tip, 1 long a day. 2026-11-02: both Shorts moved to 13:30-17:00 ET (midnight to 3:30 AM IST), the slot that performs best on Mahanavi; the 07:00 trending Short was dropped so volume stays at 3 a day. 2026-11-04: owner default (every channel at least 3 Shorts a day and 1 long video a week): third Short added, a tax tip at 17:00-18:30 ET, so the day is 3 Shorts plus 1 long video.",
+  "_comment": "Rollout config. Stage 'mix_3shorts_1video' (set 2026-10-19): per day 3 trending-news Shorts, 2 evergreen Shorts (quotes, health tips, habits), 1 tax-tip Short and 1 long video (news roundup or tax explainer, alternating). Each slot gets a random minute inside its US-Eastern window. 'fixed' stages ignore state/pace.json. 2026-10-27: focus mode. 2 money-news Shorts, 1 tax tip and 1 long video a day, all on tax and money (no quotes or health tips). 2026-11-02: evening trending Short removed (reach collapse, median 3 views): 1 money-news Short, 1 tax tip, 1 long a day. 2026-11-02: both Shorts moved to 13:30-17:00 ET (midnight to 3:30 AM IST), the slot that performs best on Mahanavi; the 07:00 trending Short was dropped so volume stays at 3 a day. 2026-11-04: owner default (every channel at least 3 Shorts a day and 1 long video a week): third Short added, a tax tip at 17:00-18:30 ET, so the day is 3 Shorts plus 1 long video. 2026-11-04 owner: no news. 3 Shorts a day (2 tax tips, rebates and wealth strategies, 1 money motivation or money habit) and 1 long tax video a week (Saturday).",
   "rollout_start_date": "2026-10-18",
   "timezone_note": "windows_et are in US Eastern local time (America/New_York) and are DST-safe - the scheduler converts them to UTC/IST at run time using zoneinfo, so they stay correct across the Nov/Mar DST switch.",
   "randomness_note": "Six 4-hour windows tile the whole ET day; the scheduler picks a genuinely random minute inside each, so there is exactly one post per 4-hour block at an unpredictable time. To avoid overnight posts, shorten the first window (e.g. 05:00-07:59) or drop it and set posts_per_day to 5.",
@@ -20,7 +20,7 @@
         {
           "window": "15:00-16:59",
           "kind": "short",
-          "source": "trending"
+          "source": "evergreen"
         },
         {
           "window": "17:00-18:30",
@@ -30,7 +30,10 @@
         {
           "window": "19:00-21:29",
           "kind": "long",
-          "source": "auto"
+          "source": "auto",
+          "weekdays": [
+            5
+          ]
         }
       ],
       "posts_per_day": 4,

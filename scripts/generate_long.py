@@ -336,7 +336,7 @@ LONG_KINDS = {
                   tags=["important dates", "week ahead", "upcoming dates", "tax deadlines", "fed meeting", "open enrollment", "money dates", "what's coming", "usa dates"],
                   hashtags="#WeekAhead #TaxDeadlines #Money #TaxSaveUSA", hours=36, horizon=75, lo=3, hi=8, wrap="upcoming deadlines and dates that matter"),
 }
-WEEKDAY_KIND = {0: "ahead", 1: "tax", 2: "tax", 3: "money", 4: "ahead", 5: "tax", 6: "money"}   # 2026-10-27: tax and money only (was tech, science, movies, general news)
+WEEKDAY_KIND = {i: "tax" for i in range(7)}   # 2026-10-27: tax and money only (was tech, science, movies, general news)
 BED_FOR_KIND = {"tax": "calm", "tech": "tech", "science": "science"}   # others use the news bed
 BED_VOLUME = 0.18  # Mon..Sun
 
@@ -404,6 +404,9 @@ def main() -> int:
         plan = tax_plan(rng)
         if plan is None and args.mode == "tax":
             raise SystemExit("no unused tax explainer left in content/long_tax.json")
+    if plan is None and args.mode == "auto":
+        # 2026-11-04 owner: no news. The weekly long video is a tax explainer only; stop (and say so) when none is left.
+        raise SystemExit("no unused tax explainer left in content/long_tax.json, add more (no news fallback)")
     if plan is None:
         kind = mode if mode in LONG_KINDS else "money"
         try:

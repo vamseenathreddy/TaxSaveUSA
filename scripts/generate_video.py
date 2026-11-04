@@ -329,9 +329,9 @@ def load_next_evergreen():
         data = json.load(f)
     items = data["items"]
     used_n = sum(1 for t in items if t.get("used"))
-    kinds = ["quote", "health", "habit"]
+    kinds = ["quote", "money", "strategy"]   # 2026-11-04: money motivation, money habits and wealth strategies (no health tips)
     want = kinds[used_n % 3]
-    pending = [t for t in items if not t.get("used")]
+    pending = [t for t in items if not t.get("used") and t.get("kind") in kinds]
     if not pending:
         raise SystemExit("No unused items left in content/evergreen.json")
     topic = next((t for t in pending if t.get("kind") == want), pending[0])

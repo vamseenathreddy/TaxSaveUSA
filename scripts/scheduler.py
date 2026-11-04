@@ -105,6 +105,8 @@ def pick_times_for_today(stage, today_et: date, seed_key: str, now_et: datetime 
     one per tick."""
     rng = random.Random(seed_key)
     slots = stage.get("slots")
+    if slots:   # a slot with "weekdays": [0..6] (Mon=0, ET) only runs on those days, e.g. the weekly long video
+        slots = [x for x in slots if "weekdays" not in x or today_et.weekday() in x["weekdays"]]
     n = len(slots) if slots else stage["posts_per_day"]
     windows = [x["window"] for x in slots] if slots else stage["windows_et"]
     # Spread posts across windows as evenly as possible
