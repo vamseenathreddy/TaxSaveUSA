@@ -700,7 +700,8 @@
       ],
       "script": "Quick tax tip. You may be able to deduct the interest on a car loan. The IRS says the deduction is up to 10,000 dollars of qualified passenger vehicle loan interest, for tax years 2025 through 2028. It starts to phase out when your modified adjusted gross income is above 100,000 dollars, or 200,000 dollars if you file jointly. You can take it even if you don't itemize. There are specific eligibility rules for the vehicle and the loan, so check the IRS guidance and your lender's year end interest statement before you file.",
       "description": "The IRS says up to $10,000 of qualified passenger vehicle loan interest may be deductible for tax years 2025 through 2028, phasing out above $100,000 ($200,000 joint) of modified adjusted gross income.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov. Consult a CPA or CFP for your specific situation.\n\n#taxtips #carloan #personalfinance #IRS #taxes2026",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-04"
     },
     {
       "slug": "senior-deduction-65-plus-2026",
@@ -1180,7 +1181,7 @@
     },
     {
       "slug": "qcd-qualified-charitable-distribution",
-      "title": "Over 70½? Give To Charity From Your IRA And Skip The Tax",
+      "title": "Over 70\u00bd? Give To Charity From Your IRA And Skip The Tax",
       "caption_headline": "QCD: Give From Your IRA",
       "background": "bg4.mp4",
       "tags": [
@@ -1192,7 +1193,7 @@
         "senior tax tips"
       ],
       "script": "If you are 70 and a half or older, there is a tax smart way to give to charity. It is called a qualified charitable distribution, or QCD. You send money straight from your IRA to a qualifying charity, up to over 100,000 dollars a year. The amount is not included in your taxable income. If you are at the age where required minimum distributions start, a QCD can count toward your RMD without raising your tax bill. That can also help keep your Medicare premiums lower. The money must go directly to the charity. Talk to your IRA custodian and a tax professional.",
-      "description": "Over 70½? Give To Charity From Your IRA And Skip The Tax\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Qualified Charitable Distributions, Publication 590-B). Consult a CPA or CFP for your specific situation.\n\n#qcd #retirement #charity #seniors #IRS",
+      "description": "Over 70\u00bd? Give To Charity From Your IRA And Skip The Tax\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Qualified Charitable Distributions, Publication 590-B). Consult a CPA or CFP for your specific situation.\n\n#qcd #retirement #charity #seniors #IRS",
       "used": false
     },
     {
