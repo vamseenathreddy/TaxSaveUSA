@@ -718,7 +718,8 @@
       ],
       "script": "Quick tax tip for seniors. If you're 65 or older, the IRS says you may be able to claim an extra 6,000 dollar deduction, for tax years 2025 through 2028. If you and your spouse both qualify, that's up to 12,000 dollars. The deduction starts to phase out once your modified adjusted gross income is above 75,000 dollars, or 150,000 dollars if you file jointly. It's available whether you itemize or take the standard deduction. Make sure your Social Security number is on your return, and check the IRS page for the full rules.",
       "description": "The IRS says a $6,000 deduction per eligible person age 65 or older is available for tax years 2025 through 2028, phasing out above $75,000 ($150,000 joint) of modified adjusted gross income.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov. Consult a CPA or CFP for your specific situation.\n\n#taxtips #seniors #retirement #IRS #taxes2026",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-05"
     },
     {
       "slug": "trump-accounts-1000-pilot",
