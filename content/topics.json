@@ -754,7 +754,8 @@
       ],
       "script": "Quick tax tip. Here are two 2026 tax brackets for single filers, straight from the IRS. The 12 percent bracket goes up to 50,400 dollars of taxable income. The 22 percent bracket goes up to 105,700 dollars. Remember, these are marginal rates. Only the dollars inside each bracket are taxed at that rate, so moving into a higher bracket never makes your whole income taxed higher. And these numbers apply to taxable income, which is what's left after your deductions. For 2026, the standard deduction for single filers is 16,100 dollars.",
       "description": "IRS Rev. Proc. 2025-32: for 2026 single filers, the 12% bracket tops out at $50,400 of taxable income and the 22% bracket at $105,700. The standard deduction is $16,100.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS Rev. Proc. 2025-32. Consult a CPA or CFP for your specific situation.\n\n#taxbrackets #taxtips #personalfinance #IRS #taxes2026",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-05"
     },
     {
       "slug": "transit-parking-benefit-2026",
