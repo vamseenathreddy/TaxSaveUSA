@@ -135,8 +135,9 @@
       "category": "evergreen",
       "playlist": "Daily Motivation Quotes",
       "pre_condensed": true,
-      "used": false,
-      "description": "Quote of the Day: Do not compare your chapter one to someone else's chapter twenty.\n\nQuote of the day. Do not compare your chapter one to someone else's chapter twenty. Everyone started somewhere. Focus on your own page.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #Motivation #Quotes"
+      "used": true,
+      "description": "Quote of the Day: Do not compare your chapter one to someone else's chapter twenty.\n\nQuote of the day. Do not compare your chapter one to someone else's chapter twenty. Everyone started somewhere. Focus on your own page.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #Motivation #Quotes",
+      "used_date": "2026-11-05"
     },
     {
       "slug": "evergreen-quote-07",
