@@ -736,7 +736,8 @@
       ],
       "script": "Quick money tip for parents. The IRS says eligible U.S. citizen children born from January 1st, 2025 through December 31st, 2028 can receive a one time 1,000 dollar federal pilot contribution into a Trump Account. To qualify, the child needs a valid Social Security number. You request it with IRS Form 4547, the Trump Account election, which you can submit through the Trump Accounts website, the app, or your IRS online account. The IRS also says some eligible children are being enrolled automatically, but parents still have to claim the account and elect the 1,000 dollars. Check the IRS Trump Accounts page for the latest steps.",
       "description": "The IRS says children born 2025 through 2028 may receive a one time $1,000 pilot contribution into a Trump Account. Elect it on Form 4547 and check irs.gov/trumpaccounts for current steps.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov. Consult a CPA or CFP for your specific situation.\n\n#trumpaccounts #parenting #personalfinance #IRS #taxes2026",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-05"
     },
     {
       "slug": "tax-brackets-2026-single",
