@@ -790,7 +790,8 @@
       ],
       "script": "Quick tax tip. You don't need kids to claim the Earned Income Tax Credit. For 2026, the IRS says the maximum credit with no qualifying children is 664 dollars. The credit starts to phase out at 10,860 dollars of income for most filers, or 18,140 dollars if you file jointly, and it's completely gone at 19,540 dollars, or 26,820 dollars for joint filers. You need earned income from work to qualify, and there are other rules on age and investment income. Check the IRS EITC assistant to see if you qualify.",
       "description": "IRS Rev. Proc. 2025-32: for 2026 the maximum EITC with no qualifying children is $664, with the phase-out beginning at $10,860 ($18,140 joint) and ending at $19,540 ($26,820 joint).\n\nGeneral education only, not personalized tax or financial advice. Source: IRS Rev. Proc. 2025-32. Consult a CPA or CFP for your specific situation.\n\n#eitc #taxcredits #personalfinance #IRS #taxes2026",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-06"
     },
     {
       "slug": "head-of-household-standard-deduction-2026",
