@@ -772,7 +772,8 @@
       ],
       "script": "Quick tax tip. If your employer offers commuter benefits, the IRS set the 2026 limit at 340 dollars a month for transit passes and commuter vehicle rides, and another 340 dollars a month for qualified parking. That money can be set aside before tax, which lowers your taxable pay. It's a use it or lose it style benefit in many plans, so check how your employer handles unused balances. Ask your HR team how to sign up and how to change your monthly election.",
       "description": "IRS Rev. Proc. 2025-32 sets the 2026 monthly limit for transit passes and commuter highway vehicles at $340, and qualified parking at $340.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS Rev. Proc. 2025-32. Consult a CPA or CFP for your specific situation.\n\n#commuterbenefits #taxtips #personalfinance #IRS #taxes2026",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-06"
     },
     {
       "slug": "eitc-no-children-2026",
