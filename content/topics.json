@@ -808,7 +808,8 @@
       ],
       "script": "Quick tax tip. Your filing status changes your standard deduction a lot. For 2026, the IRS says it's 16,100 dollars for single filers, 24,150 dollars for head of household, and 32,200 dollars for married couples filing jointly. If you're unmarried and you pay more than half the cost of keeping up a home for a qualifying person, you may be able to file as head of household instead of single, which means a bigger deduction. There are specific rules, so check the IRS filing status tool before you choose.",
       "description": "IRS Rev. Proc. 2025-32: 2026 standard deduction is $16,100 single, $24,150 head of household, $32,200 married filing jointly.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS Rev. Proc. 2025-32. Consult a CPA or CFP for your specific situation.\n\n#headofhousehold #taxtips #standarddeduction #IRS #taxes2026",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-07"
     },
     {
       "slug": "foreign-earned-income-exclusion-2026",
