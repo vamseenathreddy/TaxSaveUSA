@@ -826,7 +826,8 @@
       ],
       "script": "Quick tax tip for Americans living abroad. For 2026, the IRS says the foreign earned income exclusion is 132,900 dollars. If you qualify, you can exclude that much of your foreign earned income from U.S. tax. You still generally have to file a U.S. return, and you have to meet either the bona fide residence test or the physical presence test. You claim the exclusion by filing a form with your return. Check the IRS page for U.S. citizens abroad to see if you qualify.",
       "description": "IRS Rev. Proc. 2025-32: the 2026 foreign earned income exclusion is $132,900. You still generally must file a U.S. return and meet residence or physical presence tests.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS Rev. Proc. 2025-32. Consult a CPA or CFP for your specific situation.\n\n#expattax #taxtips #personalfinance #IRS #taxes2026",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-07"
     },
     {
       "slug": "estimated-tax-q4-jan-15-2027",
