@@ -862,7 +862,8 @@
       ],
       "script": "Quick tax tip for investors. If you sold investments at a loss, the IRS lets you use those losses to offset capital gains. If your losses are bigger than your gains, you can deduct up to 3,000 dollars of the extra loss against your other income each year, or 1,500 dollars if you're married filing separately. Anything left over carries forward to future years. That's why it can pay to keep track of your losses before the year ends. Check IRS Topic 409 on capital gains and losses for the details.",
       "description": "Net capital losses can offset other income up to $3,000 a year ($1,500 married filing separately), with the rest carried forward. See IRS Topic 409.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS Topic 409. Consult a CPA or CFP for your specific situation.\n\n#taxlossharvesting #investing #taxtips #IRS #taxes2026",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-08"
     },
     {
       "slug": "savers-credit-2026",
