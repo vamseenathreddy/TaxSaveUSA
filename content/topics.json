@@ -844,7 +844,8 @@
       ],
       "script": "Quick tax tip for freelancers and small business owners. The fourth quarter estimated tax payment for 2026 is due January 15th, 2027. If you don't have enough tax withheld, the IRS expects you to pay as you earn during the year, using Form 1040 E S. Generally you can avoid an underpayment penalty by paying at least 90 percent of this year's tax, or 100 percent of last year's tax, and 110 percent if last year's adjusted gross income was over 150,000 dollars. You can pay online with IRS Direct Pay. Mark the date now.",
       "description": "The fourth quarter 2026 estimated tax payment is due January 15, 2027. Pay online with IRS Direct Pay. Check Form 1040-ES and IRS Publication 505 for the safe harbor rules.\n\nGeneral education only, not personalized tax or financial advice. Source: IRS Form 1040-ES and Publication 505. Consult a CPA or CFP for your specific situation.\n\n#estimatedtax #selfemployed #taxtips #IRS #taxes2026",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-08"
     },
     {
       "slug": "capital-loss-3000-limit",
