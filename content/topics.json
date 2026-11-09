@@ -898,7 +898,8 @@
       ],
       "script": "Can you still contribute to a Roth IRA in 2026? It depends on your income. The contribution limit is 7,500 dollars, or 8,600 if you are 50 or older. For single filers, the Roth contribution phases out between 153,000 and 168,000 dollars of income. For married couples filing jointly, it phases out between 242,000 and 252,000 dollars. Earn above the top of the range and you cannot contribute directly. Under the range, you can contribute the full amount and pull the growth out tax free in retirement. If you are over the limit, there is a workaround called the backdoor Roth. More on that next.",
       "description": "Roth IRA Income Limits for 2026: Are You Too Rich?\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (2026 retirement plan limits, IR-2025-111). Consult a CPA or CFP for your specific situation.\n\n#rothira #retirement #taxfree #taxtips2026 #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-09"
     },
     {
       "slug": "backdoor-roth-ira-explained",
