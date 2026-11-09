@@ -880,7 +880,8 @@
       ],
       "script": "Here is a tax credit that pays you for saving for retirement. It is called the Saver's Credit. If you put money into a 401k or an IRA, you can get a credit of up to 50 percent of the first 2,000 dollars you save. That is up to 1,000 dollars off your tax bill, or 2,000 for a married couple. For 2026 the income limits are 40,250 dollars for single filers, 60,375 for head of household, and 80,500 for married couples filing jointly. A credit is better than a deduction because it cuts your tax bill dollar for dollar. Claim it on Form 8880, and confirm your numbers on irs.gov.",
       "description": "Get Up to $1,000 Back For Saving: The Saver's Credit (2026)\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (2026 retirement plan limits and Saver's Credit thresholds, IR-2025-111). Consult a CPA or CFP for your specific situation.\n\n#saverscredit #retirement #taxcredit #taxtips2026 #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-09"
     },
     {
       "slug": "roth-ira-income-limits-2026",
