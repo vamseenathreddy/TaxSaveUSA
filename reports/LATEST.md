@@ -1,16 +1,16 @@
-# TaxSaveUSA weekly review, 2026-11-02
+# TaxSaveUSA weekly review, 2026-11-09
 
 ## Flags
-- REACH COLLAPSE: median views of 38 settled posts is 4
+- REACH COLLAPSE: median views of 27 settled posts is 4
 - NO SUBSCRIBER GROWTH since last week
 
 - subscribers 2 (+0 since last review)
-- total views 974, uploads in the last 7 days 32
-- median views of settled posts: 4.0, Shorts 4.5, long videos 2.0
+- total views 1441, uploads in the last 7 days 25
+- median views of settled posts: 4, Shorts 5, long videos 2.0
 
-- best: 54 views (short), 2026 SSDI Work Limit: Earn Up to $1,690/Month (SSA Number) #Shorts
-- best: 19 views (short), Lineups, live updates from Brewers-Rays World Series Game 3 #Shorts
-- best: 12 views (short), US tech stocks see sharp falls as AI spending nears $1tn #Shorts
-- weakest: 0 views (short), Top 6 Money and Tax Stories This Week | October 30, 2026
-- weakest: 0 views (short), I earn 30,000. I'm angry there was no fuel duty cut in the Budget #Sho
-- weakest: 0 views (long), 7 Tax Deductions and Credits Most People Forget to Claim
+- best: 165 views (short), Two economists studied California's billionaire tax. They reached wild
+- best: 39 views (short), 2026 Tax Brackets: 12% Up to $50,400, 22% Up to $105,700 #Shorts
+- best: 27 views (short), Energy bills help 'doesn't go far enough' #Shorts
+- weakest: 0 views (short), Max Out Tax-Advantaged Accounts First | Wealth Strategy #Shorts
+- weakest: 0 views (short), Pay Yourself First | Money Tip #Shorts
+- weakest: 0 views (long), Self-Employed Taxes Explained: 7 Things Every Freelancer Must Know
