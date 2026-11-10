@@ -934,7 +934,8 @@
       ],
       "script": "Most people stop at the 401k limit of 24,500 dollars. But the total limit for 2026, counting your contributions, your employer match, and after tax money, is much higher, about 72,000 dollars. If your plan allows after tax contributions and in plan Roth conversions, you can move that extra after tax money into Roth, where the growth is tax free. This is called the mega backdoor Roth. Not every plan offers it, so ask your HR team or read your plan document. It is a strategy used by high earners who have already maxed out their regular accounts.",
       "description": "The Mega Backdoor Roth: Put Up To $72,000 Into Retirement\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (2026 retirement plan limits, Notice 2025-67 and IR-2025-111). Consult a CPA or CFP for your specific situation.\n\n#megabackdoorroth #401k #wealthbuilding #taxstrategy #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-10"
     },
     {
       "slug": "hsa-triple-tax-advantage",
