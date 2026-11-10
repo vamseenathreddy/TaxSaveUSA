@@ -916,7 +916,8 @@
       ],
       "script": "If your income is too high for a Roth IRA, there is a legal workaround that many high earners use. It is called the backdoor Roth. Step one, put money into a traditional IRA and do not deduct it. Step two, convert that money to a Roth IRA. Once it is in the Roth, the growth is tax free. The catch is the pro rata rule. If you already have pre tax money in any traditional IRA, the conversion is taxed in proportion, so the trick works best when those balances are zero. This is an IRS recognized process, but report it on Form 8606 and talk to a tax professional first.",
       "description": "The Backdoor Roth IRA: How High Earners Still Get Tax-Free Growth\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Roth IRA rules, Form 8606 instructions). Consult a CPA or CFP for your specific situation.\n\n#backdoorroth #rothira #wealth #taxstrategy #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-10"
     },
     {
       "slug": "mega-backdoor-roth-401k",
