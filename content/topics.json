@@ -970,7 +970,8 @@
       ],
       "script": "Should you take the standard deduction or itemize? For 2026 the standard deduction is 16,100 dollars for single filers, 32,200 for married couples, and 24,150 for heads of household. Add up what you could itemize, like mortgage interest, state and local taxes, and charitable gifts. If the total beats your standard deduction, itemize. If not, take the standard. A smart move many families use is bunching, which means paying two years of charity or property tax in one year so you itemize in that year, then take the standard deduction the next year.",
       "description": "Standard or Itemized Deduction in 2026? Do This Math First\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (2026 inflation adjustments, Rev. Proc. 2025-32). Consult a CPA or CFP for your specific situation.\n\n#taxdeduction #itemize #taxtips2026 #personalfinance #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-11"
     },
     {
       "slug": "charity-deduction-non-itemizers-2026",
