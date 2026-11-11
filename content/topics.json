@@ -952,7 +952,8 @@
       ],
       "script": "The health savings account is the only account that gives you three tax breaks. Your contributions are tax deductible. The money grows tax free. And withdrawals for medical expenses are tax free too. For 2026 you can put in 4,400 dollars if you have self only coverage, or 8,750 for family coverage, plus 1,000 extra if you are 55 or older. You need a high deductible health plan to qualify. Many wealthy savers pay current medical bills out of pocket, invest the HSA, and let it grow for decades. Keep your receipts and talk to a tax professional.",
       "description": "The HSA: The Only Account With Three Tax Breaks\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (2026 HSA limits, Rev. Proc. 2025-19). Consult a CPA or CFP for your specific situation.\n\n#hsa #taxfree #healthsavings #taxtips2026 #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-11"
     },
     {
       "slug": "standard-deduction-vs-itemize-2026",
