@@ -988,7 +988,8 @@
       ],
       "script": "Starting in 2026, you can deduct cash gifts to qualifying charities even if you take the standard deduction. The new law allows up to 1,000 dollars for single filers and 2,000 dollars for married couples filing jointly. Before this change, only people who itemized got a tax break for giving. The gift has to be cash, not clothing or goods, and it has to go to a qualifying charity, not a donor advised fund. Keep your receipts. It is a small tax break, but it rewards the kind of giving most families already do. Confirm details on irs.gov.",
       "description": "New in 2026: Deduct Charity Even If You Don't Itemize\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov and the One Big Beautiful Bill Act (charitable deduction for non-itemizers beginning 2026). Consult a CPA or CFP for your specific situation.\n\n#charity #taxdeduction #taxtips2026 #giving #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-12"
     },
     {
       "slug": "donate-appreciated-stock",
