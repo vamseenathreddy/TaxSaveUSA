@@ -1024,7 +1024,8 @@
       ],
       "script": "Investments that lost money can still save you taxes. It is called tax loss harvesting. When you sell an investment for a loss, that loss first cancels out your capital gains. If you still have losses left over, you can deduct up to 3,000 dollars against your regular income, and carry the rest forward to future years. Just watch the wash sale rule. If you buy the same or a substantially identical investment within 30 days before or after the sale, the loss is disallowed for now. Many investors review their portfolio in the fall for exactly this reason.",
       "description": "Tax-Loss Harvesting: Turn Investment Losses Into Tax Savings\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Publication 550, Investment Income and Expenses; wash sale rule). Consult a CPA or CFP for your specific situation.\n\n#taxlossharvesting #investing #capitalgains #taxstrategy #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-13"
     },
     {
       "slug": "dependent-care-fsa-2026-7500",
