@@ -1042,7 +1042,8 @@
       ],
       "script": "Paying for daycare or after school care? Good news for 2026. The dependent care FSA limit goes up from 5,000 dollars to 7,500 dollars per household. That is money you set aside from your paycheck before taxes, so you do not pay federal income or payroll tax on it. If you are in the 22 percent bracket, 7,500 dollars of pre tax childcare could save you well over 1,600 dollars in federal income tax alone. Your employer has to offer the plan, so check your benefits portal during open enrollment. This comes from the new tax law.",
       "description": "Dependent Care FSA Goes Up To $7,500 In 2026\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov and the One Big Beautiful Bill Act (dependent care FSA limit beginning 2026). Consult a CPA or CFP for your specific situation.\n\n#fsa #childcare #taxsavings #taxtips2026 #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-13"
     },
     {
       "slug": "employer-student-loan-repayment-5250",
