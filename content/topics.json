@@ -1006,7 +1006,8 @@
       ],
       "script": "If you give to charity, giving stock instead of cash can save you money. Say you own shares that have gone up a lot over several years. If you sell them, you owe capital gains tax. But if you donate those shares directly to a qualifying charity, you generally skip that capital gains tax, and if you itemize you may also deduct the full market value. Same gift to the charity, bigger benefit to you. It works for stock you have held more than one year. Wealthy donors use this every year. Check with a tax professional about your limits.",
       "description": "Donate Stock, Not Cash: The Tax Move Wealthy Givers Use\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Publication 526, Charitable Contributions). Consult a CPA or CFP for your specific situation.\n\n#charity #capitalgains #wealth #taxstrategy #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-12"
     },
     {
       "slug": "tax-loss-harvesting-explained",
