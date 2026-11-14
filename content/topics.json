@@ -1060,7 +1060,8 @@
       ],
       "script": "Check your benefits. Your employer can help pay your student loans, and up to 5,250 dollars a year of that help can be tax free to you. This rule, under Section 127 of the tax code, was made permanent by the new tax law starting in 2026. That means no federal income tax on up to 5,250 dollars of loan payments your employer makes for you each year. The same 5,250 dollar limit also covers tuition help. Not every employer offers it, so ask HR. It is one of the most overlooked workplace benefits out there.",
       "description": "Your Employer Can Pay Your Student Loans Tax-Free\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Section 127 educational assistance) and the One Big Beautiful Bill Act. Consult a CPA or CFP for your specific situation.\n\n#studentloans #employerbenefits #taxfree #taxtips2026 #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-14"
     },
     {
       "slug": "529-k12-limit-20000-2026",
