@@ -204,8 +204,9 @@
       "category": "evergreen",
       "playlist": "Daily Motivation Quotes",
       "pre_condensed": true,
-      "used": false,
-      "description": "Quote of the Day: The best time to start was yesterday. The next best time is right now.\n\nQuote of the day. The best time to start was yesterday. The next best time is right now. Do the first five minutes, and the hard part is done.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #Motivation #Quotes"
+      "used": true,
+      "description": "Quote of the Day: The best time to start was yesterday. The next best time is right now.\n\nQuote of the day. The best time to start was yesterday. The next best time is right now. Do the first five minutes, and the hard part is done.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #Motivation #Quotes",
+      "used_date": "2026-11-14"
     },
     {
       "slug": "evergreen-quote-10",
