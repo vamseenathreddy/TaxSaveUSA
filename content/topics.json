@@ -1078,7 +1078,8 @@
       ],
       "script": "A 529 plan is not just for college anymore. Starting in 2026, you can use up to 20,000 dollars per student per year from a 529 plan for K through 12 tuition. Before that, the limit was 10,000. The money grows tax free, and withdrawals for qualified education costs are tax free at the federal level. Some states also add their own deduction for contributions. The new rules also widen the list of qualified expenses, like books and certain testing fees. Check your state's rules, since they differ, and confirm details on irs.gov.",
       "description": "529 Plans Can Now Pay Up To $20,000 For K-12 Tuition\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (529 plans) and the One Big Beautiful Bill Act (K-12 expense limit beginning 2026). Consult a CPA or CFP for your specific situation.\n\n#529plan #education #taxfree #taxtips2026 #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-14"
     },
     {
       "slug": "529-superfunding-95000",
