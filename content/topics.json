@@ -1114,7 +1114,8 @@
       ],
       "script": "Homeowners, here is a tax break coming back. Under the new tax law, mortgage insurance premiums can be treated as deductible mortgage interest again, starting in 2026. If you pay PMI because you put down less than 20 percent, you may be able to deduct those premiums if you itemize and your income is under the limit. The mortgage interest deduction itself also stays in place, on up to 750,000 dollars of home loan debt. Check your Form 1098 each January, since your lender reports what you paid. Confirm the details and phase outs on irs.gov or with a tax professional.",
       "description": "Mortgage Insurance Premiums Are Deductible Again In 2026\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov and the One Big Beautiful Bill Act (mortgage insurance premiums beginning 2026). Consult a CPA or CFP for your specific situation.\n\n#homeowners #mortgage #taxdeduction #taxtips2026 #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-15"
     },
     {
       "slug": "salt-cap-40000",
