@@ -1096,7 +1096,8 @@
       ],
       "script": "Here is a wealth transfer trick for families. A 529 plan lets you front load five years of gifts at once. The annual gift tax exclusion for 2026 is 19,000 dollars per person. With the five year election, one person can put in 95,000 dollars in a single year, and a married couple can put in 190,000, per beneficiary, without using any lifetime gift exemption. You file a gift tax return to make the election. The money grows tax free for education, and it is out of your estate. Grandparents love this one. Talk to a tax professional first.",
       "description": "529 Superfunding: Move $95,000 Into A Kid's Account At Once\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (gift tax annual exclusion 2026, IR-2025-103; Form 709 instructions). Consult a CPA or CFP for your specific situation.\n\n#529plan #estateplanning #gifttax #wealth #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-15"
     },
     {
       "slug": "pmi-mortgage-insurance-deduction-2026",
