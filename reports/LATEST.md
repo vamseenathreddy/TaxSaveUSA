@@ -1,16 +1,16 @@
-# TaxSaveUSA weekly review, 2026-11-09
+# TaxSaveUSA weekly review, 2026-11-16
 
 ## Flags
-- REACH COLLAPSE: median views of 27 settled posts is 5
+- REACH COLLAPSE: median views of 22 settled posts is 14
 - NO SUBSCRIBER GROWTH since last week
 
 - subscribers 2 (+0 since last review)
-- total views 1441, uploads in the last 7 days 25
-- median views of settled posts: 5, Shorts 6, long videos 2.0
+- total views 1804, uploads in the last 7 days 22
+- median views of settled posts: 14.0, Shorts 14.0, long videos None
 
-- best: 165 views (short), Two economists studied California's billionaire tax. They reached wild
-- best: 39 views (short), 2026 Tax Brackets: 12% Up to $50,400, 22% Up to $105,700 #Shorts
-- best: 27 views (short), Energy bills help 'doesn't go far enough' #Shorts
-- weakest: 0 views (short), Max Out Tax-Advantaged Accounts First | Wealth Strategy #Shorts
-- weakest: 0 views (short), Pay Yourself First | Money Tip #Shorts
-- weakest: 0 views (long), Self-Employed Taxes Explained: 7 Things Every Freelancer Must Know
+- best: 75 views (short), Quote of the Day: The best time to start was yesterday. The next best 
+- best: 44 views (short), The 1 Percent Rule | Money Tip #Shorts
+- best: 40 views (short), Self-Employed? Final 2026 Estimated Tax Payment Due Jan 15, 2027 #Shor
+- weakest: 0 views (short), Wealth Is What You Keep | Money Tip #Shorts
+- weakest: 1 views (short), 2026 IRS Numbers Cheat Sheet: Standard Deduction, Brackets, Credits
+- weakest: 2 views (short), New in 2026: Deduct Charity Even If You Don't Itemize #Shorts
