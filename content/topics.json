@@ -1132,7 +1132,8 @@
       ],
       "script": "The deduction for state and local taxes, called SALT, just got bigger. The new law raised the cap from 10,000 dollars to 40,000 dollars for 2025, and 40,400 dollars for 2026, rising one percent a year after that. SALT covers property taxes plus either state income tax or sales tax. But the bigger cap phases down for higher earners, starting at 505,000 dollars of income for 2026, and goes back toward 10,000. If you live in a high tax state and own a home, itemizing may suddenly beat the standard deduction. Run both numbers and confirm on irs.gov.",
       "description": "The SALT Cap Is Now $40,000: Who Benefits\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov and the One Big Beautiful Bill Act (SALT deduction cap). Consult a CPA or CFP for your specific situation.\n\n#salt #taxdeduction #homeowners #taxtips2026 #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-16"
     },
     {
       "slug": "home-office-deduction-self-employed",
