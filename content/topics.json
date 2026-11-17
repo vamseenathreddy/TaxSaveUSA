@@ -1168,7 +1168,8 @@
       ],
       "script": "If you work for yourself, you can shelter far more from tax than a regular employee. With a solo 401k, you contribute as the employee, up to 24,500 dollars for 2026, and as the employer, up to 25 percent of your net self employment pay. The combined limit is around 72,000 dollars, and if you are 50 or older you can add catch up contributions on top. A SEP IRA is simpler to set up, with employer contributions up to the same overall limit. Both lower your taxable income this year. Open the account by the deadline and confirm limits on irs.gov.",
       "description": "Self-Employed? Shelter Up To $72,000 With A Solo 401(k)\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (2026 retirement plan limits, Notice 2025-67; Publication 560). Consult a CPA or CFP for your specific situation.\n\n#solo401k #selfemployed #sepira #taxstrategy #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-17"
     },
     {
       "slug": "hire-your-kids-business-strategy",
