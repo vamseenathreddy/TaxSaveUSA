@@ -1150,7 +1150,8 @@
       ],
       "script": "If you are self employed and use part of your home regularly and exclusively for business, you may qualify for the home office deduction. There is a simple way to claim it. The simplified method lets you deduct 5 dollars per square foot, up to 300 square feet, which is a deduction of up to 1,500 dollars. Or you can use the regular method and deduct your actual share of rent, utilities, and insurance. Note that regular employees working from home cannot claim this deduction on their federal return. Keep photos and measurements of the space, and confirm the rules on irs.gov.",
       "description": "Work From Home For Yourself? Claim The Home Office Deduction\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Publication 587, Business Use of Your Home). Consult a CPA or CFP for your specific situation.\n\n#homeoffice #selfemployed #freelancer #taxdeduction #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-17"
     },
     {
       "slug": "solo-401k-sep-ira-72000",
