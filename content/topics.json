@@ -1204,7 +1204,8 @@
       ],
       "script": "Your child may be able to start building tax free wealth before they can drive. If your child has earned income, from a job, babysitting, or helping in a family business, you can open a custodial Roth IRA for them. They can contribute up to what they earned or the 7,500 dollar limit for 2026, whichever is less. Money invested at age 15 has about fifty years to grow, and qualified withdrawals in retirement are tax free. Many parents even match their child's contributions. The income must be real and documented. Confirm the rules on irs.gov.",
       "description": "Open A Roth IRA For Your Child: Decades Of Tax-Free Growth\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (IRA contribution limits, 2026, IR-2025-111; Publication 590-A). Consult a CPA or CFP for your specific situation.\n\n#rothira #kidsmoney #wealthbuilding #taxfree #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-18"
     },
     {
       "slug": "qcd-qualified-charitable-distribution",
