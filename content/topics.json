@@ -1186,7 +1186,8 @@
       ],
       "script": "Here is a tax strategy many business owners use. If you own a business and your child does real work for it, like filing, cleaning, social media, or photography, you can pay them a reasonable wage and deduct it as a business expense. A child's earned income can be covered by their own standard deduction, which is 16,100 dollars for 2026, so they may owe no federal income tax. For a sole proprietorship, wages paid to your child under 18 are generally exempt from Social Security and Medicare tax. The work has to be real and the pay has to be fair. Keep time records and talk to a tax professional.",
       "description": "Hire Your Kids: A Legal Tax Strategy For Business Owners\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Publication 15, family employees; 2026 standard deduction, Rev. Proc. 2025-32). Consult a CPA or CFP for your specific situation.\n\n#smallbusiness #taxstrategy #family #wealth #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-18"
     },
     {
       "slug": "roth-ira-for-kids-custodial",
