@@ -1258,7 +1258,8 @@
       ],
       "script": "Where you hold an investment can matter as much as what you own. This is called asset location. The idea is to put investments that create a lot of taxable income, like bonds and real estate funds, inside tax deferred accounts like a 401k or traditional IRA. Put tax efficient investments, like broad stock index funds, in your regular taxable account, where long term gains get lower rates. And put your highest growth investments in a Roth, where all the growth is tax free. The same portfolio, arranged differently, can leave you with more after tax. Talk to a financial professional.",
       "description": "Asset Location: Where You Hold Investments Matters As Much As What\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Publications 550 and 590-A; investment income tax treatment). Consult a CPA or CFP for your specific situation.\n\n#assetlocation #investing #taxefficient #wealth #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-19"
     },
     {
       "slug": "real-estate-depreciation-bonus",
