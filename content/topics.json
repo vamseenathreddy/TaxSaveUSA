@@ -1222,7 +1222,8 @@
       ],
       "script": "If you are 70 and a half or older, there is a tax smart way to give to charity. It is called a qualified charitable distribution, or QCD. You send money straight from your IRA to a qualifying charity, up to over 100,000 dollars a year. The amount is not included in your taxable income. If you are at the age where required minimum distributions start, a QCD can count toward your RMD without raising your tax bill. That can also help keep your Medicare premiums lower. The money must go directly to the charity. Talk to your IRA custodian and a tax professional.",
       "description": "Over 70\u00bd? Give To Charity From Your IRA And Skip The Tax\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Qualified Charitable Distributions, Publication 590-B). Consult a CPA or CFP for your specific situation.\n\n#qcd #retirement #charity #seniors #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-19"
     },
     {
       "slug": "municipal-bonds-tax-free-interest",
