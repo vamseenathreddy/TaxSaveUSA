@@ -1240,7 +1240,8 @@
       ],
       "script": "Here is why wealthy investors own municipal bonds. The interest from most municipal bonds is exempt from federal income tax, and if you buy bonds issued in your own state, it may be exempt from state tax too. Because of that, a muni bond with a lower stated yield can beat a taxable bond if you are in a high tax bracket. To compare, divide the muni yield by one minus your tax rate. For someone in the 35 percent bracket, a 4 percent muni is like earning about 6.2 percent on a taxable bond. Munis are not risk free, so check the issuer and talk to a financial professional.",
       "description": "Municipal Bond Interest Is Federally Tax-Free: Who Should Own Them\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Publication 550, tax-exempt interest). Consult a CPA or CFP for your specific situation.\n\n#municipalbonds #taxfree #investing #wealth #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-19"
     },
     {
       "slug": "asset-location-strategy",
