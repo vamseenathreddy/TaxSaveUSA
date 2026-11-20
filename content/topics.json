@@ -1276,7 +1276,8 @@
       ],
       "script": "Real estate investors often pay little tax on rental income, and depreciation is a big reason. The IRS lets you deduct the cost of a residential rental building over 27 and a half years, even if the property is rising in value. That deduction can offset your rental income on paper. Investors also use cost segregation to speed up deductions on parts of the building, and the new tax law restored 100 percent bonus depreciation for qualifying property. Remember, depreciation can be recaptured when you sell. Keep records and work with a tax professional who knows real estate.",
       "description": "Why Real Estate Investors Pay Less Tax: Depreciation Explained\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Publication 527, Residential Rental Property) and the One Big Beautiful Bill Act. Consult a CPA or CFP for your specific situation.\n\n#realestate #depreciation #landlord #taxstrategy #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-20"
     },
     {
       "slug": "1031-exchange-explained",
