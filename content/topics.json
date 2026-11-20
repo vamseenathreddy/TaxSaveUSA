@@ -1294,7 +1294,8 @@
       ],
       "script": "When you sell an investment property at a profit, you normally owe capital gains tax. A 1031 exchange lets you defer that tax by rolling the money into another like kind investment property. You must follow strict rules. You have 45 days to identify the new property, and 180 days to close on it. You also have to use a qualified intermediary, and cannot touch the sale money yourself. This is for investment or business property, not your main home. You can repeat it many times to keep deferring gains. Get professional help before you sell.",
       "description": "The 1031 Exchange: How Investors Defer Taxes On Property Gains\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Like-Kind Exchanges, Section 1031). Consult a CPA or CFP for your specific situation.\n\n#1031exchange #realestate #capitalgains #taxstrategy #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-20"
     },
     {
       "slug": "step-up-in-basis-explained",
