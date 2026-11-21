@@ -1330,7 +1330,8 @@
       ],
       "script": "Startup founders and early investors should know about the qualified small business stock exclusion, called QSBS, under Section 1202. If you hold stock in a qualifying C corporation for long enough, you may be able to exclude a large part of your gain from federal tax. The new tax law improved it for stock issued after July 4, 2025, with a higher gain cap and a tiered schedule for holding periods of three, four, and five years. The company must meet size and business requirements, so it does not apply to every stock. If you hold startup equity, ask a tax advisor early.",
       "description": "QSBS: How Founders And Early Investors Can Exclude Gains\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Section 1202) and the One Big Beautiful Bill Act. Consult a CPA or CFP for your specific situation.\n\n#qsbs #startups #founders #taxstrategy #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-21"
     },
     {
       "slug": "buy-borrow-die-explained",
