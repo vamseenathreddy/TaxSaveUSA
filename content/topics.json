@@ -1312,7 +1312,8 @@
       ],
       "script": "Here is one of the biggest tax breaks in the code, and most people have never heard of it. When someone dies, their heirs generally receive assets like stocks or a home at a stepped up cost basis, which is the value on the date of death. That means the gain that built up during the original owner's life is wiped out for income tax. If your parent bought stock for 10,000 dollars and it is worth 100,000 when you inherit, your new basis is 100,000. You could sell it with little or no capital gains tax. Estate rules vary, so talk to an estate attorney.",
       "description": "Step-Up In Basis: Why Holding Can Beat Selling For Heirs\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Publication 551, Basis of Assets; inherited property). Consult a CPA or CFP for your specific situation.\n\n#estateplanning #inheritance #capitalgains #wealth #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-21"
     },
     {
       "slug": "qsbs-section-1202-explained",
