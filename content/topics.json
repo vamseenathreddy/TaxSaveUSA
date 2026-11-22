@@ -1348,7 +1348,8 @@
       ],
       "script": "You may have heard of a strategy called buy, borrow, die. The idea is simple. Wealthy people buy assets that grow in value, like stock or real estate. Instead of selling and paying capital gains tax, they borrow against those assets to fund their lifestyle. Loan proceeds are not income, so they are not taxed. Later, their heirs may receive the assets with a stepped up basis. It only works with the right assets, low borrowing costs, and careful risk control, because loans can be called when values fall. This is for education only, and not a recommendation. Talk to a professional.",
       "description": "Buy, Borrow, Die: How The Wealthy Use Loans Instead Of Selling\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (loan proceeds, basis step-up rules, Publication 551) and general tax law. Consult a CPA or CFP for your specific situation.\n\n#wealthstrategy #taxes #investing #estateplanning #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-22"
     },
     {
       "slug": "estimated-tax-safe-harbor",
