@@ -1366,7 +1366,8 @@
       ],
       "script": "If you are self employed or have other income without withholding, you may owe quarterly estimated taxes. Here is how to avoid the underpayment penalty even if you cannot predict your income. The safe harbor rule says you generally avoid the penalty if you pay at least 90 percent of this year's tax, or 100 percent of last year's tax. If your last year's adjusted gross income was over 150,000 dollars, the prior year number is 110 percent instead. Paying evenly in four installments keeps you safe. It can be easier than guessing. Confirm the rules on irs.gov or with a tax professional.",
       "description": "Avoid The Underpayment Penalty With This Safe Harbor Rule\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Estimated taxes, Form 2210 instructions). Consult a CPA or CFP for your specific situation.\n\n#estimatedtax #selfemployed #irs #taxtips #taxplanning",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-22"
     },
     {
       "slug": "1099k-threshold-20000",
