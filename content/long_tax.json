@@ -410,7 +410,8 @@
         "tax tips"
       ],
       "playlist": "Tax Tips",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-22"
     },
     {
       "slug": "self-employed-tax-savings-guide",
