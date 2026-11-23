@@ -273,8 +273,9 @@
       "category": "evergreen",
       "playlist": "Daily Motivation Quotes",
       "pre_condensed": true,
-      "used": false,
-      "description": "Quote of the Day: Your habits are votes for the person you are becoming.\n\nQuote of the day. Your habits are votes for the person you are becoming. Cast a good vote today.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #Motivation #Quotes"
+      "used": true,
+      "description": "Quote of the Day: Your habits are votes for the person you are becoming.\n\nQuote of the day. Your habits are votes for the person you are becoming. Cast a good vote today.\n\nNew Shorts every day: tax tips, trending US news, tech, science, health and motivation. Subscribe to TaxSaveUSA.\n\nGeneral information only, not financial, tax or medical advice.\n\n#Shorts #Motivation #Quotes",
+      "used_date": "2026-11-23"
     },
     {
       "slug": "evergreen-health-01",
