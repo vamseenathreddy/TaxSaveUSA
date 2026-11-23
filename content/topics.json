@@ -1384,7 +1384,8 @@
       ],
       "script": "If you sell things online or get paid through apps, listen up. The new tax law reversed the lower reporting threshold for Form 1099 K. Payment apps and marketplaces now only have to send you one if you receive over 20,000 dollars and have more than 200 transactions in a year. But here is the catch. You still owe tax on income, even when you do not get a form. Keep a record of every sale and payment you receive. Also, for payments made in 2026, the reporting threshold for Forms 1099 NEC and 1099 MISC rises from 600 to 2,000 dollars.",
       "description": "The 1099-K Threshold Is Back To $20,000\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov and the One Big Beautiful Bill Act (Form 1099-K and 1099-NEC thresholds). Consult a CPA or CFP for your specific situation.\n\n#1099k #sidehustle #gigeconomy #taxtips2026 #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-23"
     },
     {
       "slug": "mortgage-credit-certificate-mcc",
