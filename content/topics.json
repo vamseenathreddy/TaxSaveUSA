@@ -1402,7 +1402,8 @@
       ],
       "script": "Buying your first home? Ask your lender about a Mortgage Credit Certificate, or MCC. It is a federal tax credit program run through state and local housing agencies. It lets you claim a credit for part of the mortgage interest you pay, often 20 percent of it, with a cap of 2,000 dollars per year when the credit rate is above 20 percent. A credit reduces your tax bill dollar for dollar, which is more powerful than a deduction. You must apply before you close on the home, and there are income and price limits. Ask your state housing finance agency.",
       "description": "First-Time Homebuyer? Ask About A Mortgage Credit Certificate\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (Form 8396, Mortgage Interest Credit). Consult a CPA or CFP for your specific situation.\n\n#firsttimehomebuyer #taxcredit #homebuying #mortgage #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-24"
     },
     {
       "slug": "free-tax-help-vita",
