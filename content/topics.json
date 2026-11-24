@@ -1420,7 +1420,8 @@
       ],
       "script": "You do not have to pay to file your taxes. The IRS runs the Volunteer Income Tax Assistance program, called VITA. Trained volunteers prepare federal returns for free for people who generally have moderate incomes, as well as people with disabilities and limited English speakers. The IRS also partners with software companies on Free File, with an income limit that changes each year. Search the IRS website for a VITA site near you. Free help also makes sure you claim credits like the Earned Income Tax Credit that you may be missing.",
       "description": "Free Tax Help From The IRS: VITA And Free File\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (VITA/TCE programs and Free File). Consult a CPA or CFP for your specific situation.\n\n#freetaxhelp #vita #irs #taxtips #personalfinance",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-24"
     },
     {
       "slug": "pell-grant-fafsa-free-money",
