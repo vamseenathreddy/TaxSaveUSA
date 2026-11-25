@@ -1456,7 +1456,8 @@
       ],
       "script": "If your heating or cooling bill is too high, there is a federal program that may help. It is called LIHEAP, the Low Income Home Energy Assistance Program. It helps eligible households pay energy bills, and in some cases covers crisis repairs or weatherization. Eligibility depends on your income and household size, and each state runs its own program. To apply, visit the LIHEAP page on acf.hhs.gov to find your state office, or call 211. Funds can run out, so apply early. Also ask about the Weatherization Assistance Program, which can add free insulation to lower your bills long term.",
       "description": "Struggling With Heating Or Cooling Bills? LIHEAP Can Help\n\nGeneral education only, not personalized tax or financial advice. Source: acf.gov / HHS (Low Income Home Energy Assistance Program). Consult a CPA or CFP for your specific situation.\n\n#liheap #utilities #assistance #personalfinance #savemoney",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-25"
     },
     {
       "slug": "lifeline-phone-internet-discount",
