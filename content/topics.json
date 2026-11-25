@@ -1438,7 +1438,8 @@
       ],
       "script": "Free money for college exists, and millions of families leave it on the table. The federal Pell Grant does not have to be repaid. The maximum award is currently 7,395 dollars a year, and the amount depends on your family's income, the cost of school, and whether you study full time. You apply by filling out the FAFSA at studentaid.gov, which is free. Never pay anyone to file it. Many states and colleges use the FAFSA to give their own grants, too. The earlier you file, the better your chances. Check studentaid.gov for the current deadlines.",
       "description": "Free Money For College: The Pell Grant Does Not Need To Be Repaid\n\nGeneral education only, not personalized tax or financial advice. Source: studentaid.gov (Federal Pell Grants). Consult a CPA or CFP for your specific situation.\n\n#pellgrant #fafsa #college #freemoney #personalfinance",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-25"
     },
     {
       "slug": "liheap-energy-bill-help",
