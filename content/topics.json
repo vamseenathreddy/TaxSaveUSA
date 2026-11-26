@@ -1474,7 +1474,8 @@
       ],
       "script": "Many people qualify for a monthly discount on their phone or internet bill and never claim it. The federal Lifeline program takes up to 9.25 dollars a month off your bill. You may qualify if your household income is at or below 135 percent of the federal poverty level, or if you participate in programs like SNAP, Medicaid, or SSI. Only one Lifeline benefit is allowed per household. You can apply through a participating provider, or at the National Verifier website, lifelinesupport.org. Over a year, that is 111 dollars. Always apply through official sites only.",
       "description": "Get $9.25 Off Your Phone Or Internet Bill Every Month\n\nGeneral education only, not personalized tax or financial advice. Source: FCC.gov (Lifeline Program for Low-Income Consumers). Consult a CPA or CFP for your specific situation.\n\n#lifeline #savemoney #phonebill #benefits #personalfinance",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-26"
     },
     {
       "slug": "medicare-savings-programs",
