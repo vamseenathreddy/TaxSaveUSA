@@ -1492,7 +1492,8 @@
       ],
       "script": "If you are on Medicare and your income is limited, you may qualify for help you have never heard of. Medicare Savings Programs are run by your state Medicaid office, and they can pay your Part B premium, which is a significant monthly cost. Some programs also cover deductibles and copays. Income and asset limits apply, and the limits vary by state. Many seniors qualify but never apply. To find out, call your state Medicaid office, or contact your State Health Insurance Assistance Program for free counseling. Look up the SHIP number for your state on shiphelp.org.",
       "description": "Medicare Savings Programs Can Pay Your Part B Premium\n\nGeneral education only, not personalized tax or financial advice. Source: Medicare.gov (Medicare Savings Programs). Consult a CPA or CFP for your specific situation.\n\n#medicare #seniors #savemoney #benefits #personalfinance",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-26"
     },
     {
       "slug": "weatherization-assistance-free",
