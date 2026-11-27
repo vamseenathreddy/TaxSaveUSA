@@ -1510,7 +1510,8 @@
       ],
       "script": "There is a federal program that can upgrade your home for free if your income is limited. The Weatherization Assistance Program helps eligible households cut their energy bills by adding insulation, sealing air leaks, and servicing heating and cooling systems. Trained crews do the work, and you do not repay it. Eligibility is based on your income, and renters can qualify too, with landlord permission. Programs are run by states and local agencies. Search for the Weatherization Assistance Program at energy.gov to find your state contact. Waitlists can be long, so apply early.",
       "description": "Free Home Upgrades Through The Weatherization Assistance Program\n\nGeneral education only, not personalized tax or financial advice. Source: energy.gov (Weatherization Assistance Program). Consult a CPA or CFP for your specific situation.\n\n#weatherization #energysavings #homeowners #benefits #savemoney",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-27"
     },
     {
       "slug": "employer-401k-match-free-money",
