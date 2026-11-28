@@ -1528,7 +1528,8 @@
       ],
       "script": "If your employer offers a 401k match and you are not getting all of it, you are turning down free money. A common match is 50 cents on the dollar up to 6 percent of pay. Some give a dollar for dollar match. Put in 3,000 dollars, get another 1,500 added. That is an instant 50 percent return before your money even gets invested. Plus, your contributions lower your taxable income. Check your plan's match formula and vesting schedule in your benefits portal, and contribute at least enough to get the full match. It is the closest thing to a sure thing in personal finance.",
       "description": "Your 401(k) Match Is An Instant 100% Return: Don't Skip It\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (401(k) plans overview) and general plan design. Consult a CPA or CFP for your specific situation.\n\n#401k #retirement #freemoney #personalfinance #investing",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-28"
     },
     {
       "slug": "spousal-ira-for-non-working-spouse",
