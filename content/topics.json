@@ -1546,7 +1546,8 @@
       ],
       "script": "A spouse with no income can still save for retirement. It is called a spousal IRA. If you file a joint return, the working spouse's income can cover contributions for both. For 2026, that means up to 7,500 dollars in each spouse's IRA, or 8,600 if 50 or older, as long as the couple's total earned income covers the contributions. Traditional IRA contributions may be deductible, depending on income and workplace plan coverage, and Roth contributions grow tax free. It is a smart way for stay at home parents to build their own retirement savings. Confirm eligibility on irs.gov.",
       "description": "A Non-Working Spouse Can Still Have An IRA: Here's How\n\nGeneral education only, not personalized tax or financial advice. Source: IRS.gov (IRA contribution limits, IR-2025-111; Publication 590-A). Consult a CPA or CFP for your specific situation.\n\n#spousalira #retirement #ira #couples #IRS",
-      "used": false
+      "used": true,
+      "used_date": "2026-11-28"
     },
     {
       "slug": "roth-conversion-low-income-year",
