@@ -1532,8 +1532,9 @@
       "category": "evergreen",
       "playlist": "Wealth & Tax Strategies",
       "pre_condensed": true,
-      "used": false,
-      "description": "Time Your Income | Wealth Strategy\n\nTime Your Income. If you control when income arrives, such as bonuses or business invoices, you can sometimes shift it into a lower tax year. Smoothing income smooths your tax rate.\n\nGeneral education only, not personalized tax or financial advice. Consult a CPA or CFP for your situation. New Shorts every day. Subscribe to TaxSaveUSA.\n\n#Shorts #Money #PersonalFinance #WealthBuilding #TaxTips"
+      "used": true,
+      "description": "Time Your Income | Wealth Strategy\n\nTime Your Income. If you control when income arrives, such as bonuses or business invoices, you can sometimes shift it into a lower tax year. Smoothing income smooths your tax rate.\n\nGeneral education only, not personalized tax or financial advice. Consult a CPA or CFP for your situation. New Shorts every day. Subscribe to TaxSaveUSA.\n\n#Shorts #Money #PersonalFinance #WealthBuilding #TaxTips",
+      "used_date": "2026-11-28"
     },
     {
       "slug": "evergreen-strategy-09",
